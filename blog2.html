@@ -89,7 +89,7 @@ foo(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>); <sp
                             <li>Different compilers might have different alignment constraints as C standards state that
                                 alignment of structure totally depends on the implementation.</li>
                             <li>
-                                <p>Example: (output: &quot;Size of struct 24&quot;)</p>
+                                Example: (output: &quot;Size of struct 24&quot;)
                                 <pre><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
 <span class="hljs-keyword">struct</span> A {
   <span class="hljs-comment">// sizeof(int) = 4</span>
@@ -162,37 +162,39 @@ foo(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>); <sp
                         </p>
                     </li>
                     <li>
-                        <p>Iterators are used to point at the memory addresses of STL sequence containers.</p>
+                        Iterators are used to point at the memory addresses of STL sequence containers.
                         <pre><code><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ar = { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> };
 <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator ptr = ar.begin();
 </code></pre>
                     </li>
                     <li>
-                        <p>Functors are objects that can be treated as though they are a function or function pointer.
-                            ```
-                            // A Functor
-                            class increment {
-                            private:
-                            int num;
-                            public:
-                            increment(int n) : num(n) { }</p>
-                        <p> // This operator overloading enables calling
-                            // operator function () on objects of increment
-                            int operator () (int arr_num) const {</p>
-                        <pre><code>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">num</span> + arr_num;
+                        Functors are objects that can be treated as though they are a function or function
+                        pointer.
+                        <pre><code><span class="hljs-comment">// A Functor</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title">increment</span> {
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> num;
+<span class="hljs-keyword">public</span>:
+    increment(<span class="hljs-keyword">int</span> n) : num(n) {  }
+
+    <span class="hljs-comment">// This operator overloading enables calling</span>
+    <span class="hljs-comment">// operator function () on objects of increment</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">operator</span> (<span class="hljs-params"></span>) (<span class="hljs-params"><span class="hljs-keyword">int</span> arr_num</span>) <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> num + arr_num;
+    }
+};
+
+The line,
+transform(arr, arr+n, arr, increment(to_add));
+
+<span class="hljs-keyword">is</span> the same <span class="hljs-keyword">as</span> writing below two lines,
+<span class="hljs-comment">// Creating object of increment</span>
+<span class="hljs-function">increment <span class="hljs-title">obj</span>(<span class="hljs-params">to_add</span>)</span>; 
+
+<span class="hljs-comment">// Calling () on object</span>
+transform(arr, arr+n, arr, obj);
 </code></pre>
-                        <p> }
-                            };</p>
-                    </li>
-                </ul>
-                <p>The line,
-                    transform(arr, arr+n, arr, increment(to_add));</p>
-                <p>is the same as writing below two lines,
-                    // Creating object of increment
-                    increment obj(to_add); </p>
-                <p>// Calling () on object
-                    transform(arr, arr+n, arr, obj);
-                    ```</p>
+
                 <h3 id="c-11-new-features">C++ 11 new features</h3>
                 <h3 id="data-structures">Data structures</h3>
                 <h3 id="algorithms">Algorithms</h3>
