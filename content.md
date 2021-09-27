@@ -88,9 +88,62 @@ IntSet &r = s; // r is declared to be “reference to an IntSet
 
 ### Standard Template Library (STL)
 
+The Standard Template Library (STL) is a set of C++ template classes to provide common programming data structures and functions such as lists, stacks, arrays, etc. It is a library of container classes, algorithms, and iterators. 
 
+- Containers or container classes store objects and data. 
+  - Sequence Containers: implement data structures which can be accessed in a sequential manner. (vector, list, deque, etc)
+  - Container Adaptors : provide a different interface for sequential containers. (queue, stack, etc)
+  - Associative Containers : implement sorted data structures that can be quickly searched (O(log n) complexity). (set, map, multiset, etc)
+  - Unordered Associative Containers : implement unordered data structures that can be quickly searched. (unordered_set, unordered_multiset,
+unordered_map, all introduced in C++11)
+
+
+
+- Algorithms are a collections of implemented functions that operate on containers. For example, there are sorting and searching functions like `sort()` and `binary_search()`.
+
+- Iterators are used to point at the memory addresses of STL sequence containers.
+```
+vector<int> ar = { 1, 2, 3, 4, 5 };
+vector<int>::iterator ptr = ar.begin();
+```
+
+- Functors are objects that can be treated as though they are a function or function pointer. 
+```
+// A Functor
+class increment {
+private:
+    int num;
+public:
+    increment(int n) : num(n) {  }
+  
+    // This operator overloading enables calling
+    // operator function () on objects of increment
+    int operator () (int arr_num) const {
+        return num + arr_num;
+    }
+};
+
+The line,
+transform(arr, arr+n, arr, increment(to_add));
+
+is the same as writing below two lines,
+// Creating object of increment
+increment obj(to_add); 
+
+// Calling () on object
+transform(arr, arr+n, arr, obj);
+```
 
 ### C++ 11 new features
+
+
+
+### Data structures
+
+
+### Algorithms
+
+
 
 ### Reference
   1. Problem Solving with C++ (8th Edition), by Walter Savitch, Addison Wesley Publishing (2011)

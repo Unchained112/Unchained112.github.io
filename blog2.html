@@ -2,51 +2,220 @@
 <html>
 
 <head>
-	<title>C++ and Algorithms for Interview</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<link rel="icon" href="images/logo.png" />
+    <title>C++ and Algorithms for Interview</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="icon" href="images/logo.png" />
 </head>
 
 <body class="is-preload">
 
-	<!-- Header -->
-	<section id="header">
-		<header>
-			<span class="image avatar"><img src="images/avatar.png" alt="" /></span>
-			<h1 id="logo"><a href="index.html">Bosen Cheng</a></h1>
-			<p>Working hard towards my dream<br />
-				towards Eudaimonia</p>
-		</header>
-		
-	</section>
+    <!-- Header -->
+    <section id="header">
+        <header>
+            <span class="image avatar"><img src="images/avatar.png" alt="" /></span>
+            <h1 id="logo"><a href="index.html">Bosen Cheng</a></h1>
+            <p>Working hard towards my dream<br />
+                towards Eudaimonia</p>
+        </header>
 
-	<!-- Wrapper -->
-	<div id="wrapper">
+    </section>
 
-		<!-- Main -->
-		<div id="main">
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
             <div class="container">
                 <header class="major">
                     <p> </p>
-                    <h3>C++ and Algorithms for Interview</h3>
+                    <h3 id="c-and-algorithms-for-interview">C++ and Algorithms for Interview</h3>
                 </header>
-                
+                <h3 id="small-points">Small points</h3>
+                <ul>
+                    <li><code>x++</code> increments the value of variable <code>x</code> <strong>after</strong>
+                        processing the current statement. <code>x+=i++;</code> add <code>i</code> to <code>x</code> then
+                        increase <code>i</code> by 1. </li>
+                    <li><code>++x</code> increments the value of <code>x</code> <strong>before</strong> processing the
+                        current statement. <code>x+=++i;</code> increase <code>i</code> and add <code>i+1</code> to
+                        <code>x</code>.
+                    </li>
+                    <li>Array is passed by reference. <code>array = &amp;array[0]</code>.</li>
+                    <li>Reference must be initialized using a variable of the same type.</li>
+                    <li>Enumerate example:
+                        <pre><code><span class="hljs-keyword">enum</span> Suit_t {A, B, C, D};
+<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> Name[] = {<span class="hljs-string">"A"</span>, <span class="hljs-string">"B"</span>, <span class="hljs-string">"C"</span>, <span class="hljs-string">"D"</span>};
+<span class="hljs-keyword">enum</span> Suit_t x = C;
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; Name[x] &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+</code></pre>
+                    </li>
+                </ul>
+                <h3 id="function-pointer">Function pointer</h3>
+                <p>For functions that have precisely the same type signature, a function pointer allow us to call them
+                    the same way from a syntactic point of view.</p>
+                <p>Example:</p>
+                <pre><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">min</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;
+<span class="hljs-comment">// EFFECTS: returns the smaller of a and b.</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">max</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;
+<span class="hljs-comment">// EFFECTS: returns the larger of a and b.</span>
+
+<span class="hljs-keyword">int</span> (*foo)(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>);
+
+<span class="hljs-comment">// Then we can let foo = min or max and call</span>
+foo(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">//for example</span>
+</code></pre>
+                <h3 id="memory">Memory</h3>
+                <ul>
+                    <li>Memory leak is caused when not recycling an allocated dynamic object.</li>
+                    <li>Check memory leak: <code>valgrind --leak-check=full ./program &lt;args&gt;</code></li>
+                    <li>The space for objects created via <code>new</code> comes from heap.</li>
+                    <li>Stack is for function calls.</li>
+                    <li><img src="./images/virtual-memory.jpg" alt="Memory segmentation"></li>
+                </ul>
+                <h3 id="struct-and-class">Struct and class</h3>
+                <ul>
+                    <li>
+                        <p>The default copy constructor is shallow copy, which works when there is not points in the
+                            member of that data type. </p>
+                    </li>
+                    <li>
+                        <p>The sizeof for a struct is not always equal to the sum of sizeof of each individual member.
+                            This is because of the padding added by the compiler to avoid alignment issues. Padding is
+                            only added when a structure member is followed by a member with a larger size or at the end
+                            of the structure.</p>
+                        <ul>
+                            <li>Different compilers might have different alignment constraints as C standards state that
+                                alignment of structure totally depends on the implementation.</li>
+                            <li>
+                                <p>Example: (output: &quot;Size of struct 24&quot;)</p>
+                                <pre><code><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+<span class="hljs-keyword">struct</span> A {
+  <span class="hljs-comment">// sizeof(int) = 4</span>
+  <span class="hljs-keyword">int</span> x;
+  <span class="hljs-comment">// Padding of 4 bytes</span>
+
+  <span class="hljs-comment">// sizeof(double) = 8</span>
+  <span class="hljs-keyword">double</span> z;
+
+  <span class="hljs-comment">// sizeof(short int) = 2</span>
+  <span class="hljs-keyword">short</span> <span class="hljs-keyword">int</span> y;
+  <span class="hljs-comment">// Padding of 6 bytes</span>
+};
+
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"Size of struct: %ld"</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> A));
+
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+                                <p><img src="./images/struct_sizeof_ep.png" alt="Size of struct"></p>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>The size of the class is similar to the struct with little difference.<ul>
+                                    <li>Empty class has size 1 (byte).</li>
+                                    <li>The virtual function pointer has size of 4 bytes.</li>
+                                    <li>The size of sub-class is equals to the size of all members plus the size of its
+                                        parent class. (Note that they share the virtual function pointers) </li>
+                                </ul>
+                            </li>
+                            <li>Notice on subclass method:
+                                <pre><code><span class="hljs-type">PosIntSet</span> s; // sub <span class="hljs-keyword">class</span> <span class="hljs-keyword">instance</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">class</span> <span class="hljs-type">Intset</span>
+<span class="hljs-type">IntSet</span> *p = s; // this points precisely to s
+<span class="hljs-type">IntSet</span> &amp;r = s; // r is declared to be “reference to an <span class="hljs-type">IntSet</span>
+// <span class="hljs-type">Apparent</span> <span class="hljs-class"><span class="hljs-keyword">type</span>: the declared <span class="hljs-keyword">type</span> of the reference. (<span class="hljs-type">IntSet</span>)</span>
+// <span class="hljs-type">Actual</span> <span class="hljs-class"><span class="hljs-keyword">type</span>: the real <span class="hljs-keyword">type</span> of the referent. (<span class="hljs-type">PosIntSet</span>)</span>
+// <span class="hljs-type">Actual</span> <span class="hljs-class"><span class="hljs-keyword">type</span>: the real <span class="hljs-keyword">type</span> of the referent. (<span class="hljs-type">PosIntSet</span>)</span>
+</code></pre>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Virtual function and virtual table</li>
+                    <li><img src="./images/vtable.png" alt="Vatble"></li>
+                    <li>Note that the constructor function cannot be a virtual function since when instantiating an
+                        object, it allocates no memory for that and then there would be no virtual table.</li>
+                </ul>
+                <h3 id="standard-template-library-stl-">Standard Template Library (STL)</h3>
+                <p>The Standard Template Library (STL) is a set of C++ template classes to provide common programming
+                    data structures and functions such as lists, stacks, arrays, etc. It is a library of container
+                    classes, algorithms, and iterators. </p>
+                <ul>
+                    <li>Containers or container classes store objects and data. <ul>
+                            <li>Sequence Containers: implement data structures which can be accessed in a sequential
+                                manner. (vector, list, deque, etc)</li>
+                            <li>Container Adaptors : provide a different interface for sequential containers. (queue,
+                                stack, etc)</li>
+                            <li>Associative Containers : implement sorted data structures that can be quickly searched
+                                (O(log n) complexity). (set, map, multiset, etc)</li>
+                            <li>Unordered Associative Containers : implement unordered data structures that can be
+                                quickly searched. (unordered_set, unordered_multiset,
+                                unordered_map, all introduced in C++11)</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <p>Algorithms are a collections of implemented functions that operate on containers. For
+                            example, there are sorting and searching functions like <code>sort()</code> and
+                            <code>binary_search()</code>.
+                        </p>
+                    </li>
+                    <li>
+                        <p>Iterators are used to point at the memory addresses of STL sequence containers.</p>
+                        <pre><code><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ar = { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> };
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator ptr = ar.begin();
+</code></pre>
+                    </li>
+                    <li>
+                        <p>Functors are objects that can be treated as though they are a function or function pointer.
+                            ```
+                            // A Functor
+                            class increment {
+                            private:
+                            int num;
+                            public:
+                            increment(int n) : num(n) { }</p>
+                        <p> // This operator overloading enables calling
+                            // operator function () on objects of increment
+                            int operator () (int arr_num) const {</p>
+                        <pre><code>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">num</span> + arr_num;
+</code></pre>
+                        <p> }
+                            };</p>
+                    </li>
+                </ul>
+                <p>The line,
+                    transform(arr, arr+n, arr, increment(to_add));</p>
+                <p>is the same as writing below two lines,
+                    // Creating object of increment
+                    increment obj(to_add); </p>
+                <p>// Calling () on object
+                    transform(arr, arr+n, arr, obj);
+                    ```</p>
+                <h3 id="c-11-new-features">C++ 11 new features</h3>
+                <h3 id="data-structures">Data structures</h3>
+                <h3 id="algorithms">Algorithms</h3>
+                <h3 id="reference">Reference</h3>
+                <ol>
+                    <li>Problem Solving with C++ (8th Edition), by Walter Savitch, Addison Wesley Publishing (2011)</li>
+                    <li><a href="https://www.geeksforgeeks.org/">https://www.geeksforgeeks.org/</a></li>
+                </ol>
+
             </div>
-		</div>
+        </div>
 
 
-	</div>
+    </div>
 
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/jquery.scrolly.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
 </body>
 
