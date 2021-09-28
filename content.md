@@ -136,16 +136,76 @@ transform(arr, arr+n, arr, obj);
 
 ### C++ 11 new features
 
+1. Automatic Type Deduction:
+      
+    "auto" allow the complier to deduce the actual type of a variable, making the coding more simple. For example:
+    ```
+    std::map<std::string, std::vector<int>> map;
+    for(auto it = begin(map); it != end(map); ++it) {
+    }
+    ```
 
+2. `nullptr` replaces the `NULL`.
 
+3. Range-based for loop: more simple loop
+
+    ```
+    std::vector<int> v = {0, 1, 2, 3, 4, 5};
+ 
+    for (const int& i : v) // access by const reference
+ 
+    for (auto i : v) // access by value, the type of i is int
+    ```
+
+4. Smart pointers: 
+    - unique_ptr: should be used when ownership of a memory resource does not have to be shared (it doesn't have a copy constructor), but it can be transferred to another unique_ptr (move constructor exists).
+    - shared_ptr: should be used when ownership of a memory resource should be shared (hence the name).
+    - weak_ptr: holds a reference to an object managed by a shared_ptr, but does not contribute to the reference count; it is used to break dependency cycles (think of a tree where the parent holds an owning reference (shared_ptr) to its children, but the children also must hold a reference to the parent; if this second reference was also an owning one, a cycle would be created and no object would ever be released).
+
+5. Lambdas: C++11 introduces lambdas allow users to write an inline, anonymous functor. For example:
+
+    ```
+    void func(std::vector<double>& v) {
+      std::transform(v.begin(), v.end(), v.begin(),
+                 [](double d) { return d < 0.00001 ? 0 : d; }
+                 );
+    }
+
+    void func(std::vector<double>& v) {
+      std::transform(v.begin(), v.end(), v.begin(),
+        [](double d) -> double {
+            if (d < 0.0001) {
+                return 0;
+            } else {
+                return d;
+            }
+        });
+    }
+
+    std::function<int(int)> lfib = [&lfib](int n) {return n < 2 ? 1 : lfib(n-1) + lfib(n-2);};
+    ```
+
+6. R-value reference: C++11 adds a new type of reference called an r-value reference. An r-value reference is a reference that is designed to be initialized with an r-value (only). 
+
+    ```
+    std::string   s1     = "Hello ";
+    std::string   s2     = "world";
+    std::string&& s_rref = s1 + s2;    // the result of s1 + s2 is an rvalue
+    s_rref += ", my friend";           // I can change the temporary string!
+    std::cout << s_rref << '\n';       // prints "Hello world, my friend"
+    ```
+
+7. Thread: the class `std::thread` represents a single thread of execution. Threads allow multiple functions to execute concurrently.
+
+### Reference for part 1
+  1. Problem Solving with C++ (8th Edition), by Walter Savitch, Addison Wesley Publishing (2011)
+  2. https://www.geeksforgeeks.org/
+  3. https://www.codeproject.com/Articles/570638/Ten-Cplusplus11-Features-Every-Cplusplus-Developer
+  4. https://en.cppreference.com/w/
+ 
+ 
 ### Data structures
 
 
+
 ### Algorithms
-
-
-
-### Reference
-  1. Problem Solving with C++ (8th Edition), by Walter Savitch, Addison Wesley Publishing (2011)
-  2. https://www.geeksforgeeks.org/
- 
