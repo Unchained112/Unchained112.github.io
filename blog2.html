@@ -20,20 +20,20 @@
                 towards Eudaimonia</p>
         </header>
         <nav id="nav">
-			<ul>
-				<li><a href="#about" class="active">Back to Homepage</a></li>
-			</ul>
-		</nav>
-		<footer>
-			<ul class="icons">
-				<li><a href="https://www.linkedin.com/in/chengbosen/" class="icon brands fa-linkedin"><span
-							class="label">LinkedIn</span></a></li>
-				<li><a href="https://github.com/" class="icon brands fa-github"><span class="label">Github</span></a>
-				</li>
-				<li><a href="mailto: chengbosen112@gmail.com" class="icon solid fa-envelope"><span
-							class="label">Email</span></a></li>
-			</ul>
-		</footer>
+            <ul>
+                <li><a href="#about" class="active">Back to Homepage</a></li>
+            </ul>
+        </nav>
+        <footer>
+            <ul class="icons">
+                <li><a href="https://www.linkedin.com/in/chengbosen/" class="icon brands fa-linkedin"><span
+                            class="label">LinkedIn</span></a></li>
+                <li><a href="https://github.com/" class="icon brands fa-github"><span class="label">Github</span></a>
+                </li>
+                <li><a href="mailto: chengbosen112@gmail.com" class="icon solid fa-envelope"><span
+                            class="label">Email</span></a></li>
+            </ul>
+        </footer>
     </section>
 
     <!-- Wrapper -->
@@ -214,7 +214,7 @@ transform(arr, arr+n, arr, obj);
                             <li>
                                 Automatic Type Deduction:
                                 &quot;auto&quot; allow the complier to deduce the actual type of a variable, making
-                                    the coding more simple. For example:
+                                the coding more simple. For example:
                                 <pre><code> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">map</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">map</span>;
  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it = begin(<span class="hljs-built_in">map</span>); it != end(<span class="hljs-built_in">map</span>); ++it) {
  }
@@ -233,7 +233,7 @@ transform(arr, arr+n, arr, obj);
 </code></pre>
                             </li>
                             <li>
-                                Smart pointers: 
+                                Smart pointers:
                                 <ul>
                                     <li>unique_ptr: should be used when ownership of a memory resource does not have to
                                         be shared (it doesn&#39;t have a copy constructor), but it can be transferred to
@@ -272,7 +272,9 @@ transform(arr, arr+n, arr, obj);
 </code></pre>
                             </li>
                             <li>
-                                R-value reference: C++11 adds a new type of reference called an r-value reference. An r-value reference is a reference that is designed to be initialized with an r-value (only).
+                                R-value reference: C++11 adds a new type of reference called an r-value reference. An
+                                r-value reference is a reference that is designed to be initialized with an r-value
+                                (only).
                                 <pre><code> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>   s1     = <span class="hljs-string">"Hello "</span>;
  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>   s2     = <span class="hljs-string">"world"</span>;
  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp;&amp; s_rref = s1 + s2;    <span class="hljs-comment">// the result of s1 + s2 is an rvalue</span>
@@ -296,7 +298,287 @@ transform(arr, arr+n, arr, obj);
                             <li><a href="https://en.cppreference.com/w/">https://en.cppreference.com/w/</a></li>
                         </ol>
                         <h3 id="data-structures">Data structures</h3>
+                        <p>Data structure is a storage that is used to store and organize data. It is a way of arranging
+                            data on a computer so that it can be accessed and updated efficiently. </p>
+                        <p>I will not discuss about basic data structures including array, queue, linked list, and
+                            stack. One can easily utilize the data structure through C++ STL. Two images below offer a
+                            clear view of those data structures and features.</p>
+                        <p><img src="./images/stl_data1.png" alt="Adaptive Unordered" style="width: 100%">
+                            <img src="./images/stl_data2.png" alt="Sequence Ordered" style="width: 100%">
+                        </p>
+                        <p>We will take a closer look into some data structures, hash table, and binary tree, and their
+                            extensions. </p>
+                        <h4 id="hash-table">Hash table</h4>
+                        <p>The hash table stores elements in key-value pair. Key is the unique integer that is used for
+                            indexing the values. Value is the data that are associated with the corresponding key.</p>
+                        <p><strong>Hash function</strong></p>
+                        <p>In a hash table, a new index is processed using the keys. And, the element corresponding to
+                            that key is stored in the index. This process is called hashing. </p>
+                        <p>A good hash function may not prevent the collisions completely however it can reduce the
+                            number of collisions. For example: </p>
+                        <ol>
+                            <li>Hashing by modulo: <code>h(k) = k % m;</code> for k is a key and m is the size.</li>
+                            <li>Hashing by multiplication:
+                                <pre><code>A = <span class="hljs-comment">(sqrt(5)</span> - <span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;
+<span class="hljs-comment">// we define that kA % 1 gives the fractional part kA.</span>
+h<span class="hljs-comment">(k)</span> = floor<span class="hljs-comment">(m * ((k * A)</span> <span class="hljs-meta">%</span> <span class="hljs-number">1</span>));
+</code></pre>
+                            </li>
+                        </ol>
+                        <p><strong>Hash Collision</strong></p>
+                        <p>Collision occurs when the hash function maps two or more items (keys) with different search
+                            keys into the same bucket or index. There are two major schemes for solving the collision:
+                            separate chaining and open addressing. In chaining, if a hash function produces the same
+                            index for multiple elements, these elements are stored in the same index by using a
+                            doubly-linked list. Unlike chaining, open addressing doesn&#39;t store multiple elements
+                            into the same slot. Here, each slot is either filled with a single key or left. For example,
+                            In linear probing, collision is resolved by checking the next slot.</p>
+                        <h4 id="trees">Trees</h4>
+                        <p>A tree is a nonlinear hierarchical data structure that consists of nodes connected by edges.
+                            Some definitions are listed here:</p>
+                        <ul>
+                            <li>Root: It is the topmost node of a tree.</li>
+                            <li>Height of a Node: The height of a node is the number of edges from the node to the
+                                deepest leaf (ie. the longest path from the node to a leaf node).</li>
+                            <li>Depth of a Node: The depth of a node is the number of edges from the root to the node.
+                            </li>
+                            <li>Height of a Tree: The height of a Tree is the height of the root node or the depth of
+                                the deepest node.</li>
+                        </ul>
+                        <p><img src="./images/binaryTree.png" alt="Binary Tree"></p>
+                        <p><strong>Binary Tree</strong></p>
+                        <p>A binary tree is a tree data structure in which each parent node can have at most two
+                            children. Example code:</p>
+                        <pre><code><span class="hljs-comment">// Binary Search Tree operations in C++</span>
+
+#include &lt;iostream&gt;
+using namespace std;
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> {
+  <span class="hljs-keyword">int</span> key;
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *left, *right;
+};
+
+<span class="hljs-comment">// Create a node</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *newNode(<span class="hljs-keyword">int</span> item) {
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *temp = (<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *)malloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span>));
+  temp-&gt;key = item;
+  temp-&gt;left = temp-&gt;right = NULL;
+  <span class="hljs-keyword">return</span> temp;
+}
+
+<span class="hljs-comment">// Inorder Traversal</span>
+void inorder(<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *root) {
+  <span class="hljs-keyword">if</span> (root != NULL) {
+    <span class="hljs-comment">// Traverse left</span>
+    inorder(root-&gt;left);
+
+    <span class="hljs-comment">// Traverse root</span>
+    cout &lt;&lt; root-&gt;key &lt;&lt; <span class="hljs-string">" -&gt; "</span>;
+
+    <span class="hljs-comment">// Traverse right</span>
+    inorder(root-&gt;right);
+  }
+}
+
+<span class="hljs-comment">// Insert a node</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *insert(<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *node, <span class="hljs-keyword">int</span> key) {
+  <span class="hljs-comment">// Return a new node if the tree is empty</span>
+  <span class="hljs-keyword">if</span> (node == NULL) <span class="hljs-keyword">return</span> newNode(key);
+
+  <span class="hljs-comment">// Traverse to the right place and insert the node</span>
+  <span class="hljs-keyword">if</span> (key &lt; node-&gt;key)
+    node-&gt;left = insert(node-&gt;left, key);
+  <span class="hljs-keyword">else</span>
+    node-&gt;right = insert(node-&gt;right, key);
+
+  <span class="hljs-keyword">return</span> node;
+}
+
+<span class="hljs-comment">// Find the inorder successor</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *minValueNode(<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *node) {
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *current = node;
+
+  <span class="hljs-comment">// Find the leftmost leaf</span>
+  <span class="hljs-keyword">while</span> (current &amp;&amp; current-&gt;left != NULL)
+    current = current-&gt;left;
+
+  <span class="hljs-keyword">return</span> current;
+}
+
+<span class="hljs-comment">// Deleting a node</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *deleteNode(<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *root, <span class="hljs-keyword">int</span> key) {
+  <span class="hljs-comment">// Return if the tree is empty</span>
+  <span class="hljs-keyword">if</span> (root == NULL) <span class="hljs-keyword">return</span> root;
+
+  <span class="hljs-comment">// Find the node to be deleted</span>
+  <span class="hljs-keyword">if</span> (key &lt; root-&gt;key)
+    root-&gt;left = deleteNode(root-&gt;left, key);
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key &gt; root-&gt;key)
+    root-&gt;right = deleteNode(root-&gt;right, key);
+  <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// If the node is with only one child or no child</span>
+    <span class="hljs-keyword">if</span> (root-&gt;left == NULL) {
+      <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *temp = root-&gt;right;
+      free(root);
+      <span class="hljs-keyword">return</span> temp;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;right == NULL) {
+      <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *temp = root-&gt;left;
+      free(root);
+      <span class="hljs-keyword">return</span> temp;
+    }
+
+    <span class="hljs-comment">// If the node has two children</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *temp = minValueNode(root-&gt;right);
+
+    <span class="hljs-comment">// Place the inorder successor in position of the node to be deleted</span>
+    root-&gt;key = temp-&gt;key;
+
+    <span class="hljs-comment">// Delete the inorder successor</span>
+    root-&gt;right = deleteNode(root-&gt;right, temp-&gt;key);
+  }
+  <span class="hljs-keyword">return</span> root;
+}
+
+<span class="hljs-comment">// Driver code</span>
+<span class="hljs-keyword">int</span> main() {
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span> *root = NULL;
+  root = insert(root, <span class="hljs-number">8</span>);
+  root = insert(root, <span class="hljs-number">3</span>);
+  root = insert(root, <span class="hljs-number">1</span>);
+  root = insert(root, <span class="hljs-number">6</span>);
+  root = insert(root, <span class="hljs-number">7</span>);
+  root = insert(root, <span class="hljs-number">10</span>);
+  root = insert(root, <span class="hljs-number">14</span>);
+  root = insert(root, <span class="hljs-number">4</span>);
+
+  cout &lt;&lt; <span class="hljs-string">"Inorder traversal: "</span>;
+  inorder(root);
+
+  cout &lt;&lt; <span class="hljs-string">"\nAfter deleting 10\n"</span>;
+  root = deleteNode(root, <span class="hljs-number">10</span>);
+  cout &lt;&lt; <span class="hljs-string">"Inorder traversal: "</span>;
+  inorder(root);
+}
+</code></pre>
+                        <p><strong>Heap</strong></p>
+                        <p>Heap is a complete <strong>binary tree</strong> that satisfies the heap property, where any
+                            given node is:</p>
+                        <ul>
+                            <li>always greater than its child node/s and the key of the root node is the largest among
+                                all other nodes. This property is also called max heap property.</li>
+                            <li>always smaller than the child node/s and the key of the root node is the smallest among
+                                all other nodes. This property is also called min heap property.</li>
+                        </ul>
+                        <p>When using the heap, the following are the basic operations used:</p>
+                        <ul>
+                            <li>Heapify: Return a heap data structure given an input binary tree.</li>
+                            <li>Insert: Insert a new element.</li>
+                            <li>Delete: delete the selected element.</li>
+                        </ul>
+                        <p>Example code:</p>
+                        <pre><code><span class="hljs-comment">// Max-Heap data structure in C++</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *a, <span class="hljs-keyword">int</span> *b)</span>
+</span>{
+  <span class="hljs-keyword">int</span> temp = *b;
+  *b = *a;
+  *a = temp;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">heapify</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;hT, <span class="hljs-keyword">int</span> i)</span>
+</span>{
+  <span class="hljs-keyword">int</span> size = hT.size();
+  <span class="hljs-keyword">int</span> largest = i;
+  <span class="hljs-keyword">int</span> l = <span class="hljs-number">2</span> * i + <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">int</span> r = <span class="hljs-number">2</span> * i + <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">if</span> (l &lt; size &amp;&amp; hT[l] &gt; hT[largest])
+    largest = l;
+  <span class="hljs-keyword">if</span> (r &lt; size &amp;&amp; hT[r] &gt; hT[largest])
+    largest = r;
+
+  <span class="hljs-keyword">if</span> (largest != i)
+  {
+    swap(&amp;hT[i], &amp;hT[largest]);
+    heapify(hT, largest);
+  }
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;hT, <span class="hljs-keyword">int</span> newNum)</span>
+</span>{
+  <span class="hljs-keyword">int</span> size = hT.size();
+  <span class="hljs-keyword">if</span> (size == <span class="hljs-number">0</span>)
+  {
+    hT.push_back(newNum);
+  }
+  <span class="hljs-keyword">else</span>
+  {
+    hT.push_back(newNum);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = size / <span class="hljs-number">2</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)
+    {
+      heapify(hT, i);
+    }
+  }
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deleteNode</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;hT, <span class="hljs-keyword">int</span> num)</span>
+</span>{
+  <span class="hljs-keyword">int</span> size = hT.size();
+  <span class="hljs-keyword">int</span> i;
+  <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; size; i++)
+  {
+    <span class="hljs-keyword">if</span> (num == hT[i])
+      <span class="hljs-keyword">break</span>;
+  }
+  swap(&amp;hT[i], &amp;hT[size - <span class="hljs-number">1</span>]);
+
+  hT.pop_back();
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = size / <span class="hljs-number">2</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)
+  {
+    heapify(hT, i);
+  }
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printArray</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;hT)</span>
+</span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; hT.size(); ++i)
+    <span class="hljs-built_in">cout</span> &lt;&lt; hT[i] &lt;&lt; <span class="hljs-string">" "</span>;
+  <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"\n"</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; heapTree;
+
+  insert(heapTree, <span class="hljs-number">3</span>);
+  insert(heapTree, <span class="hljs-number">4</span>);
+  insert(heapTree, <span class="hljs-number">9</span>);
+  insert(heapTree, <span class="hljs-number">5</span>);
+  insert(heapTree, <span class="hljs-number">2</span>);
+
+  <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Max-Heap array: "</span>;
+  printArray(heapTree);
+
+  deleteNode(heapTree, <span class="hljs-number">4</span>);
+
+  <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"After deleting an element: "</span>;
+
+  printArray(heapTree);
+}
+</code></pre>
+                        <p>There are also other more complex tree structures such as AVL tree and Red-Black tree, check
+                            reference to read more about this.</p>
                         <h3 id="algorithms">Algorithms</h3>
+                        <p>Algorithm is a step-by-step procedure, which defines a set of instructions to be executed in
+                            a certain order to get the desired output. </p>
+                        <h3 id="reference-for-part-2">Reference for part 2</h3>
+                        <ol>
+                            <li><a
+                                    href="https://www.geeksforgeeks.org/the-c-standard-template-library-stl/">https://www.geeksforgeeks.org/the-c-standard-template-library-stl/</a>
+                            </li>
+                            <li><a href="https://www.programiz.com/dsa">https://www.programiz.com/dsa</a></li>
+                        </ol>
+
 
             </div>
         </div>

@@ -206,8 +206,274 @@ transform(arr, arr+n, arr, obj);
  
 ### Data structures
 
+Data structure is a storage that is used to store and organize data. It is a way of arranging data on a computer so that it can be accessed and updated efficiently. 
 
+I will not discuss about basic data structures including array, queue, linked list, and stack. One can easily utilize the data structure through C++ STL. Two images below offer a clear view of those data structures and features.
+
+![Adaptive Unordered](./images/stl_data1.png)
+![Sequence Ordered](./images/stl_data2.png)
+
+We will take a closer look into some data structures, hash table, and binary tree, and their extensions. 
+
+#### Hash table
+
+The hash table stores elements in key-value pair. Key is the unique integer that is used for indexing the values. Value is the data that are associated with the corresponding key.
+
+**Hash function**
+
+In a hash table, a new index is processed using the keys. And, the element corresponding to that key is stored in the index. This process is called hashing. 
+
+A good hash function may not prevent the collisions completely however it can reduce the number of collisions. For example: 
+
+1. Hashing by modulo: `h(k) = k % m;` for k is a key and m is the size.
+2. Hashing by multiplication: 
+```
+A = (sqrt(5) - 1)/2;
+// we define that kA % 1 gives the fractional part kA.
+h(k) = floor(m * ((k * A) % 1));
+```
+
+**Hash Collision**
+
+Collision occurs when the hash function maps two or more items (keys) with different search keys into the same bucket or index. There are two major schemes for solving the collision: separate chaining and open addressing. In chaining, if a hash function produces the same index for multiple elements, these elements are stored in the same index by using a doubly-linked list. Unlike chaining, open addressing doesn't store multiple elements into the same slot. Here, each slot is either filled with a single key or left. For example, In linear probing, collision is resolved by checking the next slot.
+
+
+#### Trees
+A tree is a nonlinear hierarchical data structure that consists of nodes connected by edges. Some definitions are listed here:
+
+ - Root: It is the topmost node of a tree.
+ - Height of a Node: The height of a node is the number of edges from the node to the deepest leaf (ie. the longest path from the node to a leaf node).
+ - Depth of a Node: The depth of a node is the number of edges from the root to the node.
+ - Height of a Tree: The height of a Tree is the height of the root node or the depth of the deepest node.
+
+![Binary Tree](./images/binaryTree.png)
+
+**Binary Tree**
+
+A binary tree is a tree data structure in which each parent node can have at most two children. Example code:
+```
+// Binary Search Tree operations in C++
+
+#include <iostream>
+using namespace std;
+
+struct node {
+  int key;
+  struct node *left, *right;
+};
+
+// Create a node
+struct node *newNode(int item) {
+  struct node *temp = (struct node *)malloc(sizeof(struct node));
+  temp->key = item;
+  temp->left = temp->right = NULL;
+  return temp;
+}
+
+// Inorder Traversal
+void inorder(struct node *root) {
+  if (root != NULL) {
+    // Traverse left
+    inorder(root->left);
+
+    // Traverse root
+    cout << root->key << " -> ";
+
+    // Traverse right
+    inorder(root->right);
+  }
+}
+
+// Insert a node
+struct node *insert(struct node *node, int key) {
+  // Return a new node if the tree is empty
+  if (node == NULL) return newNode(key);
+
+  // Traverse to the right place and insert the node
+  if (key < node->key)
+    node->left = insert(node->left, key);
+  else
+    node->right = insert(node->right, key);
+
+  return node;
+}
+
+// Find the inorder successor
+struct node *minValueNode(struct node *node) {
+  struct node *current = node;
+
+  // Find the leftmost leaf
+  while (current && current->left != NULL)
+    current = current->left;
+
+  return current;
+}
+
+// Deleting a node
+struct node *deleteNode(struct node *root, int key) {
+  // Return if the tree is empty
+  if (root == NULL) return root;
+
+  // Find the node to be deleted
+  if (key < root->key)
+    root->left = deleteNode(root->left, key);
+  else if (key > root->key)
+    root->right = deleteNode(root->right, key);
+  else {
+    // If the node is with only one child or no child
+    if (root->left == NULL) {
+      struct node *temp = root->right;
+      free(root);
+      return temp;
+    } else if (root->right == NULL) {
+      struct node *temp = root->left;
+      free(root);
+      return temp;
+    }
+
+    // If the node has two children
+    struct node *temp = minValueNode(root->right);
+
+    // Place the inorder successor in position of the node to be deleted
+    root->key = temp->key;
+
+    // Delete the inorder successor
+    root->right = deleteNode(root->right, temp->key);
+  }
+  return root;
+}
+
+// Driver code
+int main() {
+  struct node *root = NULL;
+  root = insert(root, 8);
+  root = insert(root, 3);
+  root = insert(root, 1);
+  root = insert(root, 6);
+  root = insert(root, 7);
+  root = insert(root, 10);
+  root = insert(root, 14);
+  root = insert(root, 4);
+
+  cout << "Inorder traversal: ";
+  inorder(root);
+
+  cout << "\nAfter deleting 10\n";
+  root = deleteNode(root, 10);
+  cout << "Inorder traversal: ";
+  inorder(root);
+}
+```
+
+**Heap**
+
+Heap is a complete **binary tree** that satisfies the heap property, where any given node is:
+ - always greater than its child node/s and the key of the root node is the largest among all other nodes. This property is also called max heap property.
+ - always smaller than the child node/s and the key of the root node is the smallest among all other nodes. This property is also called min heap property.
+
+When using the heap, the following are the basic operations used:
+ - Heapify: Return a heap data structure given an input binary tree.
+ - Insert: Insert a new element.
+ - Delete: delete the selected element.
+
+Example code:
+```
+// Max-Heap data structure in C++
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void swap(int *a, int *b)
+{
+  int temp = *b;
+  *b = *a;
+  *a = temp;
+}
+void heapify(vector<int> &hT, int i)
+{
+  int size = hT.size();
+  int largest = i;
+  int l = 2 * i + 1;
+  int r = 2 * i + 2;
+  if (l < size && hT[l] > hT[largest])
+    largest = l;
+  if (r < size && hT[r] > hT[largest])
+    largest = r;
+
+  if (largest != i)
+  {
+    swap(&hT[i], &hT[largest]);
+    heapify(hT, largest);
+  }
+}
+void insert(vector<int> &hT, int newNum)
+{
+  int size = hT.size();
+  if (size == 0)
+  {
+    hT.push_back(newNum);
+  }
+  else
+  {
+    hT.push_back(newNum);
+    for (int i = size / 2 - 1; i >= 0; i--)
+    {
+      heapify(hT, i);
+    }
+  }
+}
+void deleteNode(vector<int> &hT, int num)
+{
+  int size = hT.size();
+  int i;
+  for (i = 0; i < size; i++)
+  {
+    if (num == hT[i])
+      break;
+  }
+  swap(&hT[i], &hT[size - 1]);
+
+  hT.pop_back();
+  for (int i = size / 2 - 1; i >= 0; i--)
+  {
+    heapify(hT, i);
+  }
+}
+void printArray(vector<int> &hT)
+{
+  for (int i = 0; i < hT.size(); ++i)
+    cout << hT[i] << " ";
+  cout << "\n";
+}
+
+int main()
+{
+  vector<int> heapTree;
+
+  insert(heapTree, 3);
+  insert(heapTree, 4);
+  insert(heapTree, 9);
+  insert(heapTree, 5);
+  insert(heapTree, 2);
+
+  cout << "Max-Heap array: ";
+  printArray(heapTree);
+
+  deleteNode(heapTree, 4);
+
+  cout << "After deleting an element: ";
+
+  printArray(heapTree);
+}
+```
+
+There are also other more complex tree structures such as AVL tree and Red-Black tree, check reference to read more about this.
 
 ### Algorithms
 
-Under construction ...
+Algorithm is a step-by-step procedure, which defines a set of instructions to be executed in a certain order to get the desired output. 
+
+### Reference for part 2
+  1. https://www.geeksforgeeks.org/the-c-standard-template-library-stl/
+  2. https://www.programiz.com/dsa
