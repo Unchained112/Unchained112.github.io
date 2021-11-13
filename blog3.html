@@ -1,0 +1,411 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Basic Lighting in Computer Graphics</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="icon" href="images/logo.png" />
+</head>
+
+<body class="is-preload">
+
+    <!-- Header -->
+    <section id="header">
+        <header>
+            <span class="image avatar"><img src="images/avatar.png" alt="" /></span>
+            <h1 id="logo"><a href="index.html">Bosen Cheng</a></h1>
+            <p>Working hard towards my dream<br />
+                towards Eudaimonia</p>
+        </header>
+        <nav id="nav">
+            <ul>
+                <li><a href="#about" class="active">Back to Homepage</a></li>
+            </ul>
+        </nav>
+        <footer>
+            <ul class="icons">
+                <li><a href="https://www.linkedin.com/in/chengbosen/" class="icon brands fa-linkedin"><span
+                            class="label">LinkedIn</span></a></li>
+                <li><a href="https://github.com/" class="icon brands fa-github"><span class="label">Github</span></a>
+                </li>
+                <li><a href="mailto: chengbosen112@gmail.com" class="icon solid fa-envelope"><span
+                            class="label">Email</span></a></li>
+            </ul>
+        </footer>
+    </section>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
+            <div class="container">
+                <p> </p>
+                <h2 id="lighting-and-shading">Lighting and Shading</h2>
+                <p>When we generate the graphics from 3D models, lighting is one of the most important parts to make the
+                    graphics look appealing. That is why we can always see professional photographers use additional
+                    light sources to make their artworks prettier. While in the computer graphics, we need to do set all
+                    the lightings by ourselves. </p>
+                <h3 id="light-sources">Light sources</h3>
+                <p><img src="./images/LightSource.png" alt="LightSource" style="width:100%"></p>
+                <ul>
+                    <li>Directional light - produced by a light source an infinite distance from the scene., All of the
+                        light rays emanating from the light strike the polygons in the scene from a single parallel
+                        direction, and with equal intensity everywhere. <ul>
+                            <li>Sunlight can be modeled as a directional light.</li>
+                            <li>Characterized by color, intensity, and direction.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <p>Point light - a light that gives off equal amounts of light in all directions. Polygons and
+                            parts of polygons that are closer to the light appear brighter than those that are further
+                            away. The angle at which light from a point light source hits an object is a function of the
+                            positions of both the object and the light source. The intensity of the light source hitting
+                            the object is a function of the distance between them. Different graphics programs may ( or
+                            may not ) allow the programmer to adjust the falloff function in different ways. </p>
+                        <ul>
+                            <li>A bare bulb hanging from a cord is essentially a point light.</li>
+                            <li>Characterized by color, intensity, location, and falloff function.</li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <p>Spotlight - light that radiates light in a cone with more light in the center of the
+                                    cone, gradually tapering off towards the sides of the cone. The simplest spotlight
+                                    would just be a point light that is restricted to a certain angle around its primary
+                                    axis of direction - Think of something like a flashlight or car headlight as opposed
+                                    to a bare bulb hanging on a wire. More advanced spotlights have a falloff function
+                                    making the light more intense at the center of the cone and softer at the edges.</p>
+                                <ul>
+                                    <li>Characterized as a point light, an axis of direction, a radius about that axis,
+                                        and possibly a radial falloff function.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <p>Ambient light - Ambient light sources illuminate objects even when no other light
+                                    source is present. The intensity of ambient light is independent of direction,
+                                    distance, and other objects, meaning the effect is completely uniform throughout the
+                                    scene. - </p>
+                                <ul>
+                                    <li>However, there is no such thing as ambient light source in real life. In the
+                                        real dark environment, we still can see things is just because there are still
+                                        some light source (for example moon which reflect the sun light) and the lights
+                                        bounce between objects thus lighting the environment a little bit. </li>
+                                    <li>When not using PBR rendering, we add ambient light ensures that objects are
+                                        visible even in complete darkness</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <h3 id="lighting-types">Lighting types</h3>
+                <p><img src="./images/Phong_components_revised.png" alt="LightTypes" style="width:100%" </p>
+                <p>Just like we are painting using mathematics, we describe the lights on a object using three
+                    components: ambient, diffuse, specular. Before looking into the concrete concept, we first set the
+                    mathematic structure of the data we are going to discuss by some simple pseudo code.</p>
+                <pre><code><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Color</span></span>{
+    <span class="hljs-comment">// 0 - 255</span>
+    <span class="hljs-keyword">public</span>: 
+    <span class="hljs-keyword">int</span> r; 
+    <span class="hljs-keyword">int</span> g;
+    <span class="hljs-keyword">int</span> b;
+    Color(<span class="hljs-keyword">int</span> _r, <span class="hljs-keyword">int</span> _g, <span class="hljs-keyword">int</span> _b){
+        r = _r;
+        g = _g;
+        b = _b;
+    }
+};
+
+<span class="hljs-function">Color <span class="hljs-title">ColorDot</span><span class="hljs-params">(Color a, Color b)</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">return</span> <span class="hljs-title">Color</span><span class="hljs-params">(a.r * b.r, a.g * b.g, a.b * b.b)</span></span>;
+}
+
+<span class="hljs-comment">// All direction vectors are normalized</span>
+Vec3 l = Pos_light - Pos_object; <span class="hljs-comment">// Light vector</span>
+Vec3 v = Pos_camera - Pos_object; <span class="hljs-comment">// View vector</span>
+Vec3 n; <span class="hljs-comment">// Surface normal vector</span>
+Vec3 r = <span class="hljs-number">2</span> * dot(n, l) * n - l; <span class="hljs-comment">// Perfect reflection vector</span>
+
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">Distance</span><span class="hljs-params">(Vec3 cam, Vec3 obj)</span></span>; <span class="hljs-comment">// calculates the distance </span>
+<span class="hljs-comment">// between the light source and the object</span>
+<span class="hljs-comment">// Use this to calculate light intensity</span>
+</code></pre>
+                <ul>
+                    <li>Specular light (Phong reflection, Blinn-Phong reflection) - is the highlight and the shininess
+                        of the object we see. </li>
+                </ul>
+                <pre><code>Color c_sp; <span class="hljs-comment">// specular output color</span>
+Color c_l; <span class="hljs-comment">// light color</span>
+Color c_p; <span class="hljs-comment">// highlight color</span>
+<span class="hljs-type">double</span> p; <span class="hljs-comment">// specular-reflection exponent (higher is sharper falloff)</span>
+<span class="hljs-comment">// Phong model</span>
+c_sp = ColorDot(c_l, c_p) * <span class="hljs-built_in">dot</span>(r, v)^p; 
+<span class="hljs-comment">// Blinn-Phong model</span>
+Vec3 h = Normalize(l + v);
+c_sp = ColorDot(c_l, c_p) * <span class="hljs-built_in">dot</span>(h, n)^p;
+</code></pre>
+                <ul>
+                    <li>Diffuse light (modeled using Lambertian reflection) - is the light reflected by the surface but
+                        scattered. </li>
+                </ul>
+                <pre><code><span class="hljs-built_in">Color</span> c_dif; // diffuse output <span class="hljs-built_in">color</span>
+<span class="hljs-built_in">Color</span> c_l; // light <span class="hljs-built_in">color</span>
+<span class="hljs-built_in">Color</span> c_r; // surface <span class="hljs-built_in">color</span>
+
+c_dif = ColorDot(c_r, c_l) * dot(n, l);
+</code></pre>
+                <ul>
+                    <li>Ambient light - </li>
+                </ul>
+                <pre><code><span class="hljs-built_in">Color</span> c_am; // ambient output <span class="hljs-built_in">color</span>
+<span class="hljs-built_in">Color</span> c_a; // ambient <span class="hljs-built_in">color</span>
+<span class="hljs-built_in">Color</span> c_r; // surface <span class="hljs-built_in">color</span>
+
+c_am = ColorDot(c_r, c_a);
+</code></pre>
+                <p>Finally, we add them up:</p>
+                <pre><code>Color c_out<span class="hljs-comment">;</span>
+
+c_out = (<span class="hljs-name">c_sp</span> + c_dif) * (<span class="hljs-number">1</span> / (<span class="hljs-name">Distance</span>(<span class="hljs-name">Pos_light</span>, Pos_obj)^<span class="hljs-number">2</span>) + c_am<span class="hljs-comment">;</span>
+</code></pre>
+                <p><strong>Note</strong>: Those models are physically incorrect, which is why I describe them as
+                    painting instead of simulation. The core reason is that it doesn&#39;t satisfy the energy
+                    conservation. However, as long as we are using the rasterization instead of ray-tracing, the
+                    reflection and refraction always have to be achieved by some techniques.</p>
+                <h3 id="shading">Shading</h3>
+                <p>As we know, objects&#39; surfaces are all approximated by polygons. This means that we need to do
+                    some calculations to make the objects look smooth. There are mainly three methods:</p>
+                <p><img src="./images/ShadingMethods.png" alt="Shading" style="width:100%"></p>
+                <ul>
+                    <li>
+                        <p>Flat shading - each entire polygon is drawn with the same colour; need to know one normal for
+                            the entire polygon; fast; lighting equation used once per polygon.</p>
+                    </li>
+                    <li>
+                        <p>Goraud shading - colours are interpolated across the polygon; need to know a normal for each
+                            vertex of the polygon; slower than flat shading; lighting equation used at each vertex.</p>
+                    </li>
+                    <li>
+                        <p>Phong shading - normals are interpolated across the polygon; need to know a normal for each
+                            vertex of the polygon; better at dealing with highlights than Goraud shading; slower than
+                            Goraud shading; lighting equation used at each pixel.</p>
+                    </li>
+                </ul>
+                <h3 id="appendix-blinn-phong-model-hlsl-glsl-code-">Appendix (Blinn-Phong model HLSL &amp; GLSL code)
+                </h3>
+                <p>HLSL:</p>
+                <pre><code><span class="hljs-keyword">struct</span> VS_INPUT
+{
+    float4 Position : POSITION;
+    float3 Normal : NORMAL;
+    float2 TexCoord : TEXCOORD;
+};
+
+<span class="hljs-keyword">struct</span> VS_OUTPUT
+{
+    float4 Position : SV_POSITION;
+    float4 WorldPosition : POSITION;
+    float3 Normal : NORMAL;
+    float2 TexCoord : TEXCOORD;
+};
+
+<span class="hljs-keyword">struct</span> NF3D_LIGHT_OMNIDIRECTIONAL
+{
+    float4 Diffuse;
+    float4 Ambient;
+    float3 Position;
+    float3 Attitude;
+    float Range;
+    int BindSlot;
+};
+
+
+<span class="hljs-comment">//--------------------------------------------------------------------------------------</span>
+<span class="hljs-comment">// Constant Buffer Variables</span>
+<span class="hljs-comment">//--------------------------------------------------------------------------------------</span>
+cbuffer CB_PROJECTION : register(b0)
+{
+    <span class="hljs-keyword">matrix</span> Projection;
+}
+
+cbuffer CB_VIEW : register(b1)
+{
+    <span class="hljs-keyword">matrix</span> <span class="hljs-built_in">View</span>;
+    float4 CameraPosition;
+}
+
+cbuffer CB_WORLD : register(b2)
+{
+    <span class="hljs-keyword">matrix</span> World;
+}
+
+cbuffer Light : register(b5)
+{
+    NF3D_LIGHT_OMNIDIRECTIONAL light;
+};
+
+
+<span class="hljs-comment">//--------------------------------------------------------------------------------------</span>
+<span class="hljs-comment">// Vertex Shader</span>
+<span class="hljs-comment">//--------------------------------------------------------------------------------------</span>
+VS_OUTPUT VS(VS_INPUT Input)
+{
+    VS_OUTPUT <span class="hljs-keyword">Output</span> = (VS_OUTPUT)<span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// Change the position vector to be 4 units for proper matrix calculations.</span>
+    Input.Position.w = <span class="hljs-number">1.0</span>f;
+
+    <span class="hljs-comment">// Aply the perspective to every vertex.</span>
+    <span class="hljs-keyword">Output</span>.Position = mul(Input.Position, World);
+    <span class="hljs-keyword">Output</span>.WorldPosition = <span class="hljs-keyword">Output</span>.Position;
+    <span class="hljs-keyword">Output</span>.Position = mul(<span class="hljs-keyword">Output</span>.Position, <span class="hljs-built_in">View</span>);
+    <span class="hljs-keyword">Output</span>.Position = mul(<span class="hljs-keyword">Output</span>.Position, Projection);
+
+    <span class="hljs-comment">// Normalise the normal vector.</span>
+    <span class="hljs-keyword">Output</span>.Normal = mul(Input.Normal, (float3x3)World);
+    <span class="hljs-keyword">Output</span>.Normal = normalize(<span class="hljs-keyword">Output</span>.Normal);
+
+    <span class="hljs-comment">// Transfer the texture coordinates.</span>
+    <span class="hljs-keyword">Output</span>.TexCoord = Input.TexCoord;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">Output</span>;
+}
+
+
+<span class="hljs-comment">//--------------------------------------------------------------------------------------</span>
+<span class="hljs-comment">// Pixel Shader</span>
+<span class="hljs-comment">//--------------------------------------------------------------------------------------</span>
+float4 PS(VS_OUTPUT Input) : SV_Target
+{
+    <span class="hljs-comment">// https://brooknovak.wordpress.com/2008/11/13/hlsl-per-pixel-point-light-using-phong-blinn-lighting-model/</span>
+    <span class="hljs-comment">// Phong relfection is ambient + light-diffuse + spec highlights.</span>
+    <span class="hljs-comment">// I = Ia*ka*Oda + fatt*Ip[kd*Od(N.L) + ks(R.V)^n]</span>
+
+    <span class="hljs-comment">// Get light direction for this fragment</span>
+    float3 lightDir = normalize(light.Position - Input.WorldPosition);
+
+    <span class="hljs-comment">// <span class="hljs-doctag">Note:</span> Non-uniform scaling not supported</span>
+    float diffuseLighting = saturate(dot(Input.Normal, -lightDir)); <span class="hljs-comment">// per pixel diffuse lighting</span>
+
+    <span class="hljs-comment">// Introduce fall-off of light intensity</span>
+    diffuseLighting *= ((length(lightDir) * length(lightDir)) / dot(light.Position - Input.WorldPosition, light.Position - Input.WorldPosition));
+
+    <span class="hljs-comment">// Using Blinn half angle modification for perofrmance over correctness</span>
+    float3 h = normalize(normalize(CameraPosition - Input.WorldPosition) - lightDir);
+    float specLighting = pow(saturate(dot(h, Input.Normal)), <span class="hljs-number">2.0</span>f);
+
+    <span class="hljs-keyword">return</span> saturate(light.Ambient + (light.Diffuse * diffuseLighting * <span class="hljs-number">0.6</span>f) + (specLighting * <span class="hljs-number">0.5</span>f));
+}
+</code></pre>
+                <p>GLSL:</p>
+                <ul>
+                    <li>Vertex shader (Phong model)</li>
+                </ul>
+                <pre><code><span class="hljs-keyword">attribute</span> <span class="hljs-type">vec3</span> inputPosition;
+<span class="hljs-keyword">attribute</span> <span class="hljs-type">vec2</span> inputTexCoord;
+<span class="hljs-keyword">attribute</span> <span class="hljs-type">vec3</span> inputNormal;
+
+<span class="hljs-keyword">uniform</span> <span class="hljs-type">mat4</span> projection, modelview, normalMat;
+
+<span class="hljs-keyword">varying</span> <span class="hljs-type">vec3</span> normalInterp;
+<span class="hljs-keyword">varying</span> <span class="hljs-type">vec3</span> vertPos;
+
+<span class="hljs-type">void</span> main() {
+    <span class="hljs-built_in">gl_Position</span> = projection * modelview * <span class="hljs-type">vec4</span>(inputPosition, <span class="hljs-number">1.0</span>);
+    <span class="hljs-type">vec4</span> vertPos4 = modelview * <span class="hljs-type">vec4</span>(inputPosition, <span class="hljs-number">1.0</span>);
+    vertPos = <span class="hljs-type">vec3</span>(vertPos4) / vertPos4.w;
+    normalInterp = <span class="hljs-type">vec3</span>(normalMat * <span class="hljs-type">vec4</span>(inputNormal, <span class="hljs-number">0.0</span>));
+}
+</code></pre>
+                <ul>
+                    <li>Fragment shader</li>
+                </ul>
+                <pre><code><span class="hljs-keyword">precision</span> <span class="hljs-keyword">mediump</span> <span class="hljs-type">float</span>;
+
+<span class="hljs-keyword">in</span> <span class="hljs-type">vec3</span> normalInterp;
+<span class="hljs-keyword">in</span> <span class="hljs-type">vec3</span> vertPos;
+
+<span class="hljs-keyword">uniform</span> <span class="hljs-type">int</span> mode;
+
+<span class="hljs-keyword">const</span> <span class="hljs-type">vec3</span> lightPos = <span class="hljs-type">vec3</span>(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-type">vec3</span> lightColor = <span class="hljs-type">vec3</span>(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-type">float</span> lightPower = <span class="hljs-number">40.0</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-type">vec3</span> ambientColor = <span class="hljs-type">vec3</span>(<span class="hljs-number">0.1</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-type">vec3</span> diffuseColor = <span class="hljs-type">vec3</span>(<span class="hljs-number">0.5</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-type">vec3</span> specColor = <span class="hljs-type">vec3</span>(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-type">float</span> shininess = <span class="hljs-number">16.0</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-type">float</span> screenGamma = <span class="hljs-number">2.2</span>; <span class="hljs-comment">// Assume the monitor is calibrated to the sRGB color space</span>
+
+<span class="hljs-type">void</span> main() {
+
+  <span class="hljs-type">vec3</span> normal = <span class="hljs-built_in">normalize</span>(normalInterp);
+  <span class="hljs-type">vec3</span> lightDir = lightPos - vertPos;
+  <span class="hljs-type">float</span> <span class="hljs-built_in">distance</span> = <span class="hljs-built_in">length</span>(lightDir);
+  <span class="hljs-built_in">distance</span> = <span class="hljs-built_in">distance</span> * <span class="hljs-built_in">distance</span>;
+  lightDir = <span class="hljs-built_in">normalize</span>(lightDir);
+
+  <span class="hljs-type">float</span> lambertian = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">dot</span>(lightDir, normal), <span class="hljs-number">0.0</span>);
+  <span class="hljs-type">float</span> specular = <span class="hljs-number">0.0</span>;
+
+  <span class="hljs-keyword">if</span> (lambertian &gt; <span class="hljs-number">0.0</span>) {
+
+    <span class="hljs-type">vec3</span> viewDir = <span class="hljs-built_in">normalize</span>(-vertPos);
+
+    <span class="hljs-comment">// this is blinn phong</span>
+    <span class="hljs-type">vec3</span> halfDir = <span class="hljs-built_in">normalize</span>(lightDir + viewDir);
+    <span class="hljs-type">float</span> specAngle = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">dot</span>(halfDir, normal), <span class="hljs-number">0.0</span>);
+    specular = <span class="hljs-built_in">pow</span>(specAngle, shininess);
+
+    <span class="hljs-comment">// this is phong (for comparison)</span>
+    <span class="hljs-keyword">if</span> (mode == <span class="hljs-number">2</span>) {
+      <span class="hljs-type">vec3</span> reflectDir = <span class="hljs-built_in">reflect</span>(-lightDir, normal);
+      specAngle = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">dot</span>(reflectDir, viewDir), <span class="hljs-number">0.0</span>);
+      <span class="hljs-comment">// note that the exponent is different here</span>
+      specular = <span class="hljs-built_in">pow</span>(specAngle, shininess/<span class="hljs-number">4.0</span>);
+    }
+  }
+  <span class="hljs-type">vec3</span> colorLinear = ambientColor +
+                     diffuseColor * lambertian * lightColor * lightPower / <span class="hljs-built_in">distance</span> +
+                     specColor * specular * lightColor * lightPower / <span class="hljs-built_in">distance</span>;
+  <span class="hljs-comment">// apply gamma correction (assume ambientColor, diffuseColor and specColor</span>
+  <span class="hljs-comment">// have been linearized, i.e. have no gamma correction in them)</span>
+  <span class="hljs-type">vec3</span> colorGammaCorrected = <span class="hljs-built_in">pow</span>(colorLinear, <span class="hljs-type">vec3</span>(<span class="hljs-number">1.0</span> / screenGamma));
+  <span class="hljs-comment">// use the gamma corrected color in the fragment</span>
+  <span class="hljs-built_in">gl_FragColor</span> = <span class="hljs-type">vec4</span>(colorGammaCorrected, <span class="hljs-number">1.0</span>);
+}
+</code></pre>
+                <h3 id="reference">Reference</h3>
+                <ol>
+                    <li>Foley, Van Dam, Feiner, and Hughes, &quot;Computer Graphics - Principles and Practice&quot;,
+                        Chapter 16</li>
+                    <li>KTH Introduction to Visualization and Computer Graphics Course Slides</li>
+                    <li><a
+                            href="https://en.wikipedia.org/wiki/Computer_graphics_lighting">https://en.wikipedia.org/wiki/Computer_graphics_lighting</a>
+                    </li>
+                    <li><a
+                            href="https://www.cs.uic.edu/~jbell/CourseNotes/ComputerGraphics/LightingAndShading.html">https://www.cs.uic.edu/~jbell/CourseNotes/ComputerGraphics/LightingAndShading.html</a>
+                    </li>
+                </ol>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
