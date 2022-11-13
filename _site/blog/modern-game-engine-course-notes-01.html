@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Modern Game Engine Course Notes 01">
+  <meta property="og:description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine, which covers the basics components of the modern game engine.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>Modern Game Engine Course Notes 01</title>
+  <meta name="description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine, which covers the basics components of the modern game engine.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/unchained112/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/unchained112/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/unchained112/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/unchained112/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/unchained112/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/unchained112/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/unchained112/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>Modern Game Engine Course Notes 01</b></h1>
+
+<p class="post-metadata text-muted">
+  24 October 2022 -  
+  <b>3 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#computer-graphics">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Graphics</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#game-engine">
+      <span class="tag badge badge-pill text-primary border border-primary">Game Engine</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#technology">
+      <span class="tag badge badge-pill text-primary border border-primary">Technology</span>
+    </a>
+    </p>
+
+<p>Course from: <a href="https://games104.boomingtech.com/sc/">BoomingTech</a></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>What’s Game Engine? Definition from the course:</p>
+<ul>
+  <li>Technology foundation of the Matrix</li>
+  <li>Productivity tools of creation</li>
+  <li>The Art of complexity</li>
+</ul>
+
+<h2 id="layered-architecture-of-game-engine">Layered Architecture of Game Engine</h2>
+
+<p>Simplified gmae engine structure:</p>
+<ul>
+  <li>Tool Layer: tools in the editor</li>
+  <li>Function Layer: animation, physics, rendering, camera, HUB and Input, script, FSM and AI</li>
+  <li>Resource Layer: Scene and Level, Script and Graph, Game Logic Data</li>
+  <li>Core Layer: container, memory management, thread pool, math</li>
+  <li>Platform Layer: operation systems, platform file system, graphics API, platform SDK, etc..</li>
+  <li>Third Party Libraries: TrueSky, SpeedTree, etc..</li>
+</ul>
+
+<h3 id="resource">Resource</h3>
+
+<p>Unify file access by defining a meta asset file format (ie.ast).
+Assets are faster to access by importing preprocess.
+Build a composite asset file to refer to all resources.
+GUID is an extra protection of reference.</p>
+
+<p>Runtime Resource Management: A virtual file system to load/unload assets by path reference. Manage asset lifespan and reference by handle system.</p>
+
+<p>Memory management for Resources - life cycle:</p>
+<ul>
+  <li>Different resources have different life cycles.</li>
+  <li>Limited memory requires release of loaded resources when possible.</li>
+  <li>Garbage collection and deferred loading is critical features.</li>
+</ul>
+
+<h3 id="function">Function</h3>
+
+<p>A tick function to run the entire world within a unit of time. In <code class="language-plaintext highlighter-rouge">tickMain</code>, we run <code class="language-plaintext highlighter-rouge">tickLogic</code> and <code class="language-plaintext highlighter-rouge">tickRender</code> to describe how the world runs and looks.</p>
+
+<p>Function Layer provides major function modules for the game engine: Object system (HUGE).</p>
+
+<p>Game Loop updates the systems periodically: Game Loop is the key of reading codes of game engines.</p>
+
+<p>Blur the boundary between engine and game: Camera, character and behavior; Design extendable engine API for programmer.</p>
+
+<p>Multi-core processors become the mainstream: Many systems in game engine are built for parallelism.</p>
+
+<h3 id="core">Core</h3>
+
+<p>Math library: Linear algebra. The efficiency of the used functions matters very much.</p>
+
+<p>Data structure and containers like vectors, maps, etc. It requires customized that outperform STL.</p>
+
+<p>Memory management: the major bottlenecks of game engine performance is limited by memory pool, reducing cache miss, memory alignment. 
+Polymorphic memory resource (PMR):</p>
+
+<ul>
+  <li>Put data together</li>
+  <li>Access data in order</li>
+  <li>Allocate and de-allocate as a block</li>
+</ul>
+
+<h3 id="platform">Platform</h3>
+
+<p>Compatibility of different platforms, provides platform-independent services and information for upper layers: File system, Path: Slash/backslash, Environment variables, Directory Traversal.</p>
+
+<p>Render Hardware Interface (RHI): Transparent different GPU architectures and SDK, Automatic optimization of target platforms.</p>
+
+<h3 id="tool">Tool</h3>
+
+<p>Unleash the Creativity:</p>
+<ul>
+  <li>Build upon game engine.</li>
+  <li>Create, edit and exchange game play assets (level editor, shader editor, logical editor, etc.).</li>
+</ul>
+
+<p>Flexible of coding languages: C++, C#, HTML and CSS, etc.</p>
+
+<h2 id="how-to-build-a-game-world">How to Build a Game World</h2>
+
+<p>Dynamic game object</p>
+
+<p>Static game object</p>
+
+<p>Environments: sky, vegetation, terrain</p>
+
+<p>Other game objects: air wall, trigger area, navigation mesh, etc.</p>
+
+<p><strong>Game Object (GO) is the abstraction of almost everything in the game world.</strong></p>
+
+<h3 id="game-object">Game object:</h3>
+
+<ul>
+  <li>Property</li>
+  <li>Behavior</li>
+  <li>Inheritance</li>
+</ul>
+
+<p><em>There are problem problems with inheritance</em></p>
+
+<p>Base game object on components.
+<img src="/unchained112/assets/GameEngine/ComponentsInEngine.png" alt="ComponentsInEngine" /></p>
+
+<p>Object-based Tick (Intuitive)</p>
+
+<p>Component-based Tick (Parallelized processing, reduce cache miss)</p>
+
+<h3 id="events">Events</h3>
+
+<ul>
+  <li>Message sending and handling</li>
+  <li>Decoupling event sending and handling</li>
+</ul>
+
+<h3 id="scene-management">Scene Management</h3>
+
+<ul>
+  <li>Game objects are managed in a scene</li>
+  <li>Game object query
+    <ul>
+      <li>By unique game object ID</li>
+      <li>By object position</li>
+    </ul>
+  </li>
+  <li>Hierarchical segmentation: bounding volume hierarchies (BVH), octree, binary space partitioning (BSP), etc.</li>
+</ul>
+
+<h3 id="takeaways">Takeaways:</h3>
+
+<ul>
+  <li>Everything is an object</li>
+  <li>Game object could be described in the component-based way - States of game objects are updated in tick loops</li>
+  <li>Game objects interact with each other via event mechanism</li>
+  <li>Game objects are managed in a scene with efficient strategies</li>
+</ul>
+
+
+
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

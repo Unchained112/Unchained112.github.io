@@ -1,0 +1,15 @@
+- name: C/C++
+  percentage: 80
+  color: danger
+
+- name: C#
+  percentage: 80
+  color: info
+
+- name: JavaScripts
+  percentage: 60
+  color: success
+
+- name: Python
+  percentage: 50
+  color: secondary

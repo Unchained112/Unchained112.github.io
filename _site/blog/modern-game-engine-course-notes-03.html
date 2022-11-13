@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Modern Game Engine Course Notes 03">
+  <meta property="og:description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine. This part focus on animation system.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>Modern Game Engine Course Notes 03</title>
+  <meta name="description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine. This part focus on animation system.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/unchained112/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/unchained112/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/unchained112/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/unchained112/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/unchained112/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/unchained112/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/unchained112/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>Modern Game Engine Course Notes 03</b></h1>
+
+<p class="post-metadata text-muted">
+  02 November 2022 -  
+  <b>14 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#computer-graphics">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Graphics</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#game-engine">
+      <span class="tag badge badge-pill text-primary border border-primary">Game Engine</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#technology">
+      <span class="tag badge badge-pill text-primary border border-primary">Technology</span>
+    </a>
+    </p>
+
+<p>Course from: <a href="https://games104.boomingtech.com/sc/">BoomingTech</a></p>
+
+<h2 id="animation-system">Animation System</h2>
+
+<h3 id="basics-of-animation-technology">Basics of Animation Technology</h3>
+
+<p>Fundamental base: The persistence of vision &amp; Illusory motion (Phi phenomenon)</p>
+
+<p>Challenges in Game Animation</p>
+
+<ol>
+  <li>Interactive and dynamic animation
+    <ul>
+      <li>Vary according to the interaction</li>
+      <li>Cooperate with other gameplay systems</li>
+      <li>Make adjustments in complex environments</li>
+    </ul>
+  </li>
+  <li>Real-time
+    <ul>
+      <li>Compute per frame</li>
+      <li>Massive animation data(Disk and memory)</li>
+    </ul>
+  </li>
+  <li>Realism
+    <ul>
+      <li>More vivid expression</li>
+      <li>More authentic experience</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>2D Animation - Sprite animation</strong></p>
+
+<p>The electronic equivalent to cel animation</p>
+<ul>
+  <li>A sprite is a small bitmap that can be overlaid on top of a background image without disrupting it</li>
+  <li>The sequence of frames was designed so that it animates smoothly even when it is repeated indefinitely</li>
+</ul>
+
+<p>Application</p>
+<ul>
+  <li>2D character
+    <ul>
+      <li>Sprite on 2D background image</li>
+      <li>Sprite on top of 3D rendered environment</li>
+    </ul>
+  </li>
+  <li>Game effect
+    <ul>
+      <li>Sprite sheet texture for particles</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Live2D
+A technology to generate 2D animation without 3D model</p>
+<ul>
+  <li>Usually refer to eponymous software series employing the technology created by Live2D Ltd.</li>
+  <li>
+    <p>Could develop dynamic character, especially anime-style character without a 3D model.</p>
+  </li>
+  <li>By applying translation, rotation and transformation to different parts and layers of image.</li>
+  <li>Combined with real-time motion capture, could be used for Vtubing.</li>
+</ul>
+
+<p>Make a Live2D animation</p>
+
+<p>Prepare resources</p>
+<ul>
+  <li>Dividing origin character image into different parts</li>
+  <li>Set “draw order” to each parts for further use</li>
+</ul>
+
+<p>Transform image by using control points for parts</p>
+<ul>
+  <li>“ArtMesh” could be automated generated for each parts, which defined by vertices, edges and polygons</li>
+  <li>Control points could be used to help transforming “ArtMesh”</li>
+</ul>
+
+<p>Set animation “key frame”</p>
+<ul>
+  <li>Set “key frame” to help animation interpolation</li>
+</ul>
+
+<p><strong>3D Animation Techniques in Games</strong></p>
+
+<p>DoF(Degrees of Freedom)</p>
+<ul>
+  <li>refers to the number of independent variables or parameters of a system</li>
+  <li>6 DoFs per object or sub-part</li>
+</ul>
+
+<p>Rigid Hierarchical Animation</p>
+<ul>
+  <li>The earliest approach to 3D character animation</li>
+  <li>A character is modeled as a collection of rigid pieces</li>
+  <li>The rigid pieces are constrained to one another in a hierarchical fashion</li>
+</ul>
+
+<p>Per-vertex Animation</p>
+<ul>
+  <li>Most flexible(3 DoFs per vertex)</li>
+  <li>Mostly implemented by Vertex Animation Texture(VAT)</li>
+  <li>Suitable for complex morphing</li>
+  <li>Need massive data</li>
+</ul>
+
+<p>Morph Target Animation</p>
+<ul>
+  <li>A variation on Per-vertex Animation
+    <ul>
+      <li>Use key frames with LERP instead of sequence frames(e.g. 30 frames per second)</li>
+    </ul>
+  </li>
+  <li>Suitable for facial expression
+    <ul>
+      <li>Per-Vertex Animation + Key Frame LERP -&gt; Morph Target Animation</li>
+    </ul>
+  </li>
+</ul>
+
+<p>3D Skinned Animation</p>
+<ul>
+  <li>Mesh(or skin) is bound to the joints of the skeleton</li>
+  <li>Each vertex can be weighted to multiple joints</li>
+</ul>
+
+<p>Advantages</p>
+<ul>
+  <li>Need less data than per-vertex animation</li>
+  <li>Mesh can be animated in a natural way (like human “skin”)</li>
+</ul>
+
+<p>2D Skinned Animation - Derived from 3D skinned animation</p>
+<ul>
+  <li>Break up character into various body parts</li>
+  <li>Create body part meshes and piece them together</li>
+  <li>Rigging, skinning and animation</li>
+</ul>
+
+<p>Physics-based Animation</p>
+<ul>
+  <li>Ragdoll</li>
+  <li>Cloth and Fluid simulation</li>
+  <li>Inverse Kinematics (IK)</li>
+</ul>
+
+<p>Animation Content Creation</p>
+<ul>
+  <li>Digital Content Creator + Animator</li>
+  <li>Motion Capture</li>
+</ul>
+
+<p><strong>Skinned Animation Implementation</strong></p>
+
+<ol>
+  <li>Create mesh for a binding pose</li>
+  <li>Create a binding skeleton for the mesh</li>
+  <li>“Paint” per-vertices skinning weights to related skeleton</li>
+  <li>Animate skeleton to desired pose</li>
+  <li>Animate skinned vertices by skeleton and skinning weights</li>
+</ol>
+
+<p>Different Spaces</p>
+<ul>
+  <li>Local space, Model space and World space</li>
+</ul>
+
+<p><img src="/unchained112/assets/GameEngine/DifferentSpaces.png" alt="Different Spaces" /></p>
+
+<p>Skeleton for Creatures - Comprised of a hierarchy of rigid pieces known as joints</p>
+<ul>
+  <li>One joint is selected as the root</li>
+  <li>Every joint has a parent joint except the root</li>
+</ul>
+
+<p>Joint vs. Bone</p>
+<ul>
+  <li>The joints are the objects directly manipulated by the animator to control motion</li>
+  <li>The bones are the empty space between the joints</li>
+</ul>
+
+<p>Humanoid Skeleton in Real Game - Number of joints in a humanoid skeleton</p>
+<ul>
+  <li>Normal : 50~100 joints</li>
+  <li>May more than 300+ joints include facial joints and gameplay joints</li>
+</ul>
+
+<p>Joints for Game Play -Additional joints</p>
+<ul>
+  <li>Weapon joint</li>
+  <li>Mount joint</li>
+</ul>
+
+<p>Where to Start the Skeleton – Root Joint</p>
+
+<p>Root joint</p>
+<ul>
+  <li>The center of the feet</li>
+  <li>Convenient to touch the ground</li>
+</ul>
+
+<p>Pelvis joint</p>
+<ul>
+  <li>The first child joint of the root joint</li>
+  <li>Human upper and lower body separation</li>
+</ul>
+
+<p>Bind Animation for Objects</p>
+<ul>
+  <li>Attach two skeleton’s bind point</li>
+</ul>
+
+<p>Bind Pose – T-pose vs. A-pose</p>
+
+<p>The pose of the 3D mesh prior to being bound to the skeleton</p>
+<ul>
+  <li>Keep the limbs away from the body and each other, making the process of binding the vertices to the joints easier</li>
+  <li>Usually close to natural pose</li>
+</ul>
+
+<p>T-pose vs A-pose</p>
+<ul>
+  <li>Shoulders in A-pose are more relaxed</li>
+  <li>Easy to deformations in A-pose</li>
+</ul>
+
+<p>Skeleton Pose: A skeleton is posed by transform its joints from the bind pose</p>
+<ul>
+  <li>Joint Pose (9 DoFs)
+    <ul>
+      <li>Orientation (3 DoFs)</li>
+      <li>Position (3 DoFs)</li>
+      <li>Scale (3 DoFs)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Math of 3D Rotation</strong></p>
+
+<p><img src="/unchained112/assets/GameEngine/2DRotation.png" alt="2D Rotation" /></p>
+
+<p><img src="/unchained112/assets/GameEngine/3DRotation.png" alt="3D Rotation" /></p>
+
+<p>Euler Angle provides a brief description of 3D rotation and is widely used in many fields.</p>
+
+<p>Problems of Euler Angle</p>
+<ul>
+  <li>Gimbal Lock: Gimbal Lock occurs because of the loss of one DoF</li>
+  <li>Hard to interpolate: Singularity problem make it hard to interpolate</li>
+  <li>Difficult for rotation combination: Rotation combination need rotation matrix</li>
+  <li>Hard to rotate by certain axis: Easy to rotate by x,y,z axis but hard to others</li>
+</ul>
+
+<p>Quaternion</p>
+
+<p>Complex Number and 2D Rotation</p>
+
+<p><img src="/unchained112/assets/GameEngine/Complex2DRot.png" alt="2D Rotation with Complex Number" /></p>
+
+<p><img src="/unchained112/assets/GameEngine/Quaternion.png" alt="Quaternion" /></p>
+
+<p><img src="/unchained112/assets/GameEngine/RotQuaternion.png" alt="Rotation by Quaternion" /></p>
+
+<p><img src="/unchained112/assets/GameEngine/RotQuaternionMat.png" alt="Quaternion to Rotation Matrix" /></p>
+
+<p><img src="/unchained112/assets/GameEngine/RotQuMath.png" alt="Quaternion Rotation Math" /></p>
+
+<p><img src="/unchained112/assets/GameEngine/RotQuaternionAxis.png" alt="Given Axis Rotation by Quaternion" /></p>
+
+<p><strong>Joint Pose</strong></p>
+
+<p>Joint Pose - Orientation</p>
+<ul>
+  <li>Rotation -&gt; Change the Orientation of joints</li>
+  <li>Most skeleton poses change orientations of joints only</li>
+</ul>
+
+<p>Joint Pose - Position</p>
+<ul>
+  <li>Translate -&gt; change position</li>
+  <li>Translate point P to point P’ by vector T</li>
+  <li>Usually not changed in humanoid skeleton except the pelvis, facial joint and other special joints</li>
+  <li>Used for stretching models</li>
+</ul>
+
+<p>Joint Pose - Scale</p>
+<ul>
+  <li>Scale -&gt; change the size of the model</li>
+  <li>Uniform vs. Non-uniform Scale</li>
+  <li>Widely used in facial animation</li>
+  <li>Uniform and non-uniform scale facial joints</li>
+</ul>
+
+<p>Joint Pose - Affine Matrix</p>
+
+<p><img src="/unchained112/assets/GameEngine/AffineMatrix.png" alt="Affine Matrix" /></p>
+
+<p>Joint Pose Interpolation - Local Space vs. Model Space</p>
+<ul>
+  <li>Local Space
+    <ul>
+      <li>Less data with delta transform</li>
+      <li>Convenient for interpolation or blend</li>
+    </ul>
+  </li>
+  <li>Model Space
+    <ul>
+      <li>Incorrect for interpolation</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Single Joint Skinning - Attach the vertices of a mesh to a posed skeleton</p>
+<ul>
+  <li>Each vertex can be bound to one or more joints with a weight parameter</li>
+  <li>The vertex position in each bound joint’s local space is fixed</li>
+</ul>
+
+<p>Quaternion Interpolation of Rotation
+NLERP vs. SLERP</p>
+<ul>
+  <li>NLERP
+    <ul>
+      <li>Non-constant angular speed</li>
+      <li>Almost constant angular speed when θ is small</li>
+    </ul>
+  </li>
+  <li>SLERP
+    <ul>
+      <li>Constant angular speed</li>
+      <li>May have zero-divide problem when θ is small</li>
+    </ul>
+  </li>
+  <li>Combination
+    <ul>
+      <li>Widely used in 3A-game development</li>
+      <li>Use SLERP when θ is large, and NLERP when θ is almost zero</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Simple Animation Runtime Pipeline</p>
+
+<p><img src="/unchained112/assets/GameEngine/AnimationRuntimePipeline.png" alt="Animation Runtime Pipeline" /></p>
+
+<p>Catmull-Rom Spline (used for compressing animation)</p>
+<ul>
+  <li>Fitting Process</li>
+  <li>Make a Catmull-Rom spline with the middle 2 control points at both ends of the original curve</li>
+  <li>Iteratively add control points like binary search</li>
+  <li>Calculate inner curve by the most closet 4 points</li>
+  <li>Repeat until the error of each frame is under the threshold</li>
+</ul>
+
+<h3 id="advanced-animation-technology">Advanced Animation Technology</h3>
+
+<p><strong>Animation Blending</strong></p>
+
+<p>Math of Blending: LERP</p>
+<ul>
+  <li>Use LERP to get intermediate frame from poses of different clips Weight is controlled by game parameters, i.e, character speed</li>
+</ul>
+
+<p>Align Blend Timeline
+<img src="/unchained112/assets/GameEngine/AlignBlendTimeline.png" alt="Align Blend Timeline" /></p>
+
+<p><strong>Blend Space</strong></p>
+
+<p>1D Blend Space: Directional Movement</p>
+
+<p>Players can move forward from multiple angles</p>
+
+<p>We can blend any angle from three clips:</p>
+<ul>
+  <li>Strafe Left clip</li>
+  <li>Run Forward clip</li>
+  <li>Strafe Right clip</li>
+</ul>
+
+<p>The technique is called 1D Blend Space.</p>
+
+<p>2D Blend Space:</p>
+
+<ul>
+  <li>Since the movement speed in the lateral direction is lower in the forward direction, the character should enter the running state in a lower speed in the lateral direction. (Delaunay Triangulation)</li>
+</ul>
+
+<p>Skeleton Masked Blending:</p>
+
+<p><img src="/unchained112/assets/GameEngine/SkeletonMaskedBlending.png" alt="Skeleton Masked Blending" /></p>
+
+<p>Additive Blending:</p>
+
+<ul>
+  <li>
+    <p>Add a difference clip into a regular clip to produce a new clip.</p>
+  </li>
+  <li>
+    <p>Additive Blending introduces a new kind of animation called a difference clip, which represents the difference between two regular animation clips.</p>
+  </li>
+  <li>
+    <p>A difference clip can be added into a regular animation clip in order to produce interesting variations in the pose and movement of the character.</p>
+  </li>
+  <li>
+    <p>Additive blends are more likely to have abnormal bone results.</p>
+  </li>
+</ul>
+
+<p><strong>Animation State Machine</strong></p>
+
+<p>Case: Jumping</p>
+
+<ul>
+  <li>Three clips: Start jump -&gt; In the air -&gt; Land</li>
+  <li>Blend Space is synchronous, but jump is stateful</li>
+  <li>We usually model the jumping action via a finite state machine, commonly known as the Action State Machine (ASM)</li>
+</ul>
+
+<p>ASM Definition:</p>
+
+<ul>
+  <li>ASM consists of nodes and transitions</li>
+  <li>Node types
+    <ul>
+      <li>Blend space</li>
+      <li>Clip</li>
+    </ul>
+  </li>
+  <li>Transition type
+    <ul>
+      <li>simply “pop” from one state to another</li>
+      <li>cross-fade from one state to the next</li>
+      <li>Special transitional states</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Cross Fades: Two common ways</p>
+<ul>
+  <li>Smooth transition
+    <ul>
+      <li>restriction: the two clips must be looping animations, and their timelines must be synchronized</li>
+    </ul>
+  </li>
+  <li>Frozen transition</li>
+  <li>Different cross fades curve could be used for different demands</li>
+</ul>
+
+<p>Animation State Machine in Unreal</p>
+
+<p><img src="/unchained112/assets/GameEngine/UnrealASM.png" alt="Animation State Machine in Unreal" /></p>
+
+<p>Layered ASM:</p>
+
+<ul>
+  <li>different parts of a character’s body to be doing different, independent or semi- independent actions simultaneously</li>
+</ul>
+
+<p><strong>Animation Blend Tree</strong></p>
+
+<p>Blend Tree</p>
+
+<ul>
+  <li>Structure layered ASMs and operations as a tree
+    <ul>
+      <li>Inspired by expression tree</li>
+      <li>Easy to understand for animators</li>
+    </ul>
+  </li>
+  <li>For a blend tree
+    <ul>
+      <li>Non-terminal nodes and terminal nodes (leaf nodes)</li>
+      <li>The result of each non-terminal node is a pose</li>
+    </ul>
+  </li>
+</ul>
+
+<p>LERP Blend Node</p>
+
+<ul>
+  <li>Binary LERP node
+    <ul>
+      <li>Basic non-terminal node in blend tree</li>
+      <li>LERP two input poses with weight β into one output pose</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Usually extended to handle multiple inputs (e.g. Ternary/Quad LERP node)</p>
+
+<p>Additive Blend node</p>
+<ul>
+  <li>Basic non-terminal node in blend tree</li>
+  <li>Add the second input pose (usually a difference one) into the first input pose by weight β</li>
+</ul>
+
+<p>Express Layered ASM in Blend Tree</p>
+<ul>
+  <li>Use a blend tree to describe the desired final pose of ASMs</li>
+</ul>
+
+<p>Blend Tree Nodes：</p>
+
+<p>Terminal node (Leaf Nodes)</p>
+<ul>
+  <li>Clip</li>
+  <li>Blend Space</li>
+  <li>ASM</li>
+</ul>
+
+<p>Non-terminal node (No-Leaf Nodes)</p>
+<ul>
+  <li>Binary LERP blend node</li>
+  <li>Ternary (triangular) LERP blend node</li>
+  <li>Binary additive blend node</li>
+</ul>
+
+<p><strong>Inverse Kinematics (IK)</strong></p>
+
+<p>Basic Concepts</p>
+
+<ul>
+  <li>End-effector
+    <ul>
+      <li>The bone which is expected to be moved to a desired position</li>
+    </ul>
+  </li>
+  <li>IK (Inverse Kinematics)
+    <ul>
+      <li>The use of kinematic equations to determine the joint parameters of a manipulator so that the end-effector moves to a desired position</li>
+    </ul>
+  </li>
+  <li>FK (Forward Kinematics)
+    <ul>
+      <li>The use of the kinematics equations of a robot to compute the position of the end-effectors from specified values for the joint parameters</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Tone Bones IK</p>
+<ul>
+  <li>3D space</li>
+  <li>Determine the final pose by a vector</li>
+</ul>
+
+<p>Complexity of Multi-Joint IK Solving</p>
+<ul>
+  <li>Computation cost: high dimension non-linear function solving in real-time</li>
+  <li>May have multiple solutions, unique solution or no solution</li>
+</ul>
+
+<p>Check Reachability of the Target</p>
+
+<p>Constraints of Joints</p>
+
+<p>Heuristics Algorithm</p>
+
+<p>Why? Too many joints + constraints, difficult to solve with analysis method</p>
+
+<p>Basic Idea</p>
+<ul>
+  <li>Designed to solve problem in faster and more efficient fashion by sacrificing optimality, accuracy, precision, or completeness for speed
+    <ul>
+      <li>Approximation</li>
+      <li>Global optimality is not guaranteed</li>
+      <li>Iteration is usually used with a maximum limit</li>
+    </ul>
+  </li>
+</ul>
+
+<p>CCD (Cyclic Coordinate Decent)</p>
+<ul>
+  <li>Principle
+    <ul>
+      <li>From joint-to-joint, rotates the end-effector as close as possible to the target, solves IK problem in orientation space</li>
+    </ul>
+  </li>
+  <li>Reachability
+    <ul>
+      <li>Algorithm can stop after certain number of iterations to avoid unreachable target problem</li>
+    </ul>
+  </li>
+  <li>Constraints
+    <ul>
+      <li>Angular limits is allowed, by checking after each iteration</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Optimized CCD:</p>
+
+<ol>
+  <li>Add tolerance regions to each bone’s goal
+    <ul>
+      <li>Each bone stops rotating and moves onto the next bone within tolerance region</li>
+      <li>Helps to produce poses that are less rigid and more comfortable looking</li>
+    </ul>
+  </li>
+  <li>Use under-damped angle scaling
+    <ul>
+      <li>Each joint moves only a small amount toward the goal and distributes the movement across multiple bones</li>
+      <li>Produce less abrupt joint changes and more smooth and casual poses for character movement</li>
+    </ul>
+  </li>
+</ol>
+
+<p>FABRIK (Forward And Backward Reaching Inverse Kinematics)</p>
+<ul>
+  <li>Principle: Instead of orientation space, solves IK problem in position space</li>
+  <li>Reachability: Algorithm can stop after certain number of iterations to avoid unreachable target problem</li>
+  <li>Cons: Not guarantee convergence</li>
+</ul>
+
+<p>FABRIKF with Constraints: Re-positioning</p>
+<ul>
+  <li>Joint restrictions can be enforced at each step by taking the resultant orientation and forcing it to stay with in the valid range</li>
+</ul>
+
+<p>Multiple End-Effectors</p>
+<ul>
+  <li>May result in conflict between goals, which can not be achieved simultaneously</li>
+  <li>May use a priority or a weighted approach</li>
+</ul>
+
+<p>IK with Multiple End-Effectors</p>
+<ul>
+  <li>If a shared bone needs to be moved, the end-effector that is updated last will get priority and the other bones will be pulled away</li>
+</ul>
+
+<p>Other IK Solutions:</p>
+
+<p>Physics-based Method</p>
+<ul>
+  <li>More natural</li>
+  <li>Usually need lots of computation if no optimization</li>
+</ul>
+
+<p>PBD(Position Based Dynamics)</p>
+<ul>
+  <li>Different from traditional physics-based method</li>
+  <li>Better visual performance</li>
+  <li>Lower computational cost</li>
+</ul>
+
+<p>Fullbody IK in UE5</p>
+<ul>
+  <li>XPBD(Extended PBD)</li>
+</ul>
+
+<p>Animation Pipeline with Blending and IK</p>
+
+<p><img src="/unchained112/assets/GameEngine/AnimaitionPipelineIK.png" alt="Animation Pipeline with Blending and IK" /></p>
+
+<p><strong>Facial Animation</strong></p>
+
+<p>Face is Driven by Complex Muscle System Facial Muscles</p>
+<ul>
+  <li>43 Muscles</li>
+  <li>Variant shape, strength and movement</li>
+  <li>Work together to make expressions</li>
+</ul>
+
+<p>High Precision Requirements – Minor change makes difference:</p>
+<ul>
+  <li>Voluntary / Forced</li>
+  <li>Natural / Intentional</li>
+  <li>Sometimes shows quite opposite expressions</li>
+</ul>
+
+<p>Facial Action Coding System (From Movie Industry)</p>
+<ul>
+  <li>Facial Action Coding System (FACS) is a system to taxonomize human facial movements by their appearance on the face.</li>
+  <li>There are 46 basic movements named action units(AU).</li>
+  <li>An expression can be considered as a combination of some of the basic movements.</li>
+</ul>
+
+<p>28 Core Action Units</p>
+<ul>
+  <li>Apple Inc. extracted the 28 core AUs</li>
+  <li>23 Symmetric AUs are divided into two basic actions</li>
+  <li>Basic actions set varies accoring to the animation production requirements</li>
+</ul>
+
+<p>FACS In Morph Target Animation</p>
+<ul>
+  <li>Create AU key poses only store vertexes different from the neutral pose (Additive Blending)</li>
+</ul>
+
+<p>UV Texture Facial Animation</p>
+<ul>
+  <li>Using a series of texture maps applied to a simple head shape</li>
+</ul>
+
+<p><strong>Animation Re-targeting</strong></p>
+
+<p>Share Animation Among Characters</p>
+<ul>
+  <li>Allow animations to be reused between characters (save animator’s work)</li>
+  <li>Adapt motion captured animations to different characters (reduce the cost)</li>
+  <li>Terminology:
+    <ul>
+      <li>Source Character</li>
+      <li>Target Character</li>
+      <li>Source Animation</li>
+      <li>Target Animation</li>
+    </ul>
+  </li>
+  <li>Ignore Offset Between Source and Target Joints</li>
+  <li>Keep Orientation in Different Binding Pose (Relative movement)</li>
+</ul>
+
+<p>Process Tracks – Handle animation tracks respectively</p>
+<ul>
+  <li>Rotation track comes from source animation
+    <ul>
+      <li>Keep joint orientation in animation</li>
+    </ul>
+  </li>
+  <li>Translation track comes from target skeleton
+    <ul>
+      <li>Keep the proportion of target skeleton</li>
+    </ul>
+  </li>
+  <li>Scale track comes from source animation
+    <ul>
+      <li>Keep the scale in animation</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Align Movement by Pelvis Height – The movement of the character</p>
+<ul>
+  <li>Usually controlled by displacement curve or motor system at runtime
+    <ul>
+      <li>Displacement Curve is extracted from the pelvis pose in animation</li>
+    </ul>
+  </li>
+  <li>Needs to be scaled by the proportion of the pelvis</li>
+</ul>
+
+<p>Unresolved Problems of Re-targeting</p>
+<ul>
+  <li>Self mesh penetration</li>
+  <li>Self contact constrains (eg. the hands when clap)</li>
+  <li>The balance of the target character</li>
+</ul>
+
+
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

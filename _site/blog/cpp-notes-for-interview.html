@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="C++ Notes for Interview">
+  <meta property="og:description" content="C++ notes used as a structure to review for interview.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>C++ Notes for Interview</title>
+  <meta name="description" content="C++ notes used as a structure to review for interview.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/unchained112/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/unchained112/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/unchained112/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/unchained112/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/unchained112/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/unchained112/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/unchained112/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>C++ Notes for Interview</b></h1>
+
+<p class="post-metadata text-muted">
+  10 December 2021 -  
+  <b>41 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#computer-science">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Science</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#c">
+      <span class="tag badge badge-pill text-primary border border-primary">C++</span>
+    </a>
+    </p>
+
+<h2 id="foreword">Foreword</h2>
+
+<p>I have been wanting to become a game developer since I studied and tried some directions in Computer Science during my bachelor’s study. The idea behind this is that even if I cannot get away with programming, at least I could work on something that I love. However, this is a start of a nightmare until now. I found there is just so much to learn in order to just get a job in the game industry.</p>
+
+<p>Thus, I decided to document what I learned as a reference for later review, and as a record of my growth. All those things start with this summary of C++. If you are reading this, I would assume you already have some background knowledge about programming, as the content won’t begin with very basic knowledge.</p>
+
+<h2 id="polymorphism-and-virtual-function">Polymorphism and Virtual Function</h2>
+
+<h3 id="polymorphism">Polymorphism</h3>
+
+<p>Polymorphism is one of the most vital features of Object-Oriented Programming. The so-called polymorphism means that a function of the same name has multiple states, or an interface has different behaviors. C++ polymorphism is divided into compile-time polymorphism and run-time polymorphism.</p>
+<ul>
+  <li>Compile-time polymorphism is called static binding. It is realized by function (including operator) overloading and templates.</li>
+  <li>Run-time polymorphism is called dynamic binding. It is realized through inheritance and virtual functions.</li>
+</ul>
+
+<h3 id="virtual-function">Virtual Function</h3>
+
+<p>Virtual function is one of the methods of realizing polymorphism in C++ language. By pointing to the base class pointer or reference of the derived class, you can access the overridden member function with the same name in the derived class.
+When accessing a member function of a class through a pointer:</p>
+<ul>
+  <li>If the function is a non-virtual function, the compiler will find the function according to the type of the pointer; that is, the function of the pointer’s class will be called.</li>
+  <li>If the function is a virtual function, and the derived class has a function with the same name to override it, then the compiler will find the function according to the pointer; The reason why the compiler can find the virtual function through the object pointed to by the pointer is because the virtual function table is additionally added when the object is created. If there is a virtual function in a class, an additional array will be added when creating an object of this class, and each element in the array is the entry address of the virtual function. However, the array and the object are stored separately. In order to associate the object with the array, the compiler also inserts a pointer in the object to point to the starting position of the array. The array here is the virtual function table (virtual function table), abbreviated as vtable. See the following image:
+<img src="/unchained112/assets/CppNotes/vtable.png" alt="Vtable" /></li>
+  <li>The call of the virtual function is determined at runtime by looking up the function address in the virtual function table.</li>
+  <li>Virtual functions exist in classes, and different class objects share a virtual function table (in order to save memory space).</li>
+</ul>
+
+<p>Can constructors and destructors be virtual?</p>
+
+<p>No.Virtual function calls are looked up through the virtual function table. But the virtual function table is pointed to by the vptr pointer of the instantiated object of the class. The vptr is stored in the internal space of the object. The constructor needs to be called to complete the initialization. If the constructor is a virtual function, then you need to find vptr to call the constructor, but vptr has not been initialized yet!</p>
+
+<p>What about destructor?</p>
+
+<p>The destructor needs to be a virtual function! If the destructor is not a virtual function, only the base class will be released when deleting, and there is a risk of memory leaks. (Conversely, call the derived class destructor first, then call the base class destructor)</p>
+
+<h2 id="memory-management">Memory Management</h2>
+
+<h3 id="c-memory-layout">C++ Memory Layout</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Memory Layout</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Stack</td>
+    </tr>
+    <tr>
+      <td>for Stack and Heap</td>
+    </tr>
+    <tr>
+      <td>Heap</td>
+    </tr>
+    <tr>
+      <td>BSS</td>
+    </tr>
+    <tr>
+      <td>Data</td>
+    </tr>
+    <tr>
+      <td>Text</td>
+    </tr>
+  </tbody>
+</table>
+
+<ol>
+  <li>Text: This segment is read-only and allocated by codes when a process starts up. Text segment is sharable and hence only a single copy exists as well as read-only.</li>
+  <li>Data: This segment contains initialized global and static variables that are initialized. It is readable/writable.</li>
+  <li>BSS: This segment contains uninitialized global and static variables that are initialized. It is readable/writable.</li>
+  <li>Heap: This segment is used for dynamic memory allocation using <code class="language-plaintext highlighter-rouge">malloc() / new</code> and should be de-allocated by <code class="language-plaintext highlighter-rouge">free() / delete</code> (of course readable/writable). It is shared in all threads.</li>
+  <li>Stack: This segment contains non-static local variables. The virtual pointer is also stored here. Stack Frame: A set of values pushed for one function call is called Stack Frame (i.e. recursive function).</li>
+</ol>
+
+<h3 id="c-memory-alignment">C++ Memory Alignment</h3>
+
+<p>The reason for memory alignment: The key lies in the efficiency of CPU access to data. In order to improve efficiency, the computer fetches data from memory according to a fixed length. For example, on a 32-bit machine, the CPU fetches 32bit data every time, which is 4 bytes. Thus, the sizeof for a <code class="language-plaintext highlighter-rouge">struct/class</code> is not always equal to the sum of sizeof of each individual member.</p>
+
+<p>Rules:</p>
+<ol>
+  <li>The first address of <code class="language-plaintext highlighter-rouge">struct</code> can be divisible by the size of its widest basic type member.</li>
+  <li>The offset relative to the starting address of each member in the structure can be divisible by the size of the variable.</li>
+  <li>The overall size of the structure can be divisible by the widest member size; if these conditions are not met, the compiler will perform a padding.</li>
+</ol>
+
+<p>Different compilers might have different alignment constraints as C standards state that alignment of structure totally depends on the implementation.</p>
+
+<p>Examples:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">A</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// 4 bytes</span>
+  <span class="c1">// Padding of 4 bytes</span>
+  <span class="kt">double</span> <span class="n">z</span><span class="p">;</span> <span class="c1">// 8 bytes</span>
+  <span class="kt">short</span> <span class="kt">int</span> <span class="n">y</span><span class="p">;</span> <span class="c1">// 2 bytes</span>
+  <span class="c1">// Padding of 6 bytes</span>
+<span class="p">};</span> <span class="c1">//sizeof(A) = 24</span>
+
+<span class="k">struct</span> <span class="nc">B</span> <span class="p">{</span>
+    <span class="kt">short</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// 2 bytes</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// 4 bytes</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span> <span class="c1">// 1 byte</span>
+<span class="p">};</span>  <span class="c1">//sizeof(B) = 12</span>
+ 
+<span class="k">struct</span> <span class="nc">C</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// 4 bytes</span>
+    <span class="kt">short</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// 2 bytes</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span> <span class="c1">// 1 byte</span>
+<span class="p">};</span>  <span class="c1">//sizeof(C) = 8</span>
+</code></pre></div></div>
+
+<p>The size of the class is similar to the struct with little difference.</p>
+<ul>
+  <li>Empty class has size 1 (byte).</li>
+  <li>The virtual function pointer has size of 4 bytes.</li>
+  <li>The size of sub-class is equals to the size of all members plus the size of its parent class. (Note that they share the virtual function pointers)</li>
+</ul>
+
+<p>For modern C++, the <code class="language-plaintext highlighter-rouge">alignas</code> type specifier is a portable, C++ standard way to specify custom alignment of variables and user defined types. The <code class="language-plaintext highlighter-rouge">alignof</code> operator is likewise a standard, portable way to obtain the alignment of a specified type or variable. An example is shown below:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Reference: https://learn.microsoft.com/en-us/cpp/cpp/alignment-cpp-declarations?view=msvc-170</span>
+<span class="cp">#include &lt;iostream&gt;
+</span>
+<span class="k">struct</span> <span class="nc">alignas</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="n">Bar</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>       <span class="c1">// 4 bytes</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>      <span class="c1">// 4 bytes</span>
+    <span class="k">alignas</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="kt">char</span> <span class="n">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="kt">short</span> <span class="n">s</span><span class="p">;</span>          <span class="c1">// 2 bytes</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">alignof</span><span class="p">(</span><span class="n">Bar</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">// output: 16</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="type-casting">Type Casting</h2>
+
+<p>Type casting refers to the conversion of one data type to another in a program. Type Casting is divided into two types: Implicit conversion or Implicit Type Casting and Explicit Type Conversion or Explicit Type Casting.</p>
+
+<p>Implicitly type casting automatically converted from one data type to another without any external intervention such as programmer or user. It means the compiler automatically converts one data type to another. Example here:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> 
+<span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="sc">'a'</span><span class="p">;</span> 
+<span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">+</span> <span class="sc">'a'</span><span class="p">;</span> <span class="c1">//res = 117 since 'a' is 20</span>
+</code></pre></div></div>
+
+<p>Basic explicit type casting is like <code class="language-plaintext highlighter-rouge">int num = 5; float x = float(num);</code>, which is intuitive. To deal with more complex data structure, C++ offers 4 different cast operators: <code class="language-plaintext highlighter-rouge">static_cast</code>, <code class="language-plaintext highlighter-rouge">dynamic_cast</code>, <code class="language-plaintext highlighter-rouge">const_cast</code>, <code class="language-plaintext highlighter-rouge">reinterpret_cast</code>.</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">static_cast</code>: It can realize conversion between built-in basic data types in C++, such as enum, struct, int, char, float, etc. It can perform upward type conversion and downward type conversion between class levels (downward is not safe because no dynamic type checking is done). It cannot perform conversions between pointers of unrelated types (such as non-base classes and subclasses), nor can it act on objects containing underlying const. “Static” means it runs at compile time.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">dynamic_cast</code>: It can safely convert the pointer or reference of the base class to the pointer or reference of the derived class (upward conversion is also possible), if the pointer conversion fails, return NULL, and if the reference return fails, a bad_cast exception is thrown. <code class="language-plaintext highlighter-rouge">dynamic_cast</code> runs a security check at runtime; the parent class of <code class="language-plaintext highlighter-rouge">dynamic_cast</code> must have a virtual function, otherwise the compilation will fail. Example:</p>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">parent</span> <span class="p">{</span>  
+    <span class="nl">public:</span> <span class="k">virtual</span> <span class="kt">void</span> <span class="n">print</span><span class="p">()</span>  
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">derived</span><span class="o">:</span> <span class="k">public</span> <span class="n">parent</span> <span class="p">{</span> <span class="p">};</span>  
+  
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>  
+    <span class="n">parent</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">derived</span><span class="p">;</span>  <span class="c1">// create an object ptr  </span>
+    <span class="c1">// use the dynamic cast to convert class data  </span>
+    <span class="n">derived</span><span class="o">*</span> <span class="n">d</span> <span class="o">=</span> <span class="k">dynamic_cast</span> <span class="o">&lt;</span><span class="n">derived</span><span class="o">*&gt;</span> <span class="p">(</span><span class="n">ptr</span><span class="p">);</span>  
+    <span class="c1">// check whether the dynamic cast is performed or not  </span>
+    <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>    
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Dynamic casting is done successfully"</span><span class="p">;</span>  
+    <span class="k">else</span>  
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" Dynamic casting is not done successfully"</span><span class="p">;</span>  
+    <span class="c1">// Output: " Dynamic casting is done successfully"</span>
+<span class="p">}</span>  
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">reinterpret_cast</code>: It can convert convert a pointer to any other type of pointer whether the given pointer belongs to each other or not. And it can also convert any built-in data type to any other data type, even between an integer to a pointer. Example:</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">pt</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">65</span><span class="p">);</span> 
+    <span class="kt">int</span> <span class="o">*</span><span class="n">ch</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">pt</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ch</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ch</span><span class="p">;</span> 
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// Output: A A</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">const_cast</code>: It can convert const to non-const (or vice versa). <code class="language-plaintext highlighter-rouge">const_cast</code> can only be used for pointers or references, and can only change the underlying const of the object.</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">a1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">d1</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="kt">int</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">b1</span><span class="p">);</span> 
+    <span class="o">*</span><span class="n">d1</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span> <span class="c1">// invalid operation</span>
+
+    <span class="kt">int</span> <span class="n">a2</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a2</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">d2</span> <span class="o">=</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="kt">int</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">b2</span><span class="p">);</span> 
+    <span class="o">*</span><span class="n">d2</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span> <span class="c1">// valid operation</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="smart-pointer">Smart Pointer</h2>
+
+<p>Smart pointers mainly solve the problem of memory leak by automatically releasing memory space. Because it is a class itself, the destructor will be called when the function ends, and the memory space will be released by the destructor. There are 3 different types of shared pointers: <code class="language-plaintext highlighter-rouge">shared_ptr</code>, <code class="language-plaintext highlighter-rouge">unique_ptr</code> and <code class="language-plaintext highlighter-rouge">weak_ptr</code>. Header file: <code class="language-plaintext highlighter-rouge">&lt;memory&gt;</code>.</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">shared_ptr</code>: Multiple shared pointers can point to the same object. Using the mechanism of reference counting, when the last reference is destroyed, the memory space is released. Whenever possible, use the <code class="language-plaintext highlighter-rouge">make_shared</code> function to create a <code class="language-plaintext highlighter-rouge">shared_ptr</code> when the memory resource is created for the first time. <code class="language-plaintext highlighter-rouge">make_shared</code> is exception-safe. It uses the same call to allocate the memory for the control block and the resource, which reduces the construction overhead. Otherwise, you have to use an explicit <code class="language-plaintext highlighter-rouge">new</code> expression to create the object before you pass it to the <code class="language-plaintext highlighter-rouge">shared_ptr</code> constructor.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">unique_ptr</code>: This ensures that only one smart pointer can point to the object in the same period of time (the unique_ptr can be passed through the move operation), and cannot be copied.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">weak_ptr</code>: This is used to solve the deadlock problem when <code class="language-plaintext highlighter-rouge">shared_ptr</code> refers to each other. If two <code class="language-plaintext highlighter-rouge">shared_ptr</code> refer to each other, then the reference count of these two pointers can never drop to 0, and the resource will never be released. If it is a weak reference (<code class="language-plaintext highlighter-rouge">weak_ptr</code>) to the object, it will not increase the reference count of the object, and it can be converted to <code class="language-plaintext highlighter-rouge">shared_ptr</code>, <code class="language-plaintext highlighter-rouge">shared_ptr</code> can be directly assigned to it, and it can obtain <code class="language-plaintext highlighter-rouge">shared_ptr</code> by calling the lock function.</p>
+  </li>
+</ul>
+
+<p>Example of smart pointers:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="cp">#include &lt;memory&gt;
+</span> 
+<span class="k">class</span> <span class="nc">Rectangle</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">breadth</span><span class="p">;</span>
+<span class="nl">public:</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">l</span><span class="p">;</span>
+        <span class="n">breadth</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">area</span><span class="p">(){</span> <span class="k">return</span> <span class="n">length</span> <span class="o">*</span> <span class="n">breadth</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="c1">// Unique Pointer</span>
+    <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span> <span class="n">P1</span><span class="p">(</span><span class="k">new</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">P1</span><span class="o">-&gt;</span><span class="n">area</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// This'll print 50</span>
+    <span class="c1">// or  unique_ptr&lt;Rectangle&gt; P2(P1);</span>
+    <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span> <span class="n">P2</span><span class="p">;</span>
+    <span class="n">P2</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">P1</span><span class="p">);</span>   
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">P2</span><span class="o">-&gt;</span><span class="n">area</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// This'll print 50</span>
+ 
+    <span class="c1">// Shared Pointer</span>
+    <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span> <span class="n">P3</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">P3</span><span class="o">-&gt;</span><span class="n">area</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// This'll print 50</span>
+    <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span> <span class="n">P4</span><span class="p">;</span>
+    <span class="n">P4</span> <span class="o">=</span> <span class="n">P3</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">P4</span><span class="o">-&gt;</span><span class="n">area</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// This'll print 50</span>
+
+    <span class="c1">// Weak Pointer</span>
+    <span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span> <span class="n">P6</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">test</span> <span class="o">=</span> <span class="p">[]</span> <span class="p">(</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span> <span class="n">P</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="k">auto</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">P</span><span class="p">.</span><span class="n">lock</span><span class="p">()){</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">area</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"expired!"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
+        <span class="p">}</span>
+    <span class="p">};</span>
+    
+    <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">P5</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Rectangle</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="n">P6</span> <span class="o">=</span> <span class="n">P5</span><span class="p">;</span>
+    <span class="n">test</span><span class="p">(</span><span class="n">P6</span><span class="p">);</span> <span class="c1">// This'll print 50</span>
+    <span class="p">}</span>
+    <span class="n">test</span><span class="p">(</span><span class="n">P6</span><span class="p">);</span> <span class="c1">// This'll print expired!</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="lvalues-rvalues-and-copy-constructor">lvalues, rvalues and Copy Constructor</h2>
+
+<h3 id="lvalues-and-rvalues">lvalues and rvalues</h3>
+
+<ol>
+  <li>An lvalue is an addressable storage unit whose value can be changed by the user, such as a common variable: an int, float, class, etc. The lvalue has a persistent state and is not destroyed until it leaves the scope.</li>
+  <li>The rvalue represents a temporary object that is about to be destroyed and has a short-lived state, such as the literal value constant “hello”, the expression int func() that returns a non-reference type, etc., will yields an rvalue.</li>
+  <li>An <strong>rvalue reference</strong> is a reference that must be bound to an rvalue, which can be obtained by <code class="language-plaintext highlighter-rouge">&amp;&amp;</code>. An rvalue reference can only be bound to an object that is about to be destroyed, so it can be moved freely its resources;</li>
+  <li>An rvalue reference is a concept introduced to support move operations. It can only be bound to an object to be destroyed. Move operations using rvalue references can avoid unnecessary copying and improve performance. Use the <code class="language-plaintext highlighter-rouge">std::move()</code> function to convert an lvalue to an rvalue reference.</li>
+</ol>
+
+<p>Simple example:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+    <span class="c1">// Correct usage: the variable i is an lvalue and the literal 7 is a rvalue.</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+    <span class="c1">// Incorrect usage: The left operand must be an lvalue (C2106).`j * 4` is a rvalue.</span>
+    <span class="mi">7</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// C2106</span>
+    <span class="n">j</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span> <span class="c1">// C2106</span>
+    <span class="c1">// Correct usage: the dereferenced pointer is an lvalue.</span>
+    <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="c1">// Correct usage: the conditional operator returns an lvalue.</span>
+    <span class="p">((</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">?</span> <span class="n">i</span> <span class="o">:</span> <span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+    <span class="c1">// Incorrect usage: the constant ci is a non-modifiable lvalue (C3892).</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span> <span class="c1">// C3892</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="constructor-deep-copy-and-shallow-copy">Constructor, Deep Copy and Shallow Copy</h3>
+
+<ol>
+  <li>
+    <p>The role of the copy constructor is to define what we do when we initialize this object with another object of the same type. In some cases, if we do not define the copy constructor ourselves, the default copy constructor is used, an error will occur. For example, if there is a pointer in a class, if the default copy constructor is used, the pointer will be copied, that is, the two pointers point to the same object, then after one of the class objects is destructed, the pointer will also be deleted, and the other A pointer in a class will become a dangling pointer;</p>
+  </li>
+  <li>
+    <p>Shallow copy simply and directly copies the pointer to an object without copying the object itself. The old and new objects still share the same memory. However, deep copy will create an identical object. The new object does not share memory with the original object, and modifying the new object will not change the original object.</p>
+  </li>
+</ol>
+
+<h2 id="standard-template-library-stl-data-structure-and-algorithms">Standard Template Library (STL), Data Structure and Algorithms</h2>
+
+<h3 id="what-is-stl">What is STL?</h3>
+
+<p>The Standard Template Library (STL) is a set of C++ template classes to provide common programming data structures and functions such as lists, stacks, arrays, etc. It is a library of container classes, algorithms, and iterators.</p>
+
+<ul>
+  <li>Containers or container classes store objects and data.
+    <ul>
+      <li>Sequence Containers: implement data structures which can be accessed in a sequential manner. (vector, list, deque, etc)</li>
+      <li>Container Adaptors : provide a different interface for sequential containers. (queue, stack, etc)</li>
+      <li>Associative Containers : implement sorted data structures that can be quickly searched (O(log n) complexity). (set, map, multiset, etc)</li>
+      <li>Unordered Associative Containers : implement unordered data structures that can be quickly searched. (unordered_set, unordered_multiset, unordered_map, all introduced in C++11)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Algorithms are a collections of implemented functions that operate on containers. For example, there are sorting and searching functions like <code class="language-plaintext highlighter-rouge">sort()</code> and <code class="language-plaintext highlighter-rouge">binary_search()</code>.</p>
+  </li>
+  <li>Iterators are used to point at the memory addresses of STL sequence containers.</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ar</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">};</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">ar</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Functors are objects that can be treated as though they are a function or function pointer.</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// this is a functor</span>
+<span class="k">struct</span> <span class="nc">add_x</span> <span class="p">{</span>
+  <span class="n">add_x</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="p">{}</span>  <span class="c1">// Constructor</span>
+  <span class="kt">int</span> <span class="k">operator</span><span class="p">()(</span><span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="nl">private:</span>
+  <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Now you can use it like this:</span>
+<span class="n">add_x</span> <span class="nf">add42</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1">// create an instance of the functor class</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">add42</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span> <span class="c1">// and "call" it</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">50</span><span class="p">);</span> <span class="c1">// and it added 42 to its argument</span>
+</code></pre></div></div>
+
+<h3 id="basic-data-structures-in-stl">Basic Data Structures in STL</h3>
+
+<p>Two images below offer a clear view of data structures in STL.</p>
+
+<p><img src="/unchained112/assets/CppNotes/stl_data1.png" alt="Adaptive Unordered" /></p>
+
+<p><img src="/unchained112/assets/CppNotes/stl_data2.png" alt="Sequence Ordered" /></p>
+
+<p>How are the STL containers implemented?</p>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">vector</code>, the bottom layer is an array with continuous memory. The core of vector is that its length is automatically variable. Vector is mainly completed by three iterators (pointers): start pointing to the first element, finish pointing to the tail element, and end_of_storage pointing to the end of the memory. The expansion mechanism of vector is: when the current available space is insufficient, allocate twice the current space or the current space plus the required new space size (whichever is larger).</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">list</code>, the bottom layer is a circular double linked list. The linked list nodes and the linked list are defined independently, and the nodes contain pre, next pointers and data.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">deque</code>, a two-way queue, is composed of segmented continuous spaces, and each segment of continuous space is a buffer, controlled by a central controller. It must maintain a map pointer (controller pointer), and also maintain two iterators start and finish, pointing to the first buffer and the last buffer. Deque can be expanded at the front end or at the back end, and these pointers and iterators are used to control jumps between segment buffers.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">stack</code> and <code class="language-plaintext highlighter-rouge">queue</code>. They are all implemented by <code class="language-plaintext highlighter-rouge">deque</code> as the underlying container. They are a kind of container adapter that modifies the interface of <code class="language-plaintext highlighter-rouge">deque</code> and has its own unique properties. <code class="language-plaintext highlighter-rouge">stack</code> seals the head end of the deque, thus it is first in last out. <code class="language-plaintext highlighter-rouge">queue</code> is a deque that seals the tail end, thus it is first in first out.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">priority_queue</code> uses vector as the underlying container and heap as the processing rule. The essence of heap is a complete binary tree.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">set</code> and <code class="language-plaintext highlighter-rouge">map</code>. The bottom layer is implemented by red-black tree. A red-black tree is a binary search tree, but it has an additional color attribute. The properties of the red-black tree are as follows:</p>
+    <ol>
+      <li>each node is either red or black;</li>
+      <li>the root node is black;</li>
+      <li>if a node is red, then its child nodes are black;</li>
+      <li>any node The number of black nodes contained in the path from the point to the end of the tree (NULL) must be the same.</li>
+    </ol>
+
+    <p>Through the constraints defined above, the red-black tree ensures that no path will be more than twice as long as the other paths; therefore, the red-black tree is a weakly balanced binary tree, relative to the balanced binary tree that strictly requires balance, its number of rotations Less, so for the case of more insertion and deletion operations, red-black trees are usually used.</p>
+  </li>
+</ol>
+
+<p>What is the time complexity of the search, insert and delete operation of those containers?</p>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">vector</code> Vector supports random access (by index), and the time complexity is O(1). If it is an unordered vector, the time complexity of searching is O(n), if it is an ordered vector, using binary search is O(log n). For the insertion operation, the insertion at the tail is the fastest, followed by the middle, and the head is the slowest, and the deletion is the same. The memory occupied by vector is relatively large, because the double expansion mechanism may lead to waste of memory.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">list</code> Since the bottom layer of the list is a linked list, it does not support random access and can only be searched by scanning. The complexity is O(n). But the insertion and deletion are fast, and only need to adjust the pointer. list does not cause memory waste and occupies less memory.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">deque</code> Dequeue supports random access, but its performance is lower than that of vector (still O(n)). It supports double-ended expansion, so inserting and deleting elements at the head and tail is very fast, which is O(1), but inserting and deleting elements in the middle is very slow.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">set</code> and <code class="language-plaintext highlighter-rouge">map</code> The bottom layer is implemented based on red-black tree, the time complexity of adding, deleting, checking and modifying is approximately O(log n), and red-black tree is implemented based on linked list, so it occupies less memory.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">unordered_set</code> and <code class="language-plaintext highlighter-rouge">unordered_map</code> The underlying layer is implemented based on a hash table and is unordered. Theoretically, the time complexity of adding, deleting, checking and modifying is O(1) (the worst time complexity is O(n)). In fact, whether the data distribution is even or not will greatly affect the performance of the container.</p>
+  </li>
+</ol>
+
+<p><strong>Hash Table</strong></p>
+
+<p>Notice that the <code class="language-plaintext highlighter-rouge">unordered_set</code> and <code class="language-plaintext highlighter-rouge">unordered_map</code> are based on hash table, to better understand this, we now take a closer look at it.</p>
+
+<p>The hash table stores elements in key-value pair. Key is the unique integer that is used for indexing the values. Value is the data that are associated with the corresponding key.</p>
+
+<p><strong>Hash function</strong></p>
+
+<p>In a hash table, a new index is processed using the keys. And, the element corresponding to that key is stored in the index. This process is called hashing.</p>
+
+<p>A good hash function may not prevent the collisions completely however it can reduce the number of collisions. For example:</p>
+
+<ol>
+  <li>Hashing by modulo: <code class="language-plaintext highlighter-rouge">h(k) = k % m;</code> for k is a key and m is the size.</li>
+  <li>Hashing by multiplication:</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="c1">// we define that kA % 1 gives the fractional part kA.</span>
+<span class="n">h</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="p">((</span><span class="n">k</span> <span class="o">*</span> <span class="n">A</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><strong>Hash Collision</strong></p>
+
+<p>Collision occurs when the hash function maps two or more items (keys) with different search keys into the same bucket or index. There are two major schemes for solving the collision: separate chaining and open addressing.</p>
+<ul>
+  <li>In chaining, if a hash function produces the same index for multiple elements, these elements are stored in the same index by using a doubly-linked list.</li>
+  <li>Unlike chaining, open addressing doesn’t store multiple elements into the same slot. Here, each slot is either filled with a single key or left. For example, In linear probing, collision is resolved by checking the next slot.</li>
+</ul>
+
+<h3 id="basic-algorithms">Basic Algorithms</h3>
+
+<p>Sorting algorithms</p>
+
+<ul>
+  <li>
+    <p>Selection Sort: Repeatedly “selecting” the next-smallest element from the unsorted array and moving it to the front. The time complexity is O(n^2). In place.</p>
+  </li>
+  <li>
+    <p>Bubble Sort: Compare two elements from front to back, exchange them if they are in reverse order, repeat until the array is ordered. The time complexity is O(n^2), the best case O(n). In place.</p>
+  </li>
+  <li>
+    <p>Insertion Sort: Starting from the second element, inserting elements from an unsorted array into a sorted subsection of the array, one item at a time. The time complexity is O(n^2), the best case O(n). In place.</p>
+  </li>
+  <li>
+    <p>Quick Sort: Quicksort works by recursively dividing the input into two smaller arrays around a pivot item: one half has items smaller than the pivot, the other has larger items. The time complexity is O(nlogn), the worst case O(n^2). Not in place.</p>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="kt">int</span> <span class="n">high</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// select the rightmost element as pivot</span>
+  <span class="kt">int</span> <span class="n">pivot</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">high</span><span class="p">];</span>
+  
+  <span class="c1">// pointer for greater element</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// traverse each element of the array</span>
+  <span class="c1">// compare them with the pivot</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">low</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">high</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span>
+        
+      <span class="c1">// if element smaller than pivot is found</span>
+      <span class="c1">// swap it with the greater element pointed by i</span>
+      <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+      
+      <span class="c1">// swap element at i with element at j</span>
+      <span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="c1">// swap pivot with the greater element at i</span>
+  <span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">high</span><span class="p">]);</span>
+  
+  <span class="c1">// return the partition point</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">quickSort</span><span class="p">(</span><span class="kt">int</span> <span class="n">array</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">low</span><span class="p">,</span> <span class="kt">int</span> <span class="n">high</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="n">high</span><span class="p">)</span> <span class="p">{</span>
+      
+    <span class="c1">// find the pivot element such that</span>
+    <span class="c1">// elements smaller than pivot are on left of pivot</span>
+    <span class="c1">// elements greater than pivot are on righ of pivot</span>
+    <span class="kt">int</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">);</span>
+
+    <span class="c1">// recursive call on the left of pivot</span>
+    <span class="n">quickSort</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">pi</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+
+    <span class="c1">// recursive call on the right of pivot</span>
+    <span class="n">quickSort</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">pi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Merge Sort: Merge sort works by splitting the input in half, recursively sorting each half, and then merging the sorted halves back together. The time complexity is O(nlogn). In place.</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">merge</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">q</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Create L ← A[p..q] and M ← A[q+1..r]</span>
+  <span class="kt">int</span> <span class="n">n1</span> <span class="o">=</span> <span class="n">q</span> <span class="o">-</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">q</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="n">L</span><span class="p">[</span><span class="n">n1</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="n">n2</span><span class="p">];</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="n">i</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n2</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">q</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+
+  <span class="c1">// Maintain current index of sub-arrays and main array</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">k</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+
+  <span class="c1">// Until we reach either end of either L or M, pick larger among</span>
+  <span class="c1">// elements L and M and place them in the correct position at A[p..r]</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">n1</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+      <span class="n">arr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+      <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">arr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+      <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">k</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// When we run out of elements in either L or M,</span>
+  <span class="c1">// pick up the remaining elements and put in A[p..r]</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">n1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">arr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">k</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">while</span> <span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">arr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+    <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">k</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Divide the array into two subarrays, sort them and merge them</span>
+<span class="kt">void</span> <span class="nf">mergeSort</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// m is the point where the array is divided into two subarrays</span>
+    <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="n">mergeSort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">);</span>
+    <span class="n">mergeSort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+
+    <span class="c1">// Merge the sorted subarrays</span>
+    <span class="n">merge</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Head Sort: Heap sort is similar to selection sort—we’re repeatedly choosing the largest item and moving it to the end of our array. But we use a heap to get the largest item more quickly. Not in place.</li>
+</ul>
+
+<p><strong>Heap</strong></p>
+
+<p>Heap is a very useful data structure with its operations efficient for sorting.</p>
+
+<p>Heap is a complete <strong>binary tree</strong> that satisfies the heap property, where any given node is:</p>
+<ul>
+  <li>always greater than its child node/s and the key of the root node is the largest among all other nodes. This property is also called max heap property.</li>
+  <li>always smaller than the child node/s and the key of the root node is the smallest among all other nodes. This property is also called min heap property.</li>
+</ul>
+
+<p>When using the heap, the following are the basic operations used:</p>
+<ul>
+  <li>Heapify: Return a heap data structure given an input binary tree.</li>
+  <li>Insert: Insert a new element.</li>
+  <li>Delete: delete the selected element.</li>
+</ul>
+
+<p>In C++, <code class="language-plaintext highlighter-rouge">make_heap()</code> can convert a range in a container to a heap. <code class="language-plaintext highlighter-rouge">push_heap()</code> is used to insert elements into heap. <code class="language-plaintext highlighter-rouge">pop_heap()</code> is used to delete the maximum element of the heap.</p>
+
+<p>Example code:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Max-Heap data structure in C++</span>
+<span class="cp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="o">*</span><span class="n">b</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">heapify</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">hT</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">hT</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="o">&amp;&amp;</span> <span class="n">hT</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">hT</span><span class="p">[</span><span class="n">largest</span><span class="p">])</span>
+    <span class="n">largest</span> <span class="o">=</span> <span class="n">l</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="o">&amp;&amp;</span> <span class="n">hT</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">hT</span><span class="p">[</span><span class="n">largest</span><span class="p">])</span>
+    <span class="n">largest</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">largest</span> <span class="o">!=</span> <span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hT</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">hT</span><span class="p">[</span><span class="n">largest</span><span class="p">]);</span>
+    <span class="n">heapify</span><span class="p">(</span><span class="n">hT</span><span class="p">,</span> <span class="n">largest</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">insert</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">hT</span><span class="p">,</span> <span class="kt">int</span> <span class="n">newNum</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">hT</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">hT</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">newNum</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">hT</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">newNum</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">heapify</span><span class="p">(</span><span class="n">hT</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">deleteNode</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">hT</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">hT</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="n">hT</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hT</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">hT</span><span class="p">[</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]);</span>
+
+  <span class="n">hT</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">heapify</span><span class="p">(</span><span class="n">hT</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">printArray</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">hT</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">hT</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hT</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">heapTree</span><span class="p">;</span>
+
+  <span class="n">insert</span><span class="p">(</span><span class="n">heapTree</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="n">insert</span><span class="p">(</span><span class="n">heapTree</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+  <span class="n">insert</span><span class="p">(</span><span class="n">heapTree</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+  <span class="n">insert</span><span class="p">(</span><span class="n">heapTree</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">insert</span><span class="p">(</span><span class="n">heapTree</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Max-Heap array: "</span><span class="p">;</span>
+  <span class="n">printArray</span><span class="p">(</span><span class="n">heapTree</span><span class="p">);</span>
+
+  <span class="n">deleteNode</span><span class="p">(</span><span class="n">heapTree</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"After deleting an element: "</span><span class="p">;</span>
+
+  <span class="n">printArray</span><span class="p">(</span><span class="n">heapTree</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="others">Others</h2>
+
+<h3 id="pointer-and-reference">Pointer and Reference</h3>
+
+<p>Similarities</p>
+<ul>
+  <li>Pointer and reference both are the concept of memory. The pointer points to a piece of memory, and its content is the address of the pointed memory; the reference is the alias of a piece of memory.</li>
+</ul>
+
+<p>Differences</p>
+<ol>
+  <li>A pointer is an entity, while a reference is just an alias.</li>
+  <li>There is no need to dereference <code class="language-plaintext highlighter-rouge">*</code> when using the reference, and the pointer needs to be dereferenced.</li>
+  <li>The reference can only be initialized once when it is defined, and cannot be changed afterwards; the pointer can be changed.</li>
+  <li>References do not have const, pointers have const, and const pointers are immutable.</li>
+  <li>The reference cannot be empty, but the pointer can be empty.</li>
+</ol>
+
+<h3 id="easy-to-forget">Easy to Forget</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">x++</code> increments the value of variable <code class="language-plaintext highlighter-rouge">x</code> <strong>after</strong> processing the current statement. <code class="language-plaintext highlighter-rouge">x+=i++;</code> add <code class="language-plaintext highlighter-rouge">i</code> to <code class="language-plaintext highlighter-rouge">x</code> then increase <code class="language-plaintext highlighter-rouge">i</code> by 1.</li>
+  <li><code class="language-plaintext highlighter-rouge">++x</code> increments the value of <code class="language-plaintext highlighter-rouge">x</code> <strong>before</strong> processing the current statement. <code class="language-plaintext highlighter-rouge">x+=++i;</code> increase <code class="language-plaintext highlighter-rouge">i</code> and add <code class="language-plaintext highlighter-rouge">i+1</code> to <code class="language-plaintext highlighter-rouge">x</code>.</li>
+  <li>Array is passed by reference. <code class="language-plaintext highlighter-rouge">array = &amp;array[0]</code>.</li>
+  <li>Reference must be initialized using a variable of the same type.</li>
+  <li>Enumerate example:</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">Suit_t</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">};</span>
+<span class="k">const</span> <span class="n">string</span> <span class="n">Name</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">,</span> <span class="s">"D"</span><span class="p">};</span>
+<span class="k">enum</span> <span class="n">Suit_t</span> <span class="n">x</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">Name</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="engineering-problems">Engineering Problems</h3>
+
+<p>C++ Design Pattern</p>
+
+<p>A design pattern is neither a static solution, nor is it an algorithm. A pattern is a way to describe and address by name a repeatable solution or approach to a common design problem, that is, a common way to solve a generic problem. Check details in the reference: <a href="https://refactoring.guru/design-patterns/cpp">C++ Design Patterns Reference</a>.</p>
+
+<p>C++ Object Pool</p>
+
+<p>What is an object pool?</p>
+<ul>
+  <li>Pools are somewhat similar to collections in a sense. A pool is a collection of a certain amount of water; a memory pool is a collection of a certain amount of allocated memory; a thread pool is a collection of a certain number of created threads. Then, the object pool, as the name implies, is a collection of a certain number of created objects (Object).</li>
+</ul>
+
+<p>What is the object pool for?</p>
+<ul>
+  <li>In a C/C++ program, if you have to use malloc/free (or new/delete) to create and destroy an object, it will cost a lot on the one hand and cause a lot of memory fragmentation on the other hand. Over time, the performance will degrade. At this time, an object pool is generated. You can create a batch of objects in advance and put them in a collection. Whenever the program needs a new object, it will be obtained from the object pool. Whenever the program uses up the object, it will be returned to the object pool. In this way, a lot of malloc/free (new/delete) calls will be reduced, which improves the performance of the system to a certain extent, especially in programs with frequent dynamic memory allocation.</li>
+</ul>
+
+<p>What are the characteristics of the object pool?</p>
+<ul>
+  <li>In general, object pools have the following characteristics:
+    <ol>
+      <li>There are a certain number of created objects in the object pool.</li>
+      <li>The object pool provides users with an interface to obtain objects. When users need new objects, they can obtain new objects by calling this interface. If there is a pre-created object in the object pool, it will be returned to the user directly; if there is no object pool, a new object can be created and added to it, and then returned to the user.</li>
+      <li>The object pool provides users with an interface for returning objects. When users no longer use an object, they can return the object to the object pool through this interface.</li>
+    </ol>
+  </li>
+</ul>
+
+<p>More on it: <a href="https://gameprogrammingpatterns.com/object-pool.html">Object Pool</a></p>
+
+<h2 id="reference">Reference</h2>
+
+<ol>
+  <li>Problem Solving with C++ (8th Edition), by Walter Savitch, Addison Wesley Publishing (2011)</li>
+  <li>https://www.geeksforgeeks.org/</li>
+  <li>https://www.codeproject.com/Articles/570638/Ten-Cplusplus11-Features-Every-Cplusplus-Developer</li>
+  <li>https://en.cppreference.com/w/</li>
+  <li>https://www.geeksforgeeks.org/the-c-standard-template-library-stl/</li>
+  <li>https://www.programiz.com/dsa</li>
+</ol>
+
+
+
+<div class="pt-5">
+  
+</div>
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

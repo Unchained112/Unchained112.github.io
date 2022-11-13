@@ -1,0 +1,20 @@
+- title: Master's degree, KTH Royal Institute of Technology, Stockholm, Sweden
+  from: 2020 Aug
+  to: 2022 Sept
+  description: I majored in Interactive Media Technology for my master's degree. I studied courses like Computer Graphics, Visualization, and Human-Computer Interaction. During that time, I did a lot of game projects, which covers Unity (C#), JavaScript, and Unreal. I worked as the main programmer for those projects and mostly focused on game logic and graphics implementation.
+
+- title: Internship, Hasco Vision Technology, Shanghai, China
+  from: 2021 April
+  to: 2021 Sept
+  description: I worked on my Bachelor's thesis project "Simulation of Human Perceived Glare Effect" at Hasco Vision Technology. We design an algorithm for simulating the human perceived glare effects on the original image based on the biological and physical structure of human eyes. I implemented the algorithm using C++ and OpenCV library. The program takes an image as input, and processes it with functions describing different parts of glare to generate the result.
+
+- title: Internship, Synopsys, Shanghai, China
+  from: 2019 Aug
+  to: 2020 June
+  description: I worked as a technique intern at the AI lab department in Synopsys, Shanghai. I was in charge of configuring the artificial intelligence acceleration unit DPU (Deep-learning Processing Unit) on the Xilinx AI acceleration unit (a type of FPGA). We performed Machine Learning Benchmark MLPerf on the Xilinx AI accelerator to test the performance of artificial intelligence algorithms such as CK-NNTest and compare it with other platforms such as Huawei Ascend AI processor.
+
+- title: Bachelor's degree, Shanghai Jiao Tong University, Shanghai, China
+  from: 2017 Sept
+  to: 2021 Aug
+  description: I majored in Electrical and Computer Engineering for my bachelor's degree. During that time, I studied courses like Data Structure and Algorithms, Operating Systems, and Computer Networks. I joined the Advanced Network Laboratory and worked on a data science project in my junior. Together with a Ph.D. student Zhiyao Li, we published our project "A unified task recommendation strategy for realistic mobile crowdsourcing system". 
+

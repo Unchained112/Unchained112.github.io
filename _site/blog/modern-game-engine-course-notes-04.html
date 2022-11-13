@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Modern Game Engine Course Notes 03">
+  <meta property="og:description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine. This part focus on physics system.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>Modern Game Engine Course Notes 03</title>
+  <meta name="description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine. This part focus on physics system.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/unchained112/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/unchained112/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/unchained112/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/unchained112/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/unchained112/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/unchained112/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/unchained112/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>Modern Game Engine Course Notes 03</b></h1>
+
+<p class="post-metadata text-muted">
+  08 November 2022 -  
+  <b>11 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#computer-graphics">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Graphics</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#game-engine">
+      <span class="tag badge badge-pill text-primary border border-primary">Game Engine</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/unchained112/blog/tags#technology">
+      <span class="tag badge badge-pill text-primary border border-primary">Technology</span>
+    </a>
+    </p>
+
+<p>Course from: <a href="https://games104.boomingtech.com/sc/">BoomingTech</a></p>
+
+<h2 id="physics-system">Physics System</h2>
+
+<h3 id="basic-concepts">Basic Concepts</h3>
+
+<p><strong>Physics Actors and Shapes</strong></p>
+
+<p>Actor – Summary</p>
+
+<ul>
+  <li>Static Actor
+    <ul>
+      <li>Not moving</li>
+    </ul>
+  </li>
+  <li>Dynamic Actor
+    <ul>
+      <li>Can be affected by forces/torques/impulses</li>
+    </ul>
+  </li>
+  <li>Trigger
+    <ul>
+      <li>Like static actor, not moving</li>
+      <li>But not blocking</li>
+      <li>Notifies when actors enter or exit</li>
+    </ul>
+  </li>
+  <li>Kinematic Actor
+    <ul>
+      <li>Ignoring physics rules</li>
+      <li>Controlled by gameplay logic directly</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Actor Shapes</p>
+
+<p><img src="/unchained112/assets/GameEngine/ActorShape.png" alt="Actor Shapes" /></p>
+
+<p>Wrap Objects with Physics Shapes</p>
+<ul>
+  <li>Approximated Wrapping</li>
+  <li>Don’t need to be perfect</li>
+  <li>Simplicity</li>
+  <li>Prefer simple shapes (avoid triangle mesh if possible)</li>
+  <li>Least shapes</li>
+</ul>
+
+<p>Shape Properties</p>
+<ul>
+  <li>Mass and density</li>
+  <li>Friction and restitution</li>
+</ul>
+
+<p><strong>Forces</strong></p>
+
+<p>Force</p>
+<ul>
+  <li>We can apply forces to give dynamic objects accelerations, therefore affecting their movements</li>
+  <li>Examples • Gravity</li>
+  <li>Drag</li>
+  <li>Friction</li>
+</ul>
+
+<p>Impulse</p>
+<ul>
+  <li>We can change velocity of actors immediately by applying impulses</li>
+  <li>E.g. simulating an explosion</li>
+</ul>
+
+<p><strong>Movements</strong></p>
+
+<p>Newton’s 1st Law of Motion</p>
+
+<p><code class="language-plaintext highlighter-rouge">v(t + dt) = v(t), x(t + dt) = x(t) + v(t)dt</code></p>
+
+<p>Newton’s 2nd Law of Motion</p>
+
+<p><code class="language-plaintext highlighter-rouge">F = ma, a(t) = dv(t)/dt = d^2x(t)/dt^2</code></p>
+
+<p>Example of Simple Movement</p>
+<ul>
+  <li>Position</li>
+  <li>Orientation</li>
+  <li>Linear Velocity</li>
+  <li>Angular Velocity</li>
+</ul>
+
+<p>Euler’s Method</p>
+
+<p>Explicit (Forward) Euler’s Method</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>v(t + dt) = v(t) + F(t)dt / M
+x(t + dt) = x(t) + v(t)dt
+</code></pre></div></div>
+
+<p>Pros:</p>
+<ul>
+  <li>Easy to calculate, efficient</li>
+</ul>
+
+<p>Cons:</p>
+<ul>
+  <li>Poor stability</li>
+  <li>Energy growing as time progresses</li>
+</ul>
+
+<p>Implicit (Backward) Euler’s Method</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>v(t + dt) = v(t) + F(t + dt)dt / M
+x(t + dt) = x(t) + v(t + dt)dt
+</code></pre></div></div>
+
+<p>Pros:</p>
+<ul>
+  <li>Unconditionally stable</li>
+</ul>
+
+<p>Cons:</p>
+<ul>
+  <li>Expensive to solve</li>
+  <li>Challenging to implement when non-linearity presents</li>
+  <li>Energy attenuates as time
+progresses</li>
+</ul>
+
+<p>Semi-implicit Euler’s Method</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>v(t + dt) = v(t) + F(t)dt / M
+x(t + dt) = x(t) + v(t + dt)dt
+</code></pre></div></div>
+
+<ul>
+  <li>Conditionally stable</li>
+  <li>Easy to calculate, efficient</li>
+  <li>Preserves energy as time progresses</li>
+</ul>
+
+<p><strong>Rigid Body Dynamics</strong></p>
+
+<p>Rigid body Dynamics</p>
+
+<p><img src="/unchained112/assets/GameEngine/RigidbodyDynamics.png" alt="Rigid body Dynamics" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Orientation:
+
+Matrix
+R = [r_xx, r_yx, r_zx
+     r_xy, r_yy, r_zy
+     r_xz, r_yz, r_zz]
+Quaternion
+q = (s, v)
+
+
+// Angular Velocity
+omega = (d theta) / dt  = (v x r) / ||r||^2
+
+// Angular Acceleration 
+alpha = (d omega) / dt = (a x r) / ||r||^2
+
+// Rotational Inertia
+I = R I_0 R^T
+
+// Angular Momentum
+L = I omega
+
+// Torque
+tau = r x F = dL/dt
+</code></pre></div></div>
+<p><img src="/unchained112/assets/GameEngine/RigidSummary.png" alt="Rigid Body Summary" /></p>
+
+<p><strong>Collision Detection</strong></p>
+
+<p>Collision Detection – Two Phases</p>
+<ul>
+  <li>Broad phase
+    <ul>
+      <li>Find intersected rigid body AABBs</li>
+      <li>Potential overlapped rigid body pairs</li>
+    </ul>
+  </li>
+  <li>Narrow phase
+    <ul>
+      <li>Detect overlapping precisely</li>
+      <li>Generate contact information</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Broad Phase</p>
+<ul>
+  <li>Objective
+    <ul>
+      <li>Find intersected rigid body AABBs</li>
+      <li>Potential overlapped rigid body pairs</li>
+    </ul>
+  </li>
+  <li>Two approaches
+    <ul>
+      <li>Space partitioning: i. e. Boundary Volume Hierarchy (BVH) Tree</li>
+      <li>Sort and Sweep</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Broad Phase - BVH 
+<img src="/unchained112/assets/GameEngine/CollisionDetectionBVH.png" alt="Collision Detection BVH" /></p>
+
+<p>Broad Phase - Sort and Sweep</p>
+
+<ol>
+  <li>Sorting Stage (Initialize)</li>
+</ol>
+
+<p>For each axis</p>
+<ul>
+  <li>Sort AABB bounds along each axis when initializing the scene</li>
+  <li>Check AABB bounds of actors along each axis</li>
+  <li>A_max ≥ B_max indicates potential overlap of A and B</li>
+</ul>
+
+<ol>
+  <li>Sweeping Stage (Update)
+    <ul>
+      <li>Only check swapping of bounds</li>
+    </ul>
+    <ul>
+      <li>temporal coherence</li>
+      <li>local steps from frame to frame
+    - Swapping of min and max indicates add/delete potential overlap pair from overlaps set
+    - Swapping of min and min or max and max does not affect overlaps set</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Narrow Phase – Objectives</p>
+<ul>
+  <li>Detect overlapping precisely</li>
+  <li>Generate contact information
+    <ul>
+      <li>Contact manifold: approximated with a set of contact points</li>
+      <li>Contact normal</li>
+      <li>Penetration depth</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Narrow Phase – Three approaches</p>
+<ul>
+  <li>Basic Shape Intersection Test</li>
+  <li>Minkowski Difference-based Methods &amp; GJK Algorithm</li>
+  <li>Separating Axis Theorem</li>
+</ul>
+
+<p><strong>Collision Resolution</strong></p>
+
+<p>Three approaches</p>
+<ul>
+  <li>Applying Penalty Force</li>
+  <li>Solving Velocity Constraints</li>
+  <li>Solving Position Constraints (will be covered in the next lecture)</li>
+</ul>
+
+<p>Solving Constraints</p>
+<ul>
+  <li>Modelling constraints based on Lagrangian mechanics
+    <ul>
+      <li>Collision constraints:
+        <ul>
+          <li>Non-penetration</li>
+          <li>Restitution</li>
+          <li>Friction</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Iterative solver</li>
+</ul>
+
+<p>Approaches:</p>
+<ul>
+  <li>Sequential impulses</li>
+  <li>Semi-implicit integration</li>
+  <li>Non-linear Gauss-Seidel Method</li>
+</ul>
+
+<p>Characteristics:</p>
+<ul>
+  <li>Fast, stable for most cases</li>
+  <li>Commonly used in most physics engines</li>
+</ul>
+
+<p><strong>Scene Query</strong></p>
+
+<p>Raycast</p>
+
+<ul>
+  <li>Intersect a user-defined ray with the whole scene</li>
+  <li>Point, direction, distance and query mode can be defined</li>
+  <li>Multiple hits</li>
+  <li>Closet hit</li>
+  <li>Any hit</li>
+</ul>
+
+<p>Sweep</p>
+<ul>
+  <li>Geometrically similar to raycast</li>
+  <li>Shape and pose can be defined</li>
+  <li>Box, sphere, capsule and convex</li>
+</ul>
+
+<p>Overlap</p>
+<ul>
+  <li>Search a region enclosed by a specified shape for any overlapping objects in the scene</li>
+  <li>Box, sphere, capsule and convex</li>
+</ul>
+
+<p>Collision Group</p>
+<ul>
+  <li>Actor has a collision group property
+    <ul>
+      <li>Player: Pawn</li>
+      <li>Obstacle: Static</li>
+      <li>Movable box: Dynamic</li>
+      <li>Trigger box: Trigger</li>
+      <li>…</li>
+    </ul>
+  </li>
+  <li>Scene query can filter collision groups
+    <ul>
+      <li>Player moving query collision group: (Pawn, Static, Dynamic)</li>
+      <li>Trigger query collision group: (Pawn)</li>
+      <li>…</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Efficiency, Accuracy, and Determinism</strong></p>
+
+<p>Simulation Optimization - Island</p>
+
+<p>Simulation Optimization – Sleeping</p>
+<ul>
+  <li>Simulating and solving all rigid bodies uses lots of resources</li>
+  <li>Introducing sleeping
+    <ul>
+      <li>A rigid body does not move for a period of time</li>
+      <li>Until some external force acts on it</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Continuous Collision Detection</p>
+<ul>
+  <li>Thin obstacle vs. fast moving actors</li>
+  <li>Tunneling</li>
+  <li>Solution to tunneling
+    <ul>
+      <li>Let it be - something unremarkable</li>
+      <li>Make the floor thicker - boundary air wall</li>
+    </ul>
+  </li>
+  <li>Time-of-Impact (TOI) – Conservative advancement
+    <ul>
+      <li>Estimate a “safe” time substep A and B won’t collide</li>
+      <li>Advance A and B by the “safe” substep</li>
+      <li>Repeat until the distance is below a threshold</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Deterministic Simulation</p>
+<ul>
+  <li>Multiplayer game with gameplay-impacting physics</li>
+  <li>Small error causes butterfly effect • Synchronizing states requires bandwidth</li>
+  <li>Synchronizing inputs requires deterministic simulations</li>
+</ul>
+
+<p>Same old states + same inputs = same new states</p>
+
+<p>Requirements:</p>
+<ul>
+  <li>Fixed step of physics simulation</li>
+  <li>Deterministic simulation solving sequence</li>
+  <li>Float point consistency</li>
+</ul>
+
+<h3 id="applications">Applications</h3>
+
+<p><strong>Character Controller</strong></p>
+
+<p>Character Controller vs. Rigid Body Dynamics</p>
+<ul>
+  <li>Controllable rigid body interaction</li>
+  <li>Almost infinite friction / No restitution</li>
+  <li>Accelerate and brake change direction almost instantly and teleport</li>
+</ul>
+
+<p>Legacy Hack in Character Control</p>
+<ul>
+  <li>A lot of carefully tweaked values provide a good feeling</li>
+  <li>Legacy code in the industry</li>
+</ul>
+
+<p>Build a Controller in Physics System</p>
+<ul>
+  <li>Kinematic Actor
+    <ul>
+      <li>Not affected by physics rules</li>
+      <li>Push other objects</li>
+    </ul>
+  </li>
+  <li>Shape: Humanoids
+    <ul>
+      <li>Capsule</li>
+      <li>Box</li>
+      <li>Convex</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Collide with environment</p>
+<ul>
+  <li>Collision detection with environment
+    <ul>
+      <li>Sweep test</li>
+    </ul>
+  </li>
+  <li>Auto slide with wall
+    <ul>
+      <li>Calculate tangent direction</li>
+      <li>Move along tangent direction</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Auto Stepping and its Problem</p>
+<ul>
+  <li>Sweep with step offset</li>
+  <li>Virtual gap</li>
+</ul>
+
+<p>Slope Limits and Force Sliding Down</p>
+<ul>
+  <li>Max climb slopes</li>
+  <li>Slide down on steep slopes</li>
+</ul>
+
+<p>Controller Volume Update</p>
+<ul>
+  <li>Change the controller volume size at runtime, e.g. crouching</li>
+  <li>Overlap test before update to avoid insertion inside objects</li>
+</ul>
+
+<p>Controller Push Objects</p>
+<ul>
+  <li>Hit Callback when character controller collides with dynamic actor</li>
+  <li>Apply force to dynamic actor</li>
+</ul>
+
+<p>Standing on Moving Platform</p>
+
+<p><strong>Ragdoll</strong></p>
+
+<p>Map Skeleton to Rigid Bodies</p>
+<ul>
+  <li>Bind key joints with rigid bodies</li>
+</ul>
+
+<p>Importance of Joint Constraints</p>
+<ul>
+  <li>The constraints should match the anatomical skeleton</li>
+  <li>Adjust by developer</li>
+</ul>
+
+<p>Carefully Tweaked Constraints</p>
+<ul>
+  <li>The rigid bodies should fit the mesh as much as possible</li>
+</ul>
+
+<p>Animating Skeleton by Ragdoll</p>
+<ul>
+  <li>Update skeleton per frame
+    <ul>
+      <li>Intermediate joints -&gt; Bind pose</li>
+      <li>Active joints -&gt; Rigid body pose</li>
+      <li>Leaf joints -&gt; Animation pose</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Blending between Animation and Ragdoll</p>
+<ul>
+  <li>Kinematic state ragdoll
+    <ul>
+      <li>Rigid bodies are driven by animation</li>
+    </ul>
+  </li>
+  <li>Dynamic state ragdoll
+    <ul>
+      <li>Rigid bodies are simulated by physics</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Powered Ragdoll – Physics-Animation Blending</p>
+<ul>
+  <li>Blend between the animation pose and the physics pose</li>
+</ul>
+
+<p><strong>Clothing</strong></p>
+
+<p>Animation-based Cloth Simulation</p>
+<ul>
+  <li>Pipeline
+    <ul>
+      <li>Animators produce the animation of bones</li>
+      <li>Generate more animation data via DCC tools</li>
+      <li>Engine replays the animation when running</li>
+    </ul>
+  </li>
+  <li>Pros
+    <ul>
+      <li>Cheap</li>
+      <li>Controllable</li>
+    </ul>
+  </li>
+  <li>Cons
+    <ul>
+      <li>Not realistic</li>
+      <li>Could not interact with environment</li>
+      <li>The designation of clothes is limited</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Rigid Body-based Cloth Simulation</p>
+<ul>
+  <li>Pipeline
+    <ul>
+      <li>The bones of cloth are bound with rigid bodies and constraints</li>
+      <li>The effect are solved by physics engine</li>
+    </ul>
+  </li>
+  <li>Pros
+    <ul>
+      <li>Cheap</li>
+      <li>Interactive</li>
+    </ul>
+  </li>
+  <li>Cons
+    <ul>
+      <li>Undetermined quality</li>
+      <li>Work load for animators</li>
+      <li>Not robust</li>
+      <li>Needs physics engine with high performance</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Mesh-based Cloth Simulation</p>
+<ol>
+  <li>Render mesh -&gt; Physics mesh</li>
+  <li>Paint cloth simulation constraints, add maximum radius constraints to each vertex</li>
+  <li>Set cloth physical material</li>
+  <li>Cloth Solver - Mass-Spring system:
+    <ul>
+      <li>Spring force: <code class="language-plaintext highlighter-rouge">F_s = k_spring dx</code></li>
+      <li>Spring damping force: <code class="language-plaintext highlighter-rouge">F_D = -k_damping v</code></li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/unchained112/assets/GameEngine/ClothSolver.png" alt="Cloth Solver" /></p>
+
+<p>Verlet Integration</p>
+<ul>
+  <li>Verlet Integration does not need to consider about velocity when calculate, so it is faster.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x(t + dt) = 2x(t) - x(t - dt) + a(t)(dt)^2
+</code></pre></div></div>
+
+<p>Cloth Solver - Position Based Dynamics (Advanced choice)</p>
+
+<p>Self Collision</p>
+<ul>
+  <li>As a kind of flexible material, cloth can fold and collide with itself</li>
+  <li>This is pretty tricky in real-time game physics simulation</li>
+  <li>Common solutions:
+    <ul>
+      <li>Make the cloth thicker (simplest)</li>
+      <li>Use many substeps in one physics simulation step</li>
+      <li>Enforce maximal velocity</li>
+      <li>Introduce contact constraints and friction constraints</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Destruction</strong></p>
+
+<p>Destruction is Important</p>
+<ul>
+  <li>Not only a visual effect</li>
+  <li>Making the game world much more vivid and immersive</li>
+  <li>A key mechanism in many games</li>
+</ul>
+
+<p>Chunk Hierarchy</p>
+<ul>
+  <li>Organize the fractured chunks level by level</li>
+  <li>Different damage threshold for each level</li>
+</ul>
+
+<p>Connectivity Graph - Construct connectivity graph for chunks at the deepest level</p>
+<ul>
+  <li>One node per chunk</li>
+  <li>One edge if two chunks share a face</li>
+  <li>Update at runtime</li>
+</ul>
+
+<p>Connectivity Value - The value on each edge in the connectivity graph</p>
+<ul>
+  <li>How much damage needed to break the edge</li>
+  <li>Update after each damage</li>
+  <li>Break the edge when the value goes to 0</li>
+</ul>
+
+<p>Damage Calculation</p>
+
+<ol>
+  <li>Calculate damage from impulse at the impact point
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">I</code> : the applied impulse (e.g. by collision)</li>
+      <li><code class="language-plaintext highlighter-rouge">H</code> : the material hardness of the rigid body</li>
+      <li>The damage at the impact point is <code class="language-plaintext highlighter-rouge">D = I / H</code></li>
+    </ul>
+  </li>
+  <li>Damage distribution
+<img src="/unchained112/assets/GameEngine/DamageDistribution.png" alt="Damage Distribution" /></li>
+</ol>
+
+<p>Build Chunks by Voronoi Diagram</p>
+<ul>
+  <li>A partition of a plane into regions close to each of seeds</li>
+</ul>
+
+<p>Voronoi Cell</p>
+<ul>
+  <li>the region for each seed</li>
+  <li>Points in the cell are closer to the seed than to any other</li>
+</ul>
+
+<p>Fracturing with Voronoi Diagram - 2D Mesh</p>
+
+<p>Pick N random points within the bounding rect of the mesh</p>
+<ul>
+  <li>Construct the Voronoi diagram</li>
+  <li>Intersect each Voronoi cell with the mesh to get all fractured chunks</li>
+</ul>
+
+<p>Fracturing with Voronoi Diagram - 3D Mesh</p>
+
+<p>Similar to the 2D situation, but not trivial</p>
+<ul>
+  <li>New triangles need to be generated for all fracture surfaces</li>
+</ul>
+
+<p>Generate triangles for all fracture surfaces</p>
+<ul>
+  <li>Usually by Delaunay Triangulation(is dual to Voronoi diagram)</li>
+  <li>New texture and texture coordinates</li>
+</ul>
+
+<p>Different Fracture Patterns with Voronoi Diagram</p>
+<ul>
+  <li>Uniform random pattern</li>
+  <li>Clustered pattern</li>
+  <li>Radial pattern</li>
+  <li>etc.</li>
+</ul>
+
+<p>Handle destruction after collision</p>
+<ul>
+  <li>New rigid bodies may be generated after destruction</li>
+</ul>
+
+<p>Make it more realistic - Fracture is not enough</p>
+<ul>
+  <li>Sound effects</li>
+  <li>Particle effects</li>
+  <li>Navigation updated</li>
+</ul>
+
+<p>Issues with Destruction</p>
+<ul>
+  <li>Add destruction with caution
+    <ul>
+      <li>Numerous debris may cause larger performance overhead</li>
+    </ul>
+  </li>
+  <li>Empirical when artists design the destruction effect
+    <ul>
+      <li>Many parameters to be tuned, e.g. fracture parameters</li>
+      <li>Produce performance highly depends on the authoring tool</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Vehicle</strong></p>
+
+<p>Vehicle Mechanism Modeling</p>
+<ul>
+  <li>A rigid body actor
+    <ul>
+      <li>Shapes for the chassis and wheels</li>
+      <li>Scene query for the suspension simulation</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Traction Force
+<img src="/unchained112/assets/GameEngine/TractionForce.png" alt="Traction Force" /></p>
+
+<p>Suspensions Force
+<img src="/unchained112/assets/GameEngine/SuspensionsForce.png" alt="Suspensions Force" /></p>
+
+<p>Tire Forces
+<img src="/unchained112/assets/GameEngine/TireForces.png" alt="Tire Forces" /></p>
+
+<p>Center of Mass</p>
+<ul>
+  <li>Affects handling, acceleration, and traction</li>
+  <li>Should be a tunable value</li>
+  <li>Affects the stability of the vehicle in the air
+    <ul>
+      <li>front-heavy -&gt; dive</li>
+      <li>rear-heavy -&gt; stabilize</li>
+    </ul>
+  </li>
+  <li>Affects vehicle steering control
+    <ul>
+      <li>front-heavy -&gt; understeering</li>
+      <li>rear-heavy -&gt; oversteering</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Weight Transfer</p>
+<ul>
+  <li>Affects the maximum traction force per wheel</li>
+</ul>
+
+<p>Steering angles</p>
+<ul>
+  <li>Same steering angle causes slipping</li>
+  <li>Ackermann steering</li>
+</ul>
+
+<p><strong>Advanced Physics : PBD/XPBD</strong></p>
+
+<p><em>Note: only for reference</em></p>
+
+<p>Position Based Dynamics PBD - Constraints Projection</p>
+
+<p><img src="/unchained112/assets/GameEngine/PBD.png" alt="PBD" /></p>
+
+<p>Advantages of PBD</p>
+<ul>
+  <li>Projecting constraints to position corrections</li>
+  <li>Fast, stable for most cases</li>
+  <li>Hard to control constraint satisfaction</li>
+  <li>Cannot prioritize collision constraints over others</li>
+  <li>Commonly used for cloth simulation in games</li>
+  <li>NVIDIA FleX</li>
+</ul>
+
+<p>Extended Position Based Dynamics (XPBD)</p>
+<ul>
+  <li>Use compliances as inverse of constraint stiffness to handle infinite stiffness constraints (rigid body)</li>
+  <li>Reintroduce rigid body orientation to XPBD for rigid body simulation application</li>
+  <li>Unreal Chaos physics engine</li>
+</ul>
+
+
+
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>
