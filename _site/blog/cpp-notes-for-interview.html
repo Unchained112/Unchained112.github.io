@@ -28,10 +28,10 @@
   <title>C++ Notes for Interview</title>
   <meta name="description" content="C++ notes used as a structure to review for interview.">
 
-  <link rel="shortcut icon" type="image/x-icon" href="/unchained112.github.io/assets/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
   <!-- Theme style -->
-  <script src="/unchained112.github.io/assets/js/theme.js"></script>
+  <script src="/assets/js/theme.js"></script>
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
@@ -43,7 +43,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="/unchained112.github.io/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
 
@@ -52,18 +52,18 @@
   <main class="flex-shrink-0 container mt-5">
     <nav class="navbar navbar-expand-lg navbar-themed">
 
-  <a class="navbar-brand" href="/unchained112.github.io/"><h5><b>Bosen Cheng</b></h5></a>
+  <a class="navbar-brand" href="/"><h5><b>Bosen Cheng</b></h5></a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <i class="fas fa-1x fa-bars text-themed"></i>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/unchained112.github.io/projects/">Projects</a>
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
 
-      <a class="nav-item nav-link active" href="/unchained112.github.io/blog/">Blog</a>
+      <a class="nav-item nav-link active" href="/blog/">Blog</a>
 
-      <a class="nav-item nav-link " href="/unchained112.github.io/about/">About</a>
+      <a class="nav-item nav-link " href="/about/">About</a>
 
       
 
@@ -81,11 +81,11 @@
 
   <br>Tags: 
     
-    <a class="text-decoration-none no-underline" href="/unchained112.github.io/blog/tags#computer-science">
+    <a class="text-decoration-none no-underline" href="/blog/tags#computer-science">
       <span class="tag badge badge-pill text-primary border border-primary">Computer Science</span>
     </a>
     
-    <a class="text-decoration-none no-underline" href="/unchained112.github.io/blog/tags#c">
+    <a class="text-decoration-none no-underline" href="/blog/tags#c">
       <span class="tag badge badge-pill text-primary border border-primary">C++</span>
     </a>
     </p>
@@ -113,7 +113,7 @@ When accessing a member function of a class through a pointer:</p>
 <ul>
   <li>If the function is a non-virtual function, the compiler will find the function according to the type of the pointer; that is, the function of the pointer’s class will be called.</li>
   <li>If the function is a virtual function, and the derived class has a function with the same name to override it, then the compiler will find the function according to the pointer; The reason why the compiler can find the virtual function through the object pointed to by the pointer is because the virtual function table is additionally added when the object is created. If there is a virtual function in a class, an additional array will be added when creating an object of this class, and each element in the array is the entry address of the virtual function. However, the array and the object are stored separately. In order to associate the object with the array, the compiler also inserts a pointer in the object to point to the starting position of the array. The array here is the virtual function table (virtual function table), abbreviated as vtable. See the following image:
-<img src="/unchained112.github.io/assets/CppNotes/vtable.png" alt="Vtable" /></li>
+<img src="/assets/CppNotes/vtable.png" alt="Vtable" /></li>
   <li>The call of the virtual function is determined at runtime by looking up the function address in the virtual function table.</li>
   <li>Virtual functions exist in classes, and different class objects share a virtual function table (in order to save memory space).</li>
 </ul>
@@ -458,9 +458,9 @@ When accessing a member function of a class through a pointer:</p>
 
 <p>Two images below offer a clear view of data structures in STL.</p>
 
-<p><img src="/unchained112.github.io/assets/CppNotes/stl_data1.png" alt="Adaptive Unordered" /></p>
+<p><img src="/assets/CppNotes/stl_data1.png" alt="Adaptive Unordered" /></p>
 
-<p><img src="/unchained112.github.io/assets/CppNotes/stl_data2.png" alt="Sequence Ordered" /></p>
+<p><img src="/assets/CppNotes/stl_data2.png" alt="Sequence Ordered" /></p>
 
 <p>How are the STL containers implemented?</p>
 

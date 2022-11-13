@@ -28,10 +28,10 @@
   <title>Modern Game Engine Course Notes 02</title>
   <meta name="description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine. This part focus on rendering techniques.">
 
-  <link rel="shortcut icon" type="image/x-icon" href="/unchained112.github.io/assets/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
   <!-- Theme style -->
-  <script src="/unchained112.github.io/assets/js/theme.js"></script>
+  <script src="/assets/js/theme.js"></script>
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
@@ -43,7 +43,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="/unchained112.github.io/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
 
@@ -52,18 +52,18 @@
   <main class="flex-shrink-0 container mt-5">
     <nav class="navbar navbar-expand-lg navbar-themed">
 
-  <a class="navbar-brand" href="/unchained112.github.io/"><h5><b>Bosen Cheng</b></h5></a>
+  <a class="navbar-brand" href="/"><h5><b>Bosen Cheng</b></h5></a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <i class="fas fa-1x fa-bars text-themed"></i>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/unchained112.github.io/projects/">Projects</a>
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
 
-      <a class="nav-item nav-link active" href="/unchained112.github.io/blog/">Blog</a>
+      <a class="nav-item nav-link active" href="/blog/">Blog</a>
 
-      <a class="nav-item nav-link " href="/unchained112.github.io/about/">About</a>
+      <a class="nav-item nav-link " href="/about/">About</a>
 
       
 
@@ -81,15 +81,15 @@
 
   <br>Tags: 
     
-    <a class="text-decoration-none no-underline" href="/unchained112.github.io/blog/tags#computer-graphics">
+    <a class="text-decoration-none no-underline" href="/blog/tags#computer-graphics">
       <span class="tag badge badge-pill text-primary border border-primary">Computer Graphics</span>
     </a>
     
-    <a class="text-decoration-none no-underline" href="/unchained112.github.io/blog/tags#game-engine">
+    <a class="text-decoration-none no-underline" href="/blog/tags#game-engine">
       <span class="tag badge badge-pill text-primary border border-primary">Game Engine</span>
     </a>
     
-    <a class="text-decoration-none no-underline" href="/unchained112.github.io/blog/tags#technology">
+    <a class="text-decoration-none no-underline" href="/blog/tags#technology">
       <span class="tag badge badge-pill text-primary border border-primary">Technology</span>
     </a>
     </p>
@@ -100,7 +100,7 @@
 
 <p>A heavily optimized practical software framework to fulfill the critical rendering requirements of games on modern hardware (PC, console and mobiles).</p>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/OutlineofRendering.png" alt="Outline of Rendering" /></p>
+<p><img src="/assets/GameEngine/OutlineofRendering.png" alt="Outline of Rendering" /></p>
 
 <h3 id="building-blocks-of-rendering">Building Blocks of Rendering</h3>
 
@@ -119,7 +119,7 @@ Single Instruction Multiple Threads</p>
 
 <p>GPU Architecture</p>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/GPUArch.png" alt="GPU Arch" /></p>
+<p><img src="/assets/GameEngine/GPUArch.png" alt="GPU Arch" /></p>
 
 <p>Data Flow from CPU to GPU</p>
 
@@ -228,7 +228,7 @@ Single Instruction Multiple Threads</p>
 </ul>
 
 <p>The Rendering Equation
-<img src="/unchained112.github.io/assets/GameEngine/RenderingEq.png" alt="Rendering Equation" /></p>
+<img src="/assets/GameEngine/RenderingEq.png" alt="Rendering Equation" /></p>
 
 <p>The 1st Challenge: How to get incoming radiance for any given incoming direction.</p>
 <ul>
@@ -237,10 +237,10 @@ Single Instruction Multiple Threads</p>
 </ul>
 
 <p>The 2nd Challenge: Integral of lighting and scatting function on hemisphere is expensive.
-<img src="/unchained112.github.io/assets/GameEngine/2ndChallenge.png" alt="2nd Challenge" /></p>
+<img src="/assets/GameEngine/2ndChallenge.png" alt="2nd Challenge" /></p>
 
 <p>The 3rd Challenge: To evaluate incoming radiance, we have to compute yet another integral, i.e. rendering equation is recursive.
-<img src="/unchained112.github.io/assets/GameEngine/3rdChallenge.png" alt="3rd Challenge" /></p>
+<img src="/assets/GameEngine/3rdChallenge.png" alt="3rd Challenge" /></p>
 
 <h3 id="blinn-phong-model-simple-and-useful">Blinn-Phong Model: Simple and Useful</h3>
 
@@ -258,7 +258,7 @@ Single Instruction Multiple Threads</p>
 <p>Already obsolete method: planar shadow, shadow volume, projective texture.</p>
 
 <p>Shadow Map:
-<img src="/unchained112.github.io/assets/GameEngine/ShadowMap.png" alt="Shadow Map" /></p>
+<img src="/assets/GameEngine/ShadowMap.png" alt="Shadow Map" /></p>
 
 <h3 id="pre-computed-global-illumination">Pre-computed Global Illumination</h3>
 
@@ -299,7 +299,7 @@ Single Instruction Multiple Threads</p>
 <h3 id="physical-based-material">Physical-Based Material</h3>
 
 <p>BRDF Model Based on Microfacet
-<img src="/unchained112.github.io/assets/GameEngine/BRDF.png" alt="BRDF" /></p>
+<img src="/assets/GameEngine/BRDF.png" alt="BRDF" /></p>
 
 <p>Disney Principled BRDF</p>
 
@@ -313,7 +313,7 @@ Single Instruction Multiple Threads</p>
 </ul>
 
 <p>PBR Specular Glossiness
-<img src="/unchained112.github.io/assets/GameEngine/PBR_SG.png" alt="BRDF" /></p>
+<img src="/assets/GameEngine/PBR_SG.png" alt="BRDF" /></p>
 
 <p>PBR Metallic Roughness</p>
 
@@ -407,7 +407,7 @@ Single Instruction Multiple Threads</p>
 
 <p><strong>Sky</strong></p>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/AnaylticSky.png" alt="Analytic Atmosphere Appearance Modeling" /></p>
+<p><img src="/assets/GameEngine/AnaylticSky.png" alt="Analytic Atmosphere Appearance Modeling" /></p>
 
 <p>Participating Media</p>
 <ul>
@@ -415,9 +415,9 @@ Single Instruction Multiple Threads</p>
   <li>Interact differently with light depending on its composition</li>
 </ul>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/ParticipatingMedia.png" alt="Participating Media" /></p>
+<p><img src="/assets/GameEngine/ParticipatingMedia.png" alt="Participating Media" /></p>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/VRE.png" alt="Volume Rendering Equation" /></p>
+<p><img src="/assets/GameEngine/VRE.png" alt="Volume Rendering Equation" /></p>
 
 <p>Real Physics in Atmosphere</p>
 
@@ -494,13 +494,13 @@ Single Instruction Multiple Threads</p>
 
 <p>Cloud Density Model</p>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/RayMarchingCloud.png" alt="Ray Marching Cloud" /></p>
+<p><img src="/assets/GameEngine/RayMarchingCloud.png" alt="Ray Marching Cloud" /></p>
 
 <h2 id="render-pipeline-post-process-and-everything">Render Pipeline, Post-process and Everything</h2>
 
 <h3 id="ambient-occlusion">Ambient Occlusion</h3>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/AO.png" alt="Ambient Occlusion" /></p>
+<p><img src="/assets/GameEngine/AO.png" alt="Ambient Occlusion" /></p>
 
 <p>Precomputed AO: Using ray tracing to compute the AO offline and store the result into texture, which is widely used in object modeling process</p>
 <ul>
@@ -553,7 +553,7 @@ Single Instruction Multiple Threads</p>
 </ul>
 
 <p>Height Fog
-<img src="/unchained112.github.io/assets/GameEngine/HeightFog.png" alt="Height Fog" /></p>
+<img src="/assets/GameEngine/HeightFog.png" alt="Height Fog" /></p>
 
 <p>Voxel-based Volumetric Fog</p>
 <ul>
@@ -624,7 +624,7 @@ Single Instruction Multiple Threads</p>
   <li>The purpose of the Tone Mapping function is to map the wide range of high dynamic range (HDR) colors into standard dynamic range (SDR) that a display can output</li>
 </ul>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/FilmicCurve.png" alt="Filmic Curve" /></p>
+<p><img src="/assets/GameEngine/FilmicCurve.png" alt="Filmic Curve" /></p>
 
 <p>ACES Academy Color Encoding System</p>
 <ul>
@@ -676,7 +676,7 @@ Single Instruction Multiple Threads</p>
 
 <p>Deferred Rendering</p>
 
-<p><img src="/unchained112.github.io/assets/GameEngine/DeferredRendering.png" alt="Deferred Rendering" /></p>
+<p><img src="/assets/GameEngine/DeferredRendering.png" alt="Deferred Rendering" /></p>
 
 <ul>
   <li>Pros
