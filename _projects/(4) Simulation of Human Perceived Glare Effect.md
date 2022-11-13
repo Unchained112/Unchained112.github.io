@@ -1,7 +1,7 @@
 ---
 name:  Simulation of Human Perceived Glare Effect
 tools: [Image Processing, Computer Graphics, C++]
-image: https://imgur.com/fG78Rqu
+image: https://imgur.com/fG78Rqu.png
 description: This is a project aims to simulate the human perceived glare effects given an image based on the biological and physical structure of human eyes.
 ---
 
@@ -13,7 +13,7 @@ To be honest, this is a late summary almost one year after I finished this proje
 
 The glare effect is an illusion when a bright region appears self-luminous. One typical situation is when you are walking at night, you could be easily affected by a car's light that is driving towards you. This makes it a problem that our sponsor, Hasco Vision, wants to consider when designing a car light. To address this problem, we aim to simulate the process and generate the glare effect given an image.
 
-![Car Light Glare](https://imgur.com/NISc3VM)
+![Car Light Glare](https://imgur.com/NISc3VM.png)
 
 ## Concept Generation
 
@@ -21,7 +21,7 @@ To start with, we think of the problem from two perspectives. On the one hand, w
 
 By reviewing previous research, we have an overall idea of the solution. In computer graphics, generating blooming could be done in three procedures: detect the light area with a threshold; use gaussian blur to produce the bloom from the light area; add the bloom back to the image. Biologically, the scattering in the cornea, lens, and retina most contribute to the observed glare effect. Besides, the scattering of light could be modeled by a function called Point Spread Function. 
 
-![Eye Structure](https://imgur.com/wIEowF9)
+![Eye Structure](https://imgur.com/wIEowF9.png)
 
 ## Design Description
 
