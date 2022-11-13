@@ -21,12 +21,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Modern Game Engine Assignment">
-  <meta property="og:description" content="Modern Game Engine - Assignment Report (just for myself).">
+  <meta property="og:title" content="Procedural systems for urban forest generation">
+  <meta property="og:description" content="This project devised a system for automatically generating trees in vegetated areas using satellite imagery.">
   <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
 
-  <title>Modern Game Engine Assignment</title>
-  <meta name="description" content="Modern Game Engine - Assignment Report (just for myself).">
+  <title>Procedural systems for urban forest generation</title>
+  <meta name="description" content="This project devised a system for automatically generating trees in vegetated areas using satellite imagery.">
 
   <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
@@ -59,9 +59,9 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
 
-      <a class="nav-item nav-link active" href="/blog/">Blog</a>
+      <a class="nav-item nav-link " href="/blog/">Blog</a>
 
       <a class="nav-item nav-link " href="/about/">About</a>
 
@@ -73,63 +73,13 @@
 
 </nav>
     <div class="col-lg-10 mx-auto mt-5 markdown-body">
-  <h1><b>Modern Game Engine Assignment</b></h1>
+  <h2 id="foreword">Foreword</h2>
 
-<p class="post-metadata text-muted">
-  12 November 2022 -  
-  <b>less than 1 min read time</b>
+<h2 id="problem-statement">Problem Statement</h2>
 
-  <br>Tags: 
-    
-    <a class="text-decoration-none no-underline" href="/blog/tags#computer-graphics">
-      <span class="tag badge badge-pill text-primary border border-primary">Computer Graphics</span>
-    </a>
-    
-    <a class="text-decoration-none no-underline" href="/blog/tags#game-engine">
-      <span class="tag badge badge-pill text-primary border border-primary">Game Engine</span>
-    </a>
-    
-    <a class="text-decoration-none no-underline" href="/blog/tags#technology">
-      <span class="tag badge badge-pill text-primary border border-primary">Technology</span>
-    </a>
-    </p>
+<h2 id="concept-generation">Concept Generation</h2>
 
-<h2 id="install-piccolo-game-engine">Install Piccolo Game Engine</h2>
-
-<p><a href="https://github.com/BoomingTech/Piccolo">GitHub Repo for Piccolo Game Engine</a></p>
-
-<p>Firstly, Following the instructions to set up the project for the device platform.</p>
-
-<p>In my case, I am using a MacBook Air M1. Everything is supposed to be fine when running</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cmake -S . -B build -G "Xcode"
-</code></pre></div></div>
-<p>However, my case report CMake error for no CMAKE_C_COMPILER and CMAKE_CXX_COMPILER. Command <code class="language-plaintext highlighter-rouge">sudo xcode-select --reset</code> is not working here. To solve it, I needed to first run</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrun -find c++
-xcrun -find cc
-</code></pre></div></div>
-<p>Then, run</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cmake -D CMAKE_C_COMPILER="/path/to/your/c/compiler/executable" -D CMAKE_CXX_COMPILER="/path/to/your/cpp/compiler/executable" -S . -B build -G "Xcode"
-</code></pre></div></div>
-
-<p>Now, the project is ready to be open in Xcode. Here, there are also two settings one should pay attention:</p>
-
-<ol>
-  <li>Set the default C++ complier to be C++17 since this project utilized some new features.</li>
-</ol>
-
-<p><img src="/assets/GameEngineAssignment/CompilerVersion.png" alt="Compiler Version" /></p>
-
-<ol>
-  <li>Set the PiccoloEditor project as the Startup project for building.</li>
-</ol>
-
-<p><img src="/assets/GameEngineAssignment/PiccoloEditor.png" alt="PiccoloEditor" /></p>
-
-<p>Now, the editor should looks like:</p>
-
-<h2 id="color-grading">Color Grading</h2>
-
-
+<h2 id="design-description">Design Description</h2>
 
 </div>
   </main>

@@ -36,5 +36,8 @@ Now, the project is ready to be open in Xcode. Here, there are also two settings
 
 ![PiccoloEditor]({{site.baseurl}}/assets/GameEngineAssignment/PiccoloEditor.png)
 
+Now, the editor should looks like:
+
+
 
 ## Color Grading 

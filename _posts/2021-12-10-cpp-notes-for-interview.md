@@ -1,5 +1,5 @@
 ---
-title: C++ Notes for Interview
+title: C++ (with STL Data Structures and Algorithms) Notes for Interview
 tags: [Computer Science, C++]
 style: fill
 color: secondary
@@ -11,7 +11,7 @@ description: C++ notes used as a structure to review for interview.
 
 I have been wanting to become a game developer since I studied and tried some directions in Computer Science during my bachelor's study. The idea behind this is that even if I cannot get away with programming, at least I could work on something that I love. However, this is a start of a nightmare until now. I found there is just so much to learn in order to just get a job in the game industry. 
 
-Thus, I decided to document what I learned as a reference for later review, and as a record of my growth. All those things start with this summary of C++. If you are reading this, I would assume you already have some background knowledge about programming, as the content won't begin with very basic knowledge.
+Thus, I decided to document what I learned as a reference for later review, and as a record of my growth. All those things start with this summary of C++. If you are reading this, I would assume you already have some background knowledge about programming, as the content won't begin with very basic knowledge. I would be glad if you find this blog helpful!
 
 ## Polymorphism and Virtual Function
 
