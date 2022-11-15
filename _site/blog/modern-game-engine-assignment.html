@@ -77,7 +77,7 @@
 
 <p class="post-metadata text-muted">
   12 November 2022 -  
-  <b>less than 1 min read time</b>
+  <b>5 mins read time</b>
 
   <br>Tags: 
     
@@ -127,7 +127,81 @@ xcrun -find cc
 
 <p>Now, the editor should looks like:</p>
 
+<p><img src="/assets/GameEngineAssignment/Editor.png" alt="PiccoloEditor" /></p>
+
 <h2 id="color-grading">Color Grading</h2>
+
+<p>In pilot/engine/shader/glsl/color_grading.frag, my first version of implementation is</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">layout</span><span class="p">(</span><span class="n">input_attachment_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">set</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">binding</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">uniform</span> <span class="n">highp</span> <span class="n">subpassInput</span> <span class="n">in_color</span><span class="p">;</span>
+<span class="n">layout</span><span class="p">(</span><span class="n">set</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">binding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">color_grading_lut_texture_sampler</span><span class="p">;</span>
+<span class="n">layout</span><span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">out</span> <span class="n">highp</span> <span class="n">vec4</span> <span class="n">out_color</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">highp</span> <span class="n">ivec2</span> <span class="n">lut_tex_size</span> <span class="o">=</span> <span class="n">textureSize</span><span class="p">(</span><span class="n">color_grading_lut_texture_sampler</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">_COLORS</span>      <span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="n">lut_tex_size</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+    <span class="n">highp</span> <span class="n">vec4</span> <span class="n">color</span>         <span class="o">=</span> <span class="n">subpassLoad</span><span class="p">(</span><span class="n">in_color</span><span class="p">).</span><span class="n">rgba</span><span class="p">;</span>
+    
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">cell</span>         <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="mf">15.0</span><span class="p">);</span> <span class="c1">// len, 15 currently</span>
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">x_half</span>       <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="mf">256.0</span><span class="p">;</span> <span class="c1">// read from center 0.5/width</span>
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">y_half</span>       <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="mf">16.0</span><span class="p">;</span> <span class="c1">// read from center 0.5/height</span>
+    <span class="n">highp</span> <span class="n">vec2</span> <span class="n">uv</span>            <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span>
+        <span class="n">x_half</span> <span class="o">+</span> <span class="n">color</span><span class="p">.</span><span class="n">r</span> <span class="o">/</span> <span class="n">_COLORS</span> <span class="o">*</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">)</span> <span class="o">+</span> <span class="n">cell</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">,</span>
+        <span class="n">y_half</span> <span class="o">+</span> <span class="n">color</span><span class="p">.</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">));</span>
+    
+    <span class="n">highp</span> <span class="n">vec4</span> <span class="n">color_sampled</span> <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">color_grading_lut_texture_sampler</span><span class="p">,</span> <span class="n">uv</span><span class="p">);</span>
+    <span class="n">out_color</span> <span class="o">=</span> <span class="n">color_sampled</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The result looks like</p>
+
+<p><img src="/assets/GameEngineAssignment/Res1.png" alt="Result 1" /></p>
+
+<p>However, this is method did not interpolate the color between blue channel. To achieve this, we do another interpolation between both ceil and floor cells.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">layout</span><span class="p">(</span><span class="n">input_attachment_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">set</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">binding</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">uniform</span> <span class="n">highp</span> <span class="n">subpassInput</span> <span class="n">in_color</span><span class="p">;</span>
+<span class="n">layout</span><span class="p">(</span><span class="n">set</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">binding</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="n">uniform</span> <span class="n">sampler2D</span> <span class="n">color_grading_lut_texture_sampler</span><span class="p">;</span>
+<span class="n">layout</span><span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">out</span> <span class="n">highp</span> <span class="n">vec4</span> <span class="n">out_color</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">highp</span> <span class="n">ivec2</span> <span class="n">lut_tex_size</span> <span class="o">=</span> <span class="n">textureSize</span><span class="p">(</span><span class="n">color_grading_lut_texture_sampler</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">_COLORS</span>      <span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="n">lut_tex_size</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+    <span class="n">highp</span> <span class="n">vec4</span> <span class="n">color</span>         <span class="o">=</span> <span class="n">subpassLoad</span><span class="p">(</span><span class="n">in_color</span><span class="p">).</span><span class="n">rgba</span><span class="p">;</span>
+    
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">cell</span>         <span class="o">=</span> <span class="n">color</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="mf">15.0</span><span class="p">;</span> <span class="c1">// for interpoation</span>
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">cell_l</span>       <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="mf">15.0</span><span class="p">);</span> <span class="c1">// len, 15 currently</span>
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">cell_r</span>       <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="mf">15.0</span><span class="p">);</span>
+    
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">x_half</span>       <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="mf">256.0</span><span class="p">;</span> <span class="c1">// read from center 0.5/width</span>
+    <span class="n">highp</span> <span class="kt">float</span> <span class="n">y_half</span>       <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="mf">16.0</span><span class="p">;</span> <span class="c1">// read from center 0.5/height</span>
+    
+    <span class="n">highp</span> <span class="n">vec2</span> <span class="n">uv_l</span>          <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span>
+        <span class="n">x_half</span> <span class="o">+</span> <span class="n">color</span><span class="p">.</span><span class="n">r</span> <span class="o">/</span> <span class="n">_COLORS</span> <span class="o">*</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">)</span> <span class="o">+</span> <span class="n">cell_l</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">,</span>
+        <span class="n">y_half</span> <span class="o">+</span> <span class="n">color</span><span class="p">.</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">));</span>
+    <span class="n">highp</span> <span class="n">vec2</span> <span class="n">uv_r</span>          <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span>
+        <span class="n">x_half</span> <span class="o">+</span> <span class="n">color</span><span class="p">.</span><span class="n">r</span> <span class="o">/</span> <span class="n">_COLORS</span> <span class="o">*</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">)</span> <span class="o">+</span> <span class="n">cell_r</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">,</span>
+        <span class="n">y_half</span> <span class="o">+</span> <span class="n">color</span><span class="p">.</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="mf">15.0</span> <span class="o">/</span> <span class="n">_COLORS</span><span class="p">));</span>
+    
+    <span class="n">highp</span> <span class="n">vec4</span> <span class="n">color_l</span>       <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">color_grading_lut_texture_sampler</span><span class="p">,</span> <span class="n">uv_l</span><span class="p">);</span>
+    <span class="n">highp</span> <span class="n">vec4</span> <span class="n">color_r</span>       <span class="o">=</span> <span class="n">texture</span><span class="p">(</span><span class="n">color_grading_lut_texture_sampler</span><span class="p">,</span> <span class="n">uv_r</span><span class="p">);</span>
+    <span class="n">highp</span> <span class="n">vec4</span> <span class="n">mid_color</span>     <span class="o">=</span> <span class="n">mix</span><span class="p">(</span><span class="n">color_l</span><span class="p">,</span> <span class="n">color_r</span><span class="p">,</span> <span class="n">fract</span><span class="p">(</span><span class="n">cell</span><span class="p">));</span>
+    
+    <span class="n">out_color</span> <span class="o">=</span> <span class="n">mid_color</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The result now looks like:</p>
+
+<p><img src="/assets/GameEngineAssignment/Res2.png" alt="Result 2" /></p>
+
+<p>The difference in the cloud is noticeable. The interpolation makes it more natural and smooth.</p>
+
+<h3 id="reference">Reference</h3>
+
+<p><a href="https://defold.com/tutorials/grading/">Grading tutorial</a></p>
 
 
 
