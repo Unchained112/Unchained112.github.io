@@ -160,11 +160,14 @@ When accessing a member function of a class through a pointer:</p>
 
 <ol>
   <li>Text: This segment is read-only and allocated by codes when a process starts up. Text segment is sharable and hence only a single copy exists as well as read-only.</li>
-  <li>Data: This segment contains initialized global and static variables that are initialized. It is readable/writable.</li>
-  <li>BSS: This segment contains uninitialized global and static variables that are initialized. It is readable/writable.</li>
+  <li>Data: This segment contains uninitialized global and static variables that are initialized. It is readable/writable.</li>
+  <li>BSS (Block Started by Symbol): This segment contains initialized global and static variables that are initialized. It is readable/writable.</li>
   <li>Heap: This segment is used for dynamic memory allocation using <code class="language-plaintext highlighter-rouge">malloc() / new</code> and should be de-allocated by <code class="language-plaintext highlighter-rouge">free() / delete</code> (of course readable/writable). It is shared in all threads.</li>
   <li>Stack: This segment contains non-static local variables. The virtual pointer is also stored here. Stack Frame: A set of values pushed for one function call is called Stack Frame (i.e. recursive function).</li>
 </ol>
+
+<p>A more clear memory layout of a C program:
+<img src="/assets/CppNotes/CMemoryLayout.png" alt="C Memory Layout" /></p>
 
 <h3 id="c-memory-alignment">C++ Memory Alignment</h3>
 
@@ -862,10 +865,6 @@ When accessing a member function of a class through a pointer:</p>
 </ol>
 
 
-
-<div class="pt-5">
-  
-</div>
 
 </div>
   </main>

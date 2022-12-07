@@ -3,7 +3,6 @@ title: C++ (with STL Data Structures and Algorithms) Notes for Interview
 tags: [Computer Science, C++]
 style: fill
 color: secondary
-comments: true
 description: C++ notes used as a structure to review for interview.
 ---
 
@@ -53,10 +52,13 @@ The destructor needs to be a virtual function! If the destructor is not a virtua
 | Text              |
 
 1. Text: This segment is read-only and allocated by codes when a process starts up. Text segment is sharable and hence only a single copy exists as well as read-only.
-2. Data: This segment contains initialized global and static variables that are initialized. It is readable/writable.
-3. BSS: This segment contains uninitialized global and static variables that are initialized. It is readable/writable.
+2. Data: This segment contains uninitialized global and static variables that are initialized. It is readable/writable.
+3. BSS (Block Started by Symbol): This segment contains initialized global and static variables that are initialized. It is readable/writable.
 4. Heap: This segment is used for dynamic memory allocation using `malloc() / new` and should be de-allocated by `free() / delete` (of course readable/writable). It is shared in all threads. 
 5. Stack: This segment contains non-static local variables. The virtual pointer is also stored here. Stack Frame: A set of values pushed for one function call is called Stack Frame (i.e. recursive function).
+
+A more clear memory layout of a C program:
+![C Memory Layout]({{site.baseurl}}/assets/CppNotes/CMemoryLayout.png)
 
 ### C++ Memory Alignment
 
