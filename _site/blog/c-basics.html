@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="C# Basics">
+  <meta property="og:description" content="C# Basics and some of its feature. I only take the points that are different from C++.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>C# Basics</title>
+  <meta name="description" content="C# Basics and some of its feature. I only take the points that are different from C++.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>C# Basics</b></h1>
+
+<p class="post-metadata text-muted">
+  05 January 2022 -  
+  <b>14 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#computer-science">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Science</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#c">
+      <span class="tag badge badge-pill text-primary border border-primary">C#</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#object-oriented-programming">
+      <span class="tag badge badge-pill text-primary border border-primary">Object-Oriented Programming</span>
+    </a>
+    </p>
+
+<h2 id="class">Class</h2>
+
+<h3 id="properties-set-and-get-and-encapsulation">Properties <code class="language-plaintext highlighter-rouge">set</code> and <code class="language-plaintext highlighter-rouge">get</code> and Encapsulation</h3>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+  <span class="k">private</span> <span class="kt">string</span> <span class="n">name</span><span class="p">;</span> <span class="c1">// field</span>
+
+  <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span>   <span class="c1">// property</span>
+  <span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>   <span class="c1">// get method</span>
+    <span class="k">set</span> <span class="p">{</span> <span class="n">name</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>  <span class="c1">// set method : set(string value)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="inheritance">Inheritance</h3>
+
+<blockquote>
+  <p>The following illustration shows a class <code class="language-plaintext highlighter-rouge">WorkItem</code> that represents an item of work in some business process. Like all classes, it derives from <code class="language-plaintext highlighter-rouge">System.Object</code> and inherits all its methods. <code class="language-plaintext highlighter-rouge">WorkItem</code> adds six members of its own. These members include a constructor, because constructors aren’t inherited. Class <code class="language-plaintext highlighter-rouge">ChangeRequest</code> inherits from <code class="language-plaintext highlighter-rouge">WorkItem</code> and represents a particular kind of work item. <code class="language-plaintext highlighter-rouge">ChangeRequest</code> adds two more members to the members that it inherits from WorkItem and from Object. It must add its own constructor, and it also adds <code class="language-plaintext highlighter-rouge">originalItemID</code>. Property <code class="language-plaintext highlighter-rouge">originalItemID</code> enables the <code class="language-plaintext highlighter-rouge">ChangeRequest</code> instance to be associated with the original WorkItem to which the change request applies.</p>
+</blockquote>
+
+<p><img src="/assets/UnityCSharp/Inheritance.png" alt="Inheritance" /></p>
+
+<h3 id="polymorphism">Polymorphism</h3>
+
+<blockquote>
+  <p>Base classes may define and implement virtual methods, and derived classes can override them, which means they provide their own definition and implementation. At run-time, when client code calls the method, the CLR looks up the run-time type of the object, and invokes that override of the virtual method. In your source code you can call a method on a base class, and cause a derived class’s version of the method to be executed.</p>
+</blockquote>
+
+<p>Example:</p>
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">A</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">DoWork</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">B</span> <span class="p">:</span> <span class="n">A</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">DoWork</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>A derived class can stop virtual inheritance by declaring an override as sealed. Stopping inheritance requires putting the <code class="language-plaintext highlighter-rouge">sealed</code> keyword before the <code class="language-plaintext highlighter-rouge">override</code> keyword in the class member declaration.</p>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">C</span> <span class="p">:</span> <span class="n">B</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">sealed</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">DoWork</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In the previous example, the method <code class="language-plaintext highlighter-rouge">DoWork</code> is no longer virtual to any class derived from <code class="language-plaintext highlighter-rouge">C</code>. It’s still virtual for instances of <code class="language-plaintext highlighter-rouge">C</code>, even if they’re cast to type <code class="language-plaintext highlighter-rouge">B</code> or type <code class="language-plaintext highlighter-rouge">A</code>. Sealed methods can be replaced by derived classes by using the <code class="language-plaintext highlighter-rouge">new</code> keyword:</p>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">D</span> <span class="p">:</span> <span class="n">C</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">new</span> <span class="k">void</span> <span class="nf">DoWork</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>A derived class that has replaced or overridden a method or property can still access the method or property on the base class using the base keyword:</p>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">DoWork</span><span class="p">()</span> <span class="p">{</span><span class="cm">/*...*/</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Derived</span> <span class="p">:</span> <span class="n">Base</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">DoWork</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//Perform Derived's work here</span>
+        <span class="c1">//...</span>
+        <span class="c1">// Call DoWork on base class</span>
+        <span class="k">base</span><span class="p">.</span><span class="nf">DoWork</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="abstract-class">Abstract Class</h3>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">abstract</code> modifier indicates that the thing being modified has a missing or incomplete implementation. The abstract modifier can be used with classes, methods, properties, indexers, and events. Use the <code class="language-plaintext highlighter-rouge">abstract</code> modifier in a class declaration to indicate that a class is intended only to be a base class of other classes, not instantiated on its own. Members marked as abstract must be implemented by non-abstract classes that derive from the abstract class.</p>
+</blockquote>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Shape</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">abstract</span> <span class="kt">int</span> <span class="nf">GetArea</span><span class="p">();</span> <span class="c1">// implicitly a virtual method</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">Square</span> <span class="p">:</span> <span class="n">Shape</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">_side</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">Square</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_side</span> <span class="p">=</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="c1">// GetArea method is required to avoid a compile-time error.</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">int</span> <span class="nf">GetArea</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">_side</span> <span class="p">*</span> <span class="n">_side</span><span class="p">;</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">sq</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Square</span><span class="p">(</span><span class="m">12</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Area of the square = </span><span class="p">{</span><span class="n">sq</span><span class="p">.</span><span class="nf">GetArea</span><span class="p">()}</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// Output: Area of the square = 144</span>
+</code></pre></div></div>
+
+<h2 id="interface">Interface</h2>
+
+<blockquote>
+  <p>An interface defines a contract. Any <code class="language-plaintext highlighter-rouge">class</code> or <code class="language-plaintext highlighter-rouge">struct</code> that implements that contract must provide an implementation of the members defined in the interface. An interface may define a default implementation for members. It may also define <code class="language-plaintext highlighter-rouge">static</code> members in order to provide a single implementation for common functionality.</p>
+</blockquote>
+
+<p>Example:</p>
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">interface</span> <span class="nc">IPoint</span>
+<span class="p">{</span>
+    <span class="c1">// Property signatures:</span>
+    <span class="kt">int</span> <span class="n">X</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">Y</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">double</span> <span class="n">Distance</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">Point</span> <span class="p">:</span> <span class="n">IPoint</span>
+<span class="p">{</span>
+    <span class="c1">// Constructor:</span>
+    <span class="k">public</span> <span class="nf">Point</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">X</span> <span class="p">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">Y</span> <span class="p">=</span> <span class="n">y</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Property implementation:</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">X</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Y</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// Property implementation</span>
+    <span class="k">public</span> <span class="kt">double</span> <span class="n">Distance</span> <span class="p">=&gt;</span>
+       <span class="n">Math</span><span class="p">.</span><span class="nf">Sqrt</span><span class="p">(</span><span class="n">X</span> <span class="p">*</span> <span class="n">X</span> <span class="p">+</span> <span class="n">Y</span> <span class="p">*</span> <span class="n">Y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">MainClass</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">PrintPoint</span><span class="p">(</span><span class="n">IPoint</span> <span class="n">p</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"x={0}, y={1}"</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">Y</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">IPoint</span> <span class="n">p</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Point</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="s">"My Point: "</span><span class="p">);</span>
+        <span class="nf">PrintPoint</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// Output: My Point: x=2, y=3</span>
+</code></pre></div></div>
+
+<p>A class can inherit only one abstract class, but many interfaces.</p>
+
+<h2 id="operator-overloading">Operator Overloading</h2>
+
+<p>Example:</p>
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">readonly</span> <span class="k">struct</span> <span class="nc">Fraction</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">int</span> <span class="n">num</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">int</span> <span class="n">den</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">Fraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">numerator</span><span class="p">,</span> <span class="kt">int</span> <span class="n">denominator</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">denominator</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ArgumentException</span><span class="p">(</span><span class="s">"Denominator cannot be zero."</span><span class="p">,</span> <span class="k">nameof</span><span class="p">(</span><span class="n">denominator</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">num</span> <span class="p">=</span> <span class="n">numerator</span><span class="p">;</span>
+        <span class="n">den</span> <span class="p">=</span> <span class="n">denominator</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">Fraction</span> <span class="k">operator</span> <span class="p">+(</span><span class="n">Fraction</span> <span class="n">a</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">a</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="n">Fraction</span> <span class="k">operator</span> <span class="p">-(</span><span class="n">Fraction</span> <span class="n">a</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">Fraction</span><span class="p">(-</span><span class="n">a</span><span class="p">.</span><span class="n">num</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">den</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">Fraction</span> <span class="k">operator</span> <span class="p">+(</span><span class="n">Fraction</span> <span class="n">a</span><span class="p">,</span> <span class="n">Fraction</span> <span class="n">b</span><span class="p">)</span>
+        <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">Fraction</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">num</span> <span class="p">*</span> <span class="n">b</span><span class="p">.</span><span class="n">den</span> <span class="p">+</span> <span class="n">b</span><span class="p">.</span><span class="n">num</span> <span class="p">*</span> <span class="n">a</span><span class="p">.</span><span class="n">den</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">den</span> <span class="p">*</span> <span class="n">b</span><span class="p">.</span><span class="n">den</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">Fraction</span> <span class="k">operator</span> <span class="p">-(</span><span class="n">Fraction</span> <span class="n">a</span><span class="p">,</span> <span class="n">Fraction</span> <span class="n">b</span><span class="p">)</span>
+        <span class="p">=&gt;</span> <span class="n">a</span> <span class="p">+</span> <span class="p">(-</span><span class="n">b</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">Fraction</span> <span class="k">operator</span> <span class="p">*(</span><span class="n">Fraction</span> <span class="n">a</span><span class="p">,</span> <span class="n">Fraction</span> <span class="n">b</span><span class="p">)</span>
+        <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">Fraction</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">num</span> <span class="p">*</span> <span class="n">b</span><span class="p">.</span><span class="n">num</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">den</span> <span class="p">*</span> <span class="n">b</span><span class="p">.</span><span class="n">den</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="n">Fraction</span> <span class="k">operator</span> <span class="p">/(</span><span class="n">Fraction</span> <span class="n">a</span><span class="p">,</span> <span class="n">Fraction</span> <span class="n">b</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">num</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">DivideByZeroException</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Fraction</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">num</span> <span class="p">*</span> <span class="n">b</span><span class="p">.</span><span class="n">den</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">den</span> <span class="p">*</span> <span class="n">b</span><span class="p">.</span><span class="n">num</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="s">$"</span><span class="p">{</span><span class="n">num</span><span class="p">}</span><span class="s"> / </span><span class="p">{</span><span class="n">den</span><span class="p">}</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">OperatorOverloading</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">a</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Fraction</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">b</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Fraction</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(-</span><span class="n">a</span><span class="p">);</span>   <span class="c1">// output: -5 / 4</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">a</span> <span class="p">+</span> <span class="n">b</span><span class="p">);</span>  <span class="c1">// output: 14 / 8</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">a</span> <span class="p">-</span> <span class="n">b</span><span class="p">);</span>  <span class="c1">// output: 6 / 8</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">a</span> <span class="p">*</span> <span class="n">b</span><span class="p">);</span>  <span class="c1">// output: 5 / 8</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">a</span> <span class="p">/</span> <span class="n">b</span><span class="p">);</span>  <span class="c1">// output: 10 / 4</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="delegate">Delegate</h2>
+
+<blockquote>
+  <p>A delegate is a type that represents references to methods with a particular parameter list and return type. Delegates are used to pass methods as arguments to other methods. Event handlers are nothing more than methods that are invoked through delegates.</p>
+</blockquote>
+
+<p>A <code class="language-plaintext highlighter-rouge">delegate</code> is a type that safely encapsulates a method, similar to a function pointer in C and C++.</p>
+
+<p>You can declare delegates using any of the following methods:</p>
+<ul>
+  <li>Declare a delegate type and declare a method with a matching signature:
+```c#
+// Declare a delegate.
+delegate void Del(string str);</li>
+</ul>
+
+<p>// Declare a method with the same signature as the delegate.
+static void Notify(string name)
+{
+    Console.WriteLine($”Notification received for: {name}”);
+}</p>
+
+<p>// Create an instance of the delegate.
+Del del1 = new Del(Notify);</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+- Assign a method group to a delegate type:
+```c#
+Del del2 = Notify;
+</code></pre></div></div>
+
+<ul>
+  <li>Declare an anonymous method:
+    <div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Instantiate Del by using an anonymous method.</span>
+<span class="n">Del</span> <span class="n">del3</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+  <span class="p">{</span> <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Notification received for: </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">"</span><span class="p">);</span> <span class="p">};</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Use a lambda expression:
+    <div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Instantiate Del by using a lambda expression.</span>
+<span class="n">Del</span> <span class="n">del4</span> <span class="p">=</span> <span class="n">name</span> <span class="p">=&gt;</span>  <span class="p">{</span> <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">$"Notification received for: </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">"</span><span class="p">);</span> <span class="p">};</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="event">Event</h2>
+
+<p>Events enable a <code class="language-plaintext highlighter-rouge">class</code> or object to notify other classes or objects when something of interest occurs. The class that sends (or raises) the event is called the <em>publisher</em> and the classes that receive (or handle) the event are called <em>subscribers</em>.</p>
+
+<p><img src="/assets/UnityCSharp/Event.png" alt="Event" /></p>
+
+<blockquote>
+  <p>. NET provides the <code class="language-plaintext highlighter-rouge">EventHandler</code> and <code class="language-plaintext highlighter-rouge">EventHandler&lt;TEventArgs&gt;</code> delegates to support most event scenarios. Use the <code class="language-plaintext highlighter-rouge">EventHandler</code> delegate for all events that don’t include event data. Use the <code class="language-plaintext highlighter-rouge">EventHandler&lt;TEventArgs&gt;</code> delegate for events that include data about the event. These delegates have no return type value and take two parameters (an object for the source of the event and an object for event data).</p>
+</blockquote>
+
+<p>This tutorial from Microsoft document offers three very clear examples: <a href="https://learn.microsoft.com/en-us/dotnet/standard/events/how-to-raise-and-consume-events">How to: Raise and Consume Events</a>.</p>
+
+<h2 id="others">Others</h2>
+
+<h3 id="readonly-vs-const"><code class="language-plaintext highlighter-rouge">readonly</code> vs. <code class="language-plaintext highlighter-rouge">const</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>ReadOnly Keyword</th>
+      <th>Const Keyword</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>In C#, <code class="language-plaintext highlighter-rouge">readonly</code> fields can be created using readonly keyword</td>
+      <td>In C#, <code class="language-plaintext highlighter-rouge">constant</code> fields are created using const keyword.</td>
+    </tr>
+    <tr>
+      <td>ReadOnly is a runtime constant.</td>
+      <td>Const is a compile time constant.</td>
+    </tr>
+    <tr>
+      <td>The value of readonly field can be changed.</td>
+      <td>The value of the const field can not be changed.</td>
+    </tr>
+    <tr>
+      <td>It cannot be declared inside the method.</td>
+      <td>It can be declared inside the method.</td>
+    </tr>
+    <tr>
+      <td>In readonly fields, we can assign values in declaration and in the constructor part.</td>
+      <td>In const fields, we can only assign values in declaration part.</td>
+    </tr>
+    <tr>
+      <td>It can be used with static modifiers.</td>
+      <td>It cannot be used with static modifiers.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="base"><code class="language-plaintext highlighter-rouge">base</code></h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">base</code> keyword is used to access members of the base class from within a derived class. Use it if you want to:</p>
+<ul>
+  <li>Call a method on the base class that has been overridden by another method.</li>
+  <li>Specify which base-class constructor should be called when creating instances of the derived class.</li>
+</ul>
+
+<h3 id="static"><code class="language-plaintext highlighter-rouge">static</code></h3>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">static</code> modifier to declare a static member, which belongs to the type itself rather than to a specific object.</p>
+<ul>
+  <li>The normal class (non-static class) can contain one or more <code class="language-plaintext highlighter-rouge">static</code> methods, fields, properties, events and other non-static members.</li>
+  <li>Static field of a non-static class is shared across all the instances. So, changes done by one instance would reflect in others.</li>
+  <li>Static methods do not consume any memory. Static fields are initialized <strong>before</strong> you access any static field or create any instance of the type.</li>
+  <li>Static methods can be called without creating an object. The <code class="language-plaintext highlighter-rouge">static</code> methods can only call other static methods and access static members.</li>
+  <li>If the <code class="language-plaintext highlighter-rouge">static</code> keyword is applied to a class, all the members of the class must be <code class="language-plaintext highlighter-rouge">static</code>.</li>
+</ul>
+
+<h3 id="var"><code class="language-plaintext highlighter-rouge">var</code></h3>
+
+<blockquote>
+  <p>Variables that are declared at method scope can have an implicit “type” <code class="language-plaintext highlighter-rouge">var</code>. A common use of the <code class="language-plaintext highlighter-rouge">var</code> keyword is with constructor invocation expressions. The use of <code class="language-plaintext highlighter-rouge">var</code> allows you to not repeat a type name in a variable declaration and object instantiation</p>
+</blockquote>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">xs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;();</span>
+</code></pre></div></div>
+
+<h3 id="ref"><code class="language-plaintext highlighter-rouge">ref</code></h3>
+
+<blockquote>
+  <p>The <code class="language-plaintext highlighter-rouge">ref</code> keyword indicates that a variable is a reference, or an alias for another object.</p>
+</blockquote>
+
+<p>It’s used in five different contexts (eee examples in this <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/ref#reference-return-values">article</a>):</p>
+<ul>
+  <li>In a method signature and in a method call, to pass an argument to a method by reference.</li>
+  <li>In a method signature, to return a value to the caller by reference.</li>
+  <li>In a member body, to indicate that a reference return value is stored locally as a reference that the caller intends to modify. Or to indicate that a local variable accesses another value by reference.</li>
+  <li>In a struct declaration, to declare a ref struct or a readonly ref struct.</li>
+  <li>In a ref struct declaration, to declare that a field is a reference.</li>
+</ul>
+
+<h3 id="further-reading">Further reading</h3>
+
+<p>For the following topics, I haven’t dive into them, but I hope I could in the future. I just post some interesting references for further reading.</p>
+
+<ul>
+  <li>Attribute: <a href="https://www.pluralsight.com/guides/using-attributes-in-c">Using Attributes in C#</a></li>
+  <li>Reflection: <a href="https://www.tutorialspoint.com/csharp/csharp_reflection.htm#">TutorialPoint C# - Reflection</a></li>
+  <li><a href="https://learn.microsoft.com/en-us/dotnet/standard/collections/">C# Collections and Data Structure</a></li>
+  <li>Design Pattern: <a href="https://www.dofactory.com/net/design-patterns">C# Design Patterns</a></li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/">https://learn.microsoft.com/en-us/dotnet/csharp/</a></li>
+</ul>
+
+
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

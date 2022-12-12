@@ -183,7 +183,43 @@ is not present in the TLB, it must be retrieved from the page table.
 
 ### Virtual Memory
 
+Virtual memory abstracts physical memory into an extremely large uniform array of storage. The benefits of virtual memory include the following: 
+1. a program can be larger than physical memory;
+2. a program does not need to be entirely in memory;
+3. processes can share memory;
+4. processes can be created more efficiently.
 
+**Demand paging** is a technique whereby pages are loaded only when they are demanded during program execution. Pages that are never demanded are thus never loaded into memory. A **page fault** occurs when a page that is currently not in memory is
+accessed. The page must be brought from the backing store into an available page frame in memory.
+
+![Page Fault]({{site.baseurl}}/assets/OSNotes/PageFault.png)
+
+When available memory runs low, a page-replacement algorithm selects an existing page in memory to replace with a new page. Page-replacement algorithms include FIFO, optimal, and LRU. Pure LRU algorithms are impractical to implement, and most systems instead use LRU-approximation algorithms.
+
+1. First In First Out (FIFO) 
+
+    This is the simplest page replacement algorithm. In this algorithm, operating system keeps track of all pages in the memory in a queue, oldest page is in the front of the queue. When a page needs to be replaced page in the front of the queue is selected for removal.
+    For example, consider page reference string 1, 3, 0, 3, 5, 6 and 3 page slots. Initially, all slots are empty, so when 1, 3, 0 came they are allocated to the empty slots —> 3 Page Faults. When 3 comes, it is already in  memory so —> 0 Page Faults. Then 5 comes, it is not available in  memory so it replaces the oldest page slot i.e 1. —> 1 Page Fault. Finally, 6 comes,  it is also not available in memory so it replaces the oldest page slot i.e 3 —> 1 Page Fault.
+
+    **Belady’s anomaly**:
+
+    Belady’s anomaly proves that it is possible to have more page faults when increasing the number of page frames while using the First in First Out (FIFO) page replacement algorithm.  For example, if we consider reference string 3 2 1 0 3 2 4 3 2 1 0 4 and 3 slots, we get 9 total page faults, but if we increase slots to 4, we get 10 page faults.
+
+2. Optimal Page replacement
+    In this algorithm, pages are replaced which are not used for the longest duration of time in the future.
+    Let us consider page reference string 7 0 1 2 0 3 0 4 2 3 0 3 2 and 4 page slots. Initially, all slots are empty, so when 7 0 1 2 are allocated to the empty slots —> 4 Page faults. 0 is already there so —> 0 Page fault. When 3 came it will take the place of 7 because it is not used for the longest duration of time in the future.—> 1 Page fault. 0 is already there so —> 0 Page fault. 4 will takes place of 1 —> 1 Page Fault. Now for the further page reference string —> 0 Page fault because they are already available in the memory.
+
+    Optimal page replacement is perfect, but not possible in practice as an operating system cannot know future requests. The use of Optimal Page replacement is to set up a benchmark so that other replacement algorithms can be analyzed against it.
+
+3. Least Recently Used (LRU) 
+    In this algorithm, the page will be replaced which is least recently used.
+    Let say the page reference string 7 0 1 2 0 3 0 4 2 3 0 3 2 . Initially, we have 4-page slots empty. Initially, all slots are empty, so when 7 0 1 2 are allocated to the empty slots —> 4 Page faults. 0 is already their so —> 0 Page fault. When 3 came it will take the place of 7 because it is least recently used —> 1 Page fault. 0 is already in memory so —> 0 Page fault. 4 will takes place of 1 —> 1 Page Fault. Now for the further page reference string —> 0 Page fault because they are already available in the memory.
+
+**Thrashing** occurs when a system spends more time paging than executing.
+
+A locality represents a set of pages that are actively used together. As a process executes, it moves from locality to locality. A working set is based on locality and is defined as the set of pages currently in use by a process.
+
+Linux, Windows, and Solaris manage virtual memory similarly, using demand paging and copy-on-write, among other features. Each system also uses a variation of LRU approximation known as the clock algorithm.
 
 ## File Management
 
@@ -192,7 +228,7 @@ is not present in the TLB, it must be retrieved from the page table.
 ### Disk Management
 
 ## I/O Management
-
+ 
 ### Basic I/O Management
 
 ### I/O System

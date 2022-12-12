@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Operating System Notes">
+  <meta property="og:description" content="Basic concepts for understanding the operating system.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>Operating System Notes</title>
+  <meta name="description" content="Basic concepts for understanding the operating system.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>Operating System Notes</b></h1>
+
+<p class="post-metadata text-muted">
+  06 December 2022 -  
+  <b>18 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#computer-science">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Science</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#operating-system">
+      <span class="tag badge badge-pill text-primary border border-primary">Operating System</span>
+    </a>
+    </p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>An operating system is a software that manages a computer’s hardware. It can</p>
+<ul>
+  <li>control and manage the computer’s hardware and software</li>
+  <li>organize and schedule the workload and resources distribution</li>
+  <li>provide a convenient interface and environment for users and applications programs</li>
+</ul>
+
+<p><img src="/assets/OSNotes/OSOverview.png" alt="OS Overview" /></p>
+
+<p>The operating system has its own particularity, that is, its basic characteristics. The basic characteristics of an operating system include</p>
+<ol>
+  <li><strong>Concurrency</strong> - allow multitasking on the macro level by rapidly switching between processes on the micro level</li>
+  <li><strong>Sharing</strong> - allow resources to be shared by different processes</li>
+  <li>Virtualization - abstract a computer’s hardware into several different execution environments.</li>
+  <li>Asynchrony - the multitasking feature makes different process runs with unpredictable speed</li>
+</ol>
+
+<p>In order to provide a good operating environment for multiprogramming, the operating system should have the following services:</p>
+<ul>
+  <li>Process Management: A process is the fundamental unit of work in an operating system. Process management includes creating and deleting processes and providing mechanisms for processes to communicate and synchronize with each other.</li>
+  <li>Memory Management: An operating system manages memory by keeping track of what parts of memory are being used and by whom. It is also responsible for dynamically allocating and freeing memory space.</li>
+  <li>File Management: An operating system provides file systems for representing files and directories and managing space on mass-storage devices.</li>
+  <li>I/O Management: An operating system controls the access of processes or users to the resources made available by the computer system.</li>
+</ul>
+
+<p><img src="/assets/OSNotes/UNIXstructure.png" alt="UNIX structure" /></p>
+
+<p>To prevent user programs from interfering with the proper operation of the system, the system hardware has two modes: <strong>user mode</strong> and <strong>kernel mode</strong>. Various instructions are <strong>privileged</strong> and can be executed only in kernel mode. Examples include the instruction to switch to kernel mode, I/O control, timer management, and interrupt management.</p>
+
+<p><strong>Interrupts</strong> are a key way in which hardware interacts with the operating system. A hardware device triggers an interrupt by sending a signal to the CPU to alert the CPU that some event requires attention. The interrupt is managed by the interrupt handler.</p>
+
+<p>System calls provide an interface to the services made available by an operating system. Programmers use a system call’s application programming interface (API) for accessing system-call services. System calls can be divided into six major categories: (1) process control, (2) file management, (3) device management, (4) information maintenance, (5) communications, and (6) protection.</p>
+
+<p><img src="/assets/OSNotes/SystemCalls.png" alt="System Calls" /></p>
+
+<p>A <strong>linker</strong> combines several relocatable object modules into a single binary executable file. A <strong>loader</strong> loads the executable file into memory, where it becomes eligible to run on an available CPU.</p>
+
+<p><img src="/assets/OSNotes/LinkerLoader.png" alt="Linker Loader" /></p>
+
+<h2 id="process-management">Process Management</h2>
+
+<h3 id="process">Process</h3>
+
+<p>A process is a program in execution, and the status of the current activity of a process is represented by the program counter, as well as other registers. The layout of a process in memory is represented by four different sections:
+(1) text, (2) data, (3) heap, and (4) stack. A process control block (PCB) is the kernel data structure that represents a process in an operating system. Notice that PCB is the only sign of the existence of the process!</p>
+
+<p>As a process executes, it changes state. There are four general states of a process: (1) ready, (2) running, (3) waiting, and (4) terminated.</p>
+
+<p><img src="/assets/OSNotes/ProcessStates.png" alt="Process States" /></p>
+
+<p>An operating system performs a context switch when it switches from running one process to running another.</p>
+
+<p>Interprocess communication refers to the exchange of information between processes. There are three main types of advanced communication methods:</p>
+<ol>
+  <li>Sharing Memory: When shared memory is used for communication between processes, two (or more) processes share the same region of memory. POSIX provides an API for shared memory.</li>
+  <li>Exchanging Message: Two processes may communicate by exchanging messages with one another using message passing. The Mach operating system uses message passing as its primary form of interprocess communication. Windows provides a form of message passing as well.</li>
+  <li>Pipe Communication: A pipe provides a conduit for two processes to communicate. There are two forms of pipes, ordinary and named. Ordinary pipes are designed for communication between processes that have a parent–child relationship. Named pipes are more general and allow several processes to communicate.</li>
+</ol>
+
+<p><strong>Communication between processes in different computers</strong></p>
+
+<p>For Client–Server Systems, sockets and remote procedure calls (RPCs) are commonly used. Sockets allow two processes on different
+machines to communicate over a network. RPCs abstract the concept of function (procedure) calls in such a way that a function can be invoked on another process that may reside on a separate computer.</p>
+
+<h3 id="thread">Thread</h3>
+
+<p>A thread represents a basic unit of CPU utilization, and threads belonging to the same process share many of the process resources, including code and data. There are four primary benefits to multithreaded applications: (1) responsiveness, (2) resource sharing.</p>
+
+<p>Concurrency exists when multiple threads are making progress, whereas parallelism exists when multiple threads are making progress simultaneously. On a system with a single CPU, only concurrency is possible; parallelism requires a multicore system that provides multiple CPUs.</p>
+
+<p>Thread implementation can be divided into two categories: user-level thread (ULT) and kernel-level thread (KLT). User applications create user-level threads, which must ultimately be mapped to kernel threads to execute on a CPU. The many-to-one model maps many user-level threads to one kernel thread. Other approaches include the one-to-one and many-to-many models.</p>
+
+<p><img src="/assets/OSNotes/ULTKLT.png" alt="ULT KLT" />
+<img src="/assets/OSNotes/MixModel.png" alt="Mix Model" /></p>
+
+<p>A thread library provides an API for creating and managing threads. Three common thread libraries include Windows, Pthreads, and Java threading. Windows is for the Windows system only, while Pthreads is available for POSIX-compatible systems such as UNIX, Linux, and macOS. Java threads will run on any system that supports a Java virtual machine.</p>
+
+<p>Threads may be terminated using either asynchronous or deferred cancellation. Asynchronous cancellation stops a thread immediately, even if it is in the middle of performing an update. Deferred cancellation informs a thread that it should terminate but allows the thread to terminate in an orderly fashion. In most circumstances, deferred cancellation is preferred
+to asynchronous termination.</p>
+
+<h3 id="scheduling">Scheduling</h3>
+
+<p>CPU scheduling is the task of selecting a waiting process from the ready queue and allocating the CPU to it. The CPU is allocated to the selected process by the dispatcher. Scheduling algorithms may be either preemptive (where the CPU can be taken away from a process) or nonpreemptive (where a process must voluntarily relinquish control of the CPU). Almost all modern operating systems are preemptive.</p>
+
+<p><img src="/assets/OSNotes/Scheduling.png" alt="Scheduling" /></p>
+
+<p>Scheduling algorithms can be evaluated according to the following five criteria: (1) CPU utilization, (2) throughput, (3) turnaround time, (4) waiting time, and (5) response time.</p>
+
+<p>Common Scheduling Algorithms</p>
+<ul>
+  <li>First-come, first-served (FCFS) scheduling is the simplest scheduling algorithm, but it can cause short processes to wait for very long processes.</li>
+  <li>Shortest-job-first (SJF) scheduling is provably optimal, providing the shortest average waiting time. Implementing SJF scheduling is difficult, however, because predicting the length of the next CPU burst is difficult.</li>
+  <li><strong>Round-robin (RR)</strong> scheduling allocates the CPU to each process for a time quantum. If the process does not relinquish the CPU before its time quantum expires, the process is preempted, and another process is scheduled to run for a time quantum.</li>
+  <li>Priority scheduling assigns each process a priority, and the CPU is allocated to the process with the highest priority. Processes with the same priority can be scheduled in FCFS order or using RR scheduling.</li>
+  <li>Multilevel queue scheduling partitions processes into several separate queues arranged by priority, and the scheduler executes the processes in the highest-priority queue. Different scheduling algorithms may be used
+in each queue.</li>
+  <li>Multilevel feedback queues are similar to multilevel queues, except that a process may migrate between different queues.</li>
+  <li>Earliest-deadline-first (EDF) scheduling assigns priorities according to deadline. The earlier the deadline, the higher the priority; the later the deadline, the lower the priority.</li>
+</ul>
+
+<p>Linux uses the completely fair scheduler (CFS), which assigns a proportion of CPU processing time to each task. The proportion is based on the virtual runtime (vruntime) value associated with each task. Windows scheduling uses a preemptive, 32-level priority scheme to determine the order of thread scheduling.</p>
+
+<p>Some useful facts about Scheduling Algorithms:</p>
+
+<ol>
+  <li>FCFS can cause long waiting times, especially when the first job takes too much CPU time.</li>
+  <li>Both SJF and Shortest Remaining time first algorithms may cause starvation. Consider a situation when a long process is there in the ready queue and shorter processes keep coming.</li>
+  <li>If time quantum for Round Robin scheduling is very large, then it behaves same as FCFS scheduling.</li>
+  <li>SJF is optimal in terms of average waiting time for a given set of processes. SJF gives minimum average waiting time, but problems with SJF is how to know/predict the time of next job.</li>
+</ol>
+
+<h3 id="synchronization-and-dead-lock">Synchronization and Dead Lock</h3>
+
+<p>A <strong>race condition</strong> occurs when processes have concurrent access to shared data and the final result depends on the particular order in which <strong>concurrent</strong> accesses occur. Race conditions can result in corrupted values of shared data.</p>
+
+<p>A <strong>critical section</strong> is a section of code where shared data may be manipulated and a possible race condition may occur. The critical-section problem is to design a protocol whereby processes can synchronize their activity to cooperatively share data.</p>
+
+<p>A solution to the critical-section problem must satisfy the following three requirements:</p>
+<ol>
+  <li>Mutual exclusion: Mutual exclusion ensures that only one process at a time is active in its critical section.</li>
+  <li>Progress: Progress ensures that programs will cooperatively determine what process will next enter its critical section.</li>
+  <li>Bounded waiting: Bounded waiting limits how much time a program will wait before it can enter its critical section.</li>
+</ol>
+
+<p>Software solutions to the critical-section problem, such as Peterson’s solution, do not work well on modern computer architectures.</p>
+
+<p>Hardware support for the critical-section problem includes memory barriers; hardware instructions, such as the compare-and-swap instruction; and atomic variables.</p>
+
+<p>A <strong>mutex lock</strong> provides mutual exclusion by requiring that a process acquire a lock before entering a critical section and release the lock on exiting the critical section.</p>
+
+<p><strong>Semaphores</strong>, like mutex locks, can be used to provide mutual exclusion. However, whereas a mutex lock has a binary value that indicates if the lock is available or not, a semaphore has an integer value and can therefore be used to solve a variety of synchronization problems.</p>
+
+<p>A <strong>monitor</strong> is an abstract data type that provides a high-level form of process synchronization. A monitor uses condition variables that allow processes to wait for certain conditions to become true and to signal one another when conditions have been set to true.</p>
+
+<p>Classic problems of process synchronization include the <strong>bounded-buffer</strong>, <strong>readers–writers</strong>, and <strong>dining-philosophers</strong> problems.</p>
+
+<p><strong>Deadlock</strong> occurs in a set of processes when every process in the set is waiting for an event that can only be caused by another process in the set. Deadlock can arise if following four conditions hold simultaneously (Necessary Conditions):</p>
+<ol>
+  <li>Mutual Exclusion – One or more than one resource are non-sharable (Only one process can use at a time).</li>
+  <li>Hold and Wait – A process is holding at least one resource and waiting for resources.</li>
+  <li>No Preemption – A resource cannot be taken from a process unless the process releases the resource.</li>
+  <li>Circular Wait – A set of processes are waiting for each other in circular form.</li>
+</ol>
+
+<p>Deadlocks can be prevented by ensuring that one of the four necessary conditions for deadlock cannot occur. 
+There are three ways to handle deadlock:</p>
+<ol>
+  <li>Deadlock prevention: The idea is to set certain limitation to avoid one or more conditions that caused the deadlock.</li>
+  <li>Deadlock avoidance: The idea is to use certain method to let the system into deadlock state when allocating the resources.</li>
+  <li>Deadlock detection and recovery : Let deadlock occur, use certain algorithm to evaluate processes and resources on a running system to determine if a set of processes is in a deadlocked state. If deadlock does occur, a system can attempt to recover from the deadlock by either aborting one of the processes in the circular wait or preempting resources that have been assigned to a deadlocked process.</li>
+</ol>
+
+<p>Deadlock can be avoided by using the <strong>banker’s algorithm</strong>, which does not grant resources if doing so would lead the system into an unsafe state where deadlock would be possible.</p>
+
+<h2 id="memory-management">Memory Management</h2>
+
+<h3 id="main-memory">Main Memory</h3>
+
+<p>Memory is central to the operation of a modern computer system and consists of a large array of bytes, each with its own address. One way to allocate an address space to each process is through the use of base and limit registers. The base register holds the smallest legal physical memory address, and the limit specifies the size of the range.</p>
+
+<p>Binding symbolic address references to actual physical addresses may occur during (1) compile, (2) load, or (3) execution time.</p>
+
+<p>An address generated by the CPU is known as a <strong>logical address</strong>, which the memory management unit (MMU) translates to a <strong>physical address</strong> in memory.</p>
+
+<p>These techniques allow the memory to be shared among multiple processes:</p>
+<ul>
+  <li>Overlays – The memory should contain only those instructions and data that are required at a given time.</li>
+  <li>Swapping – In multiprogramming, the instructions that have used the time slice are swapped out from the memory.</li>
+</ul>
+
+<p>Contiguous Memory Allocation</p>
+<ol>
+  <li>Single Partition Allocation Schemes – The memory is divided into two parts. One part is kept to be used by the OS and the other is kept to be used by the users.</li>
+  <li>Fixed Partition – The memory is divided into fixed size partitions.</li>
+  <li>Variable Partition – The memory is divided into variable sized partitions.
+    <ol>
+      <li>First Fit – The arriving process is allotted the first hole of memory in which it fits completely.</li>
+      <li>Best Fit – The arriving process is allotted the hole of memory in which it fits the best by leaving the minimum memory empty.</li>
+      <li>Worst Fit – The arriving process is allotted the hole of memory in which it leaves the maximum gap.</li>
+    </ol>
+  </li>
+</ol>
+
+<p>Modern operating systems use <strong>paging</strong> to manage memory. In this process, physical memory is divided into fixed-sized blocks called <strong>frames</strong> and logical memory into blocks of the same size called <strong>pages</strong>. When paging is used, a logical address is divided into two parts: a page number and a page offset. The page number serves as an index into a per-process page table that contains the frame in physical memory that holds the page. The offset is the specific location in the frame being referenced.</p>
+
+<p><img src="/assets/OSNotes/PagingHardware.png" alt="Paging Hardware" /></p>
+
+<p>A <strong>translation look-aside buffer (TLB)</strong> is a hardware cache of the page table. Each TLB entry contains a page number and its corresponding frame. Using a TLB in address translation for paging systems involves obtaining the page number from the logical address and checking if the frame for the page is in the TLB. If it is, the frame is obtained from the TLB. If the frame
+is not present in the TLB, it must be retrieved from the page table.</p>
+
+<p><img src="/assets/OSNotes/TLB.png" alt="TLB" /></p>
+
+<p><strong>Segmentation</strong> is implemented to give users view of memory. The logical address space is a collection of segments. Segmentation can be implemented with or without the use of paging. The CPU generates logical addresses, which are given to the segmentation unit. The segmentation unit produces a linear address for each logical address. The linear address is then given to the paging unit, which in turn generates the physical address in main memory.</p>
+
+<p><img src="/assets/OSNotes/SP.png" alt="SP" /></p>
+
+<p><img src="/assets/OSNotes/Segmentation.png" alt="Segmentation" /></p>
+
+<h3 id="virtual-memory">Virtual Memory</h3>
+
+<p>Virtual memory abstracts physical memory into an extremely large uniform array of storage. The benefits of virtual memory include the following:</p>
+<ol>
+  <li>a program can be larger than physical memory;</li>
+  <li>a program does not need to be entirely in memory;</li>
+  <li>processes can share memory;</li>
+  <li>processes can be created more efficiently.</li>
+</ol>
+
+<p><strong>Demand paging</strong> is a technique whereby pages are loaded only when they are demanded during program execution. Pages that are never demanded are thus never loaded into memory. A <strong>page fault</strong> occurs when a page that is currently not in memory is
+accessed. The page must be brought from the backing store into an available page frame in memory.</p>
+
+<p><img src="/assets/OSNotes/PageFault.png" alt="Page Fault" /></p>
+
+<p>When available memory runs low, a page-replacement algorithm selects an existing page in memory to replace with a new page. Page-replacement algorithms include FIFO, optimal, and LRU. Pure LRU algorithms are impractical to implement, and most systems instead use LRU-approximation algorithms.</p>
+
+<ol>
+  <li>
+    <p>First In First Out (FIFO)</p>
+
+    <p>This is the simplest page replacement algorithm. In this algorithm, operating system keeps track of all pages in the memory in a queue, oldest page is in the front of the queue. When a page needs to be replaced page in the front of the queue is selected for removal.
+ For example, consider page reference string 1, 3, 0, 3, 5, 6 and 3 page slots. Initially, all slots are empty, so when 1, 3, 0 came they are allocated to the empty slots —&gt; 3 Page Faults. When 3 comes, it is already in  memory so —&gt; 0 Page Faults. Then 5 comes, it is not available in  memory so it replaces the oldest page slot i.e 1. —&gt; 1 Page Fault. Finally, 6 comes,  it is also not available in memory so it replaces the oldest page slot i.e 3 —&gt; 1 Page Fault.</p>
+
+    <p><strong>Belady’s anomaly</strong>:</p>
+
+    <p>Belady’s anomaly proves that it is possible to have more page faults when increasing the number of page frames while using the First in First Out (FIFO) page replacement algorithm.  For example, if we consider reference string 3 2 1 0 3 2 4 3 2 1 0 4 and 3 slots, we get 9 total page faults, but if we increase slots to 4, we get 10 page faults.</p>
+  </li>
+  <li>
+    <p>Optimal Page replacement
+ In this algorithm, pages are replaced which are not used for the longest duration of time in the future.
+ Let us consider page reference string 7 0 1 2 0 3 0 4 2 3 0 3 2 and 4 page slots. Initially, all slots are empty, so when 7 0 1 2 are allocated to the empty slots —&gt; 4 Page faults. 0 is already there so —&gt; 0 Page fault. When 3 came it will take the place of 7 because it is not used for the longest duration of time in the future.—&gt; 1 Page fault. 0 is already there so —&gt; 0 Page fault. 4 will takes place of 1 —&gt; 1 Page Fault. Now for the further page reference string —&gt; 0 Page fault because they are already available in the memory.</p>
+
+    <p>Optimal page replacement is perfect, but not possible in practice as an operating system cannot know future requests. The use of Optimal Page replacement is to set up a benchmark so that other replacement algorithms can be analyzed against it.</p>
+  </li>
+  <li>
+    <p>Least Recently Used (LRU) 
+ In this algorithm, the page will be replaced which is least recently used.
+ Let say the page reference string 7 0 1 2 0 3 0 4 2 3 0 3 2 . Initially, we have 4-page slots empty. Initially, all slots are empty, so when 7 0 1 2 are allocated to the empty slots —&gt; 4 Page faults. 0 is already their so —&gt; 0 Page fault. When 3 came it will take the place of 7 because it is least recently used —&gt; 1 Page fault. 0 is already in memory so —&gt; 0 Page fault. 4 will takes place of 1 —&gt; 1 Page Fault. Now for the further page reference string —&gt; 0 Page fault because they are already available in the memory.</p>
+  </li>
+</ol>
+
+<p><strong>Thrashing</strong> occurs when a system spends more time paging than executing.</p>
+
+<p>A locality represents a set of pages that are actively used together. As a process executes, it moves from locality to locality. A working set is based on locality and is defined as the set of pages currently in use by a process.</p>
+
+<p>Linux, Windows, and Solaris manage virtual memory similarly, using demand paging and copy-on-write, among other features. Each system also uses a variation of LRU approximation known as the clock algorithm.</p>
+
+<h2 id="file-management">File Management</h2>
+
+<h3 id="file-system">File System</h3>
+
+<h3 id="disk-management">Disk Management</h3>
+
+<h2 id="io-management">I/O Management</h2>
+
+<h3 id="basic-io-management">Basic I/O Management</h3>
+
+<h3 id="io-system">I/O System</h3>
+
+<h2 id="reference">Reference</h2>
+
+<ol>
+  <li>Operating System Concepts 8th Edition</li>
+  <li><a href="https://www.geeksforgeeks.org/last-minute-notes-operating-systems/">https://www.geeksforgeeks.org/last-minute-notes-operating-systems/</a></li>
+</ol>
+
+
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

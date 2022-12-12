@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Unity and C# Study Notes - Computer Graphics Basics">
+  <meta property="og:description" content="Notes about the techniques that are important or easy to forget.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>Unity and C# Study Notes - Computer Graphics Basics</title>
+  <meta name="description" content="Notes about the techniques that are important or easy to forget.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>Unity and C# Study Notes - Computer Graphics Basics</b></h1>
+
+<p class="post-metadata text-muted">
+  09 December 2022 -  
+  <b>3 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#computer-graphics">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Graphics</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#unity">
+      <span class="tag badge badge-pill text-primary border border-primary">Unity</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#c">
+      <span class="tag badge badge-pill text-primary border border-primary">C#</span>
+    </a>
+    </p>
+
+<h3 id="vector">Vector</h3>
+
+<ul>
+  <li>In Unity, vector is defined as <code class="language-plaintext highlighter-rouge">struct</code>.
+    <ul>
+      <li>When you want to equal sign to copy the content (allocate new memory), it is more convenient to define the the type of object as <code class="language-plaintext highlighter-rouge">struct</code>. Otherwise, <code class="language-plaintext highlighter-rouge">class</code> will allow you to copy it as reference.</li>
+    </ul>
+  </li>
+  <li>Override ToString function (the <code class="language-plaintext highlighter-rouge">print</code> function will default call the object’s ToString function):</li>
+</ul>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">ToString</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="kt">string</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"(0:F2),(1:F2),(2:F2)"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>In Unity, <code class="language-plaintext highlighter-rouge">mesh.normals</code> are the normals associated to the vertices: usually the shader calculates each pixel’s normal by interpolating among the normals. Flat surfaces have equal normals in their vertices (like if they were surface normals), but curved surfaces have different normals associated to each vertex. <strong>Notice</strong> that all data in a mesh is in local space, which doesn’t take the transform settings into account (rotation, scale, position). You should convert each vertex and its normal to world space in order to correctly display them</li>
+</ul>
+
+<h2 id="matrix">Matrix</h2>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+
+<span class="p">[</span><span class="nf">StructLayout</span><span class="p">(</span><span class="n">LayoutKind</span><span class="p">.</span><span class="n">Sequential</span><span class="p">)]</span>
+<span class="k">namespace</span> <span class="nn">My</span><span class="p">{</span>
+<span class="k">struct</span> <span class="nc">Matrix4x4</span><span class="p">{</span>
+    <span class="p">[</span><span class="nf">MarshalAs</span><span class="p">(</span><span class="n">UnmanagedType</span><span class="p">.</span><span class="n">ByValArray</span><span class="p">,</span> <span class="n">SizeConst</span> <span class="p">=</span> <span class="m">4</span><span class="p">*</span><span class="m">4</span><span class="p">)]</span>
+    <span class="k">private</span> <span class="kt">float</span><span class="p">[,]</span> <span class="n">m</span><span class="p">;</span> <span class="c1">// = null</span>
+    <span class="k">public</span> <span class="nf">Matrix4x4</span><span class="p">(</span><span class="kt">float</span> <span class="p">[,]</span> <span class="n">m</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">m</span> <span class="p">=</span> <span class="n">m</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="k">this</span><span class="p">[</span><span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">]{</span>
+        <span class="k">get</span><span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">row</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
+					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">col</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
+					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+
+				<span class="k">return</span> <span class="n">m</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">set</span><span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">row</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
+					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">col</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
+					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+
+				<span class="n">m</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span> <span class="c1">// namespace</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>In C#, <code class="language-plaintext highlighter-rouge">struct</code> does not allow to override the default constructor for a properties since it will automatically fill the content with null.</p>
+
+    <blockquote>
+      <p>If a struct declares any field initializers, it must explicitly declare a constructor. That constructor need not be parameterless. If a struct declares a field initializer but no constructors, the compiler reports an error. Any explicitly declared constructor (with parameters, or parameterless) executes all field initializers for that struct. All fields without a field initializer or an assignment in a constructor are set to the default value.</p>
+    </blockquote>
+  </li>
+  <li>To the implementer of a class, a property is one or two code blocks, representing a <code class="language-plaintext highlighter-rouge">get</code> accessor and/or a <code class="language-plaintext highlighter-rouge">set</code> accessor.
+    <ul>
+      <li>The code block for the <code class="language-plaintext highlighter-rouge">get</code> accessor is executed when the property is read.</li>
+      <li>The code block for the <code class="language-plaintext highlighter-rouge">set</code> accessor is executed when the property is assigned a value.</li>
+      <li>This is useful for <strong>Encapsulation</strong>, to make sure that “sensitive” data is hidden from users.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">throw (C# Reference)</code> Signals the occurrence of an exception during program execution.
+    <ul>
+      <li>e.g. <code class="language-plaintext highlighter-rouge">throw new IndexOutOfRangeException();</code></li>
+      <li>e.g. <code class="language-plaintext highlighter-rouge">throw new NotImplementedException();</code></li>
+    </ul>
+  </li>
+</ul>
+
+
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>
