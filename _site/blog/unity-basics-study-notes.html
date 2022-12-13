@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Unity Basic Notes for Interview">
+  <meta property="og:description" content="Basic Unity notes used as a structure to review for interview.">
+  <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
+
+  <title>Unity Basic Notes for Interview</title>
+  <meta name="description" content="Basic Unity notes used as a structure to review for interview.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>Bosen Cheng</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link active" href="/blog/">Blog</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1><b>Unity Basic Notes for Interview</b></h1>
+
+<p class="post-metadata text-muted">
+  12 December 2022 -  
+  <b>7 mins read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#game-development">
+      <span class="tag badge badge-pill text-primary border border-primary">Game Development</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#unity">
+      <span class="tag badge badge-pill text-primary border border-primary">Unity</span>
+    </a>
+    </p>
+
+<h3 id="gameobject">GameObject</h3>
+
+<p>Unity’s GameObject class represents anything which can exist in a Scene.</p>
+
+<p>GameObjects are the <strong>fundamental objects</strong> in Unity that represent characters, props and scenery. They do not accomplish much in themselves but they act as containers for Components, which implement the functionality.</p>
+
+<p>To give a GameObject the properties it needs to become a light, or a tree, or a camera, you need to <strong>add components</strong> to it. Depending on what kind of object you want to create, you add different combinations of components to a GameObject.</p>
+
+<h3 id="monobehaviour">MonoBehaviour</h3>
+
+<p>The MonoBehaviour class is the <strong>base class</strong> from which every Unity script derives, by default.</p>
+
+<p>The MonoBehaviour class provides the framework which allows you to attach your script to a GameObject in the editor, as well as providing hooks into useful Events such as Start and Update.</p>
+
+<p>The diagram below summarizes how Unity orders and repeats event functions over a script’s lifetime.</p>
+
+<p><img src="/assets/UnityCSharp/MonobehaviourFlowchart.svg" alt="Monobehaviour Flowchart" /></p>
+
+<ul>
+  <li>
+    <p>Coroutines: A coroutine allows you to <strong>spread tasks across several frames</strong>. In Unity, a coroutine is a method that can pause execution and return control to Unity but then continue where it left off on the following frame. However, it’s important to remember that coroutines <strong>aren’t threads</strong>. Synchronous operations that run within a coroutine still <strong>execute on the main thread</strong>.</p>
+  </li>
+  <li>
+    <p>Event: The MonoBehaviour class provides access to a large collection of event messages, which allows you to execute your code based on what is currently happening in your project.</p>
+  </li>
+  <li>
+    <p>Difference between <code class="language-plaintext highlighter-rouge">Awake()</code> and <code class="language-plaintext highlighter-rouge">Start()</code>: Awake is called first and, unlike Start, will be called even if the script component is disabled. Using Start and Awake together is useful for separating initialization tasks into two steps. For example, a script’s self-initialization (e.g. creating component references and initializing variables) can be done in Awake before another script attempts to access and use that data in Start, avoiding errors. Besides, Start can be called as a coroutine.</p>
+  </li>
+</ul>
+
+<p><em>I make a metaphor, the Unity Engine gives the developer an empty rail tracks. GameObjects are those trains that could run on those tracks. To build your own tracks, the MonoBehaviour base class gives you a frame of a train, which allows you easily fill it up to build your own trains.</em></p>
+
+<h3 id="prefab">Prefab</h3>
+
+<p>Unity’s Prefab system allows you to create, configure, and <strong>store a GameObject</strong> complete with all its components, property values, and child GameObjects as a <strong>reusable Asset</strong>. The Prefab Asset acts as a template from which you can create new Prefab instances in the Scene. You can override settings on individual prefab instances if you want some instances of a Prefab to differ from others. You can also create variants of Prefabs which allow you to group a set of overrides together into a meaningful variation of a Prefab. You should also <strong>use Prefabs</strong> when you want to instantiate GameObjects at <strong>runtime</strong> that did <strong>not exist</strong> in your Scene at the start.</p>
+
+<p>Some common examples of Prefab use include:</p>
+<ul>
+  <li>Environmental Assets - for example a certain type of tree used multiple times around a level (as seen in the screenshot above).</li>
+  <li>Non-player characters (NPCs) - for example a certain type of robot may appear in your game multiple times, across multiple levels. They may differ (using overrides) in the speed they move, or the sound they make.</li>
+  <li>Projectiles - for example a pirate’s cannon might instantiate a cannonball Prefab each time it is fired.</li>
+  <li>The player’s main character - the player prefab might be placed at the starting point on each level (separate Scenes) of your game.</li>
+</ul>
+
+<h3 id="unity-built-in-render-pipeline">Unity Built-in Render Pipeline</h3>
+
+<p><img src="/assets/UnityCSharp/Unity-Built-In-Render-Pipeline.png" alt="Unity Built-in Render Pipeline" /></p>
+
+<h3 id="possible-questions">Possible Questions</h3>
+
+<p>Can threads be used to modify a Texture on runtime?</p>
+<ul>
+  <li>No, Unity’s renderer runs on the main thread.</li>
+</ul>
+
+<p>Can threads be used to move a GameObject on the scene?</p>
+<ul>
+  <li>No. Fetching the Transform reference isn’t thread safe in Unity.</li>
+</ul>
+
+<p>Explain why deferred lighting optimizes scenes with a lot of lights and elements.</p>
+<ul>
+  <li>Deferred Lighting makes the scene render all pixels without illumination (which is fast), and with extra information (at a cost of low overhead), it calculates the illumination step only for the <strong>pixels of the screen buffer</strong> (which is less than all pixels processed for each element).</li>
+</ul>
+
+<p>Explain why <code class="language-plaintext highlighter-rouge">Time.deltaTime</code> should be used to make things that depend on time operate correctly.</p>
+<ul>
+  <li>Real time applications, such as games, have a variable FPS. They sometimes run at 60FPS, or when suffering slowdowns, they will run on 40FPS or less. Then for example, for a transformation within a fixed time (1s), <code class="language-plaintext highlighter-rouge">Time.deltaTime</code> allows you to achieve this without worrying the changing FPS.</li>
+</ul>
+
+<p>Can two GameObjects, each with only an SphereCollider, both set as trigger and raise OnTrigger events?</p>
+<ul>
+  <li>No. Collision events between two objects can only be raised when one of them has a <code class="language-plaintext highlighter-rouge">RigidBody</code> attached to it. This is a common error when implementing applications that use “physics.”</li>
+</ul>
+
+<p>Which of the following examples will run faster?</p>
+<ol>
+  <li>1000 <code class="language-plaintext highlighter-rouge">GameObjects</code>, each with a <code class="language-plaintext highlighter-rouge">MonoBehaviour</code> implementing the <code class="language-plaintext highlighter-rouge">Update</code> call back.</li>
+  <li>One <code class="language-plaintext highlighter-rouge">GameObject</code> with one <code class="language-plaintext highlighter-rouge">MonoBehaviour</code> with an Array of 1000 classes, each implementing a custom <code class="language-plaintext highlighter-rouge">Update()</code> callback.
+    <ul>
+      <li>Example 2 is faster. The <code class="language-plaintext highlighter-rouge">Update</code> callback is called using a C# Reflection, which is significantly slower than calling a function directly. In our example, 1000 GameObjects each with a <code class="language-plaintext highlighter-rouge">MonoBehaviour</code> means 1000 Reflection calls per frame. Creating one <code class="language-plaintext highlighter-rouge">MonoBehaviour</code> with one <code class="language-plaintext highlighter-rouge">Update</code>, and using this single callback to <code class="language-plaintext highlighter-rouge">Update</code> a given number of elements, is a lot faster, due to the direct access to the method.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Explain, in a few words, what roles the inspector, project and hierarchy panels in the Unity editor have. Which is responsible for referencing the content that will be included in the build process?</p>
+<ul>
+  <li>The inspector panel allows users to modify numeric values (such as position, rotation and scale), drag and drop references of scene objects (like Prefabs, Materials and Game Objects), and others. Also it can show a custom-made UI, created by the user, by using Editor scripts.</li>
+  <li>The project panel contains files from the file system of the assets folder in the project’s root folder. It shows all the available scripts, textures, materials and shaders available for use in the project.</li>
+  <li>The hierarchy panel shows the current scene structure, with its GameObjects and its children. It also helps users organize them by name and order relative to the GameObject’s siblings. Order dependent features, such as UI, make use of this categorization.</li>
+  <li>The panel responsible for <strong>referencing content</strong> in the build process is the <strong>hierarchy panel</strong>. The panel contains references to the objects that exist, or will exist, when the application is executed. When building the project, Unity searches for them in the project panel, and adds them to the bundle.</li>
+</ul>
+
+<p>Explain the issue with the code below and provide an alternative implementation that would correct the problem.</p>
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">TEST</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+    <span class="k">void</span> <span class="nf">Start</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="m">10</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>The issue is that <strong>you can’t modify the position from a transform directly</strong>. This is because the position is actually a <strong>property (not a field)</strong>. Therefore, when a getter is called, it invokes a method which returns a Vector3 copy which it places into the stack. So basically what you are doing in the code above is assigning a member of the struct a value that is in the stack and that is later removed. Correct way:</li>
+</ul>
+
+<div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">TEST</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+   <span class="k">void</span> <span class="nf">Start</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="reference">Reference</h3>
+
+<ol>
+  <li><a href="https://docs.unity3d.com/Manual/">Unity Documentation</a></li>
+  <li><a href="https://www.toptal.com/unity-unity3d/interview-questions">12 Essential Unity or Unity3D Interview Questions</a></li>
+</ol>
+
+
+
+</div>
+  </main>
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Bosen Cheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:chengbosen112@gamil.com"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/Unchained112"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/chengbosen"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div><small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small>
+
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</body>
+
+</html>

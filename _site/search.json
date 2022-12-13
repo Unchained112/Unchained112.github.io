@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Unity Basic Notes for Interview",
+      "category" : "",
+      "tags"     : "Game Development, Unity",
+      "url"      : "/blog/unity-basics-study-notes",
+      "date"     : "2022-12-12 00:00:00 +0100"
+    } ,
+  
+    {
       "title"    : "Unity and C# Study Notes - Computer Graphics Basics",
       "category" : "",
       "tags"     : "Computer Graphics, Unity, C#",

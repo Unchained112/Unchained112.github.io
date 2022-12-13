@@ -25,6 +25,7 @@ public override string ToString(){
 
 ```c#
 using System;
+using System.Text;
 using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
@@ -53,6 +54,39 @@ struct Matrix4x4{
 				m[row, col] = value;
         }
     }
+    public Matrix4x4 transpose{
+        get{
+            Matrix4x4 mRet = new Matrix4x4(new float [4,4]);
+            for(int i = 0; i < 4; i++){
+                for(int j = 0; j < 4; j++){
+                    mRet[i, j] = this[j, i];
+                }
+            }
+            return mRet;
+        }
+    }
+    public static Matrix4x4 operator *(Matrix4x4 a, Matrix4x4 b){
+        Matrix4x4 c = new Matrix4x4(new float [4,4]);
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                c[i, j] = a[i, 0] * b[0, j] +
+                          a[i, 1] * b[1, j] +
+                          a[i, 2] * b[2, j] +
+                          a[i, 3] * b[3, j];
+            }
+        }
+        return c;
+    }
+    public override string ToString(){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4 ;j++){
+                sb.AppendFormat("{0:F2} ", m[i, j]);
+            }
+            sb.Append("\n");
+        }
+        return sb.ToString();
+    }
 }
 } // namespace
 ```
@@ -65,6 +99,41 @@ struct Matrix4x4{
     - The code block for the `get` accessor is executed when the property is read.
     - The code block for the `set` accessor is executed when the property is assigned a value. 
     - This is useful for **Encapsulation**, to make sure that "sensitive" data is hidden from users.
+
 - `throw (C# Reference)` Signals the occurrence of an exception during program execution. 
     - e.g. `throw new IndexOutOfRangeException();`
     - e.g. `throw new NotImplementedException();`
+
+- Game Engine might optimize the matrix multiplication using SIMD.
+
+- Unity 3D and OpenGL use **column-major** matrix, Direct3D use **row-major** matrix.
+    - row-vector * row-major-matrix
+    - col-major-matrix * col-vector
+
+- When deploying Direct3D API in Unity, it will automatically convert the column-major matrix to a row-major matrix, along with the transformation of the coordinates' axis directions.
+
+- Transformation matrix: 
+    - `M = M_translate * M_rotate * M_scale`
+    - `M_translate.inverse = -M_translate`
+    - `M_rotate.inverse = M_rotate.transpose`
+    - `M_scale(x, y, z).inverse = M_scale(1/x, 1/y, 1/z)`
+
+- The inverse of the transformation matrix indicates the inverse transformation process.
+
+### Projection Matrix
+
+- Direct3D transformation:
+```c
+p_screen = p_local * M_w * M_v * M_p * M_s
+M_w: local -> world
+M_v: world -> view 
+M_p: view -> projection
+M_s: projection -> screen
+```
+
+- OpenGL transformation:
+```c
+p_screen = M_s * M_p * M_v * M_w * p_local
+```
+
+ 
