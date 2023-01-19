@@ -14,7 +14,7 @@ A computer network is a system that connects scattered computer systems with ind
 - WANs (wide area network) may cover a country or a continent. Some of the technologies used to build these networks are point-to-point (e.g., a cable) while others are broadcast (e.g.,wireless). 
 
 Network software is built around protocols, which are rules by which processes communicate. Most networks support protocol hierarchies, with each layer providing services to the layer above it and insulating them from the details of the
-protocols used in the lower layers. Protocol stacks are typically based either on the OSI model or on the TCP/IP model. Both have the link, network, transport, and application layers, but they differ on the other layers. Design issues include reliability, resource allocation, growth, security, and more. Much of this book deals with protocols and their design.
+protocols used in the lower layers. Protocol stacks are typically based either on the OSI model or on the TCP/IP model. Both have the link, network, transport, and application layers, but they differ on the other layers. Design issues include reliability, resource allocation, growth, security, and more.
 
 ![OSI TCP/IP]({{site.baseurl}}/assets/NetworkNotes/OSITCPIP.png)
 
@@ -28,7 +28,7 @@ The physical layer is the basis of all networks. Nature imposes two fundamental 
 
     BitRate = 2 * Bandwidth * log2(L)
 
-    where,L is the number of signal levels used to represent data.
+    where L is the number of signal levels used to represent data.
 
 - Noisy Channel : Shannon Capacity
 
@@ -150,10 +150,85 @@ Hop Count:
 
 ## Transport Layer
 
+Transport layer provides efficient, reliable, and cost-effective data transmission service to its users, normally **processes** in the application layer.
 
+**Together with the network layer, transport layer is the heart of the protocol hierarchy.**
+
+Even when the network layer is completely reliable, the transport layer has plenty of work to do. It must handle all the service primitives, manage connections and timers, allocate bandwidth with congestion control, and run a variable-sized sliding window for flow control.
+
+The Internet has two main transport protocols: UDP and TCP. 
+
+- UDP is a connectionless protocol that is mainly a wrapper for IP packets with additional address. UDP can be used for client-server interactions, for example, using RPC. It can also be used for building real-time protocols such as RTP. The UDP header is shown in the image below.
+
+![UDP Header]({{site.baseurl}}/assets/NetworkNotes/UDPHeader.png)
+
+- The main Internet transport protocol is TCP. It provides a reliable, bidirectional, congestion-controlled byte stream with a 20-byte header on all segments. A great deal of work has gone into optimizing TCP performance, using algorithms from Nagle, Clark, Jacobson, Karn, and others. The TCP header is shown in the image below.
+
+![TCP Header]({{site.baseurl}}/assets/NetworkNotes/TCPHeader.png)
+
+TCP provides reliable communication with something called Positive Acknowledgement with Re-transmission(PAR). The Protocol Data Unit(PDU) of the transport layer is called a segment. A TCP connection is established with a 3-Way Handshake Process:
+
+- **Step 1 (SYN)**: In the first step, client wants to establish a connection with server, so it sends a segment with SYN(Synchronize Sequence Number) which informs server that client is likely to start communication and with what sequence number it starts segments with
+- **Step 2 (SYN + ACK)**: Server responds to the client request with SYN-ACK signal bits set. Acknowledgement(ACK) signifies the response of segment it received and SYN signifies with what sequence number it is likely to start the segments with
+- **Step 3 (ACK)**: In the final part client acknowledges the response of server and they both establish a reliable connection with which they will start eh actual data transfer.
+
+![TCP Handshake Process]({{site.baseurl}}/assets/NetworkNotes/TCPHandshakeProcess.png)
+
+TCP uses a congestion window and a congestion policy that avoid congestion. 
+
+Congestion policy in TCP:
+1. **Slow Start Phase: exponential increment** - starts slowly increment is exponential to threshold.
+2. **Congestion Avoidance Phase: additive increment** - After reaching the threshold increment is by 1.
+3. **Congestion Detection Phase: multiplicative decrement**- Sender goes back to Slow start phase or Congestion avoidance phase.
+    - **Case 1 : Retransmission due to Timeout** – In this case congestion possibility is high.
+    - **Case 2 : Retransmission due to 3 Acknowledgement Duplicates** – In this case congestion possibility is less.
 
 ## Application Layer
 
+The layers below the application layer are there to provide transport services, but they do not do real work for users. In the application layer, different protocols are provided to allow the applications to function. 
+
+**Client/Server Model**: In the Client/Server (C/S) model, there is one always-on host called the server, which services requests from many other hosts called clients. Its workflow is as follows:
+1. The server is in the state of receiving the request.
+2. The client sends out a service request and waits for the result to be received.
+3. After receiving the request, the server analyzes the request, performs necessary processing, obtains the result and sends it to the client.
+
+**Peer-to-Peer Model (P2P)**: In the P2P model, each computer has no fixed client and server division. Instead, any pair of computers, called peers, communicate directly with each other. In fact, the P2P model still uses the client/server model in essence, and each node not only accesses the resources of other nodes as a client but also provides resources for other nodes to access as a server.
+
+### Domain Name Server
+
+DNS is a host name to IP address translation service. DNS is a distributed database implemented in a hierarchy of name servers. It is an application layer protocol for message exchange between clients and servers. At the top level are the well-known generic domains, including com and edu, as well as about 200 country domains. DNS is implemented as a distributed database with servers all over the world. By querying a DNS server, a process can  **map an Internet domain name onto the IP address** used to communicate with a computer for that domain.
+
+### Dynamic Host Configuration Protocol(DHCP) 
+
+DHCP is an application layer protocol which is used to provide: 
+
+1. Subnet Mask (Option 1 – e.g., 255.255.255.0)
+2. Router Address (Option 3 – e.g., 192.168.1.1)
+3. DNS Address (Option 6 – e.g., 8.8.8.8)
+4. Vendor Class Identifier (Option 43 – e.g., ‘unifi’ = 192.168.1.9 ##where unifi = controller)
+
+DHCP is based on a client-server model and based on discovery, offer, request, and ACK. 
+
+DHCP port number for server is 67 and for the client is 68. It is a Client server protocol which uses UDP services. IP address is assigned from a pool of addresses. In DHCP, the client and the server exchange mainly 4 DHCP messages in order to make a connection, also called DORA process, but there are 8 DHCP messages in the process. 
+
+### Email
+
+Email is the original killer app of the Internet. It is still widely used by everyone from small children to grandparents. Most email systems in the world use the mail system now defined in RFCs 5321 (SMTP) and 5322 (IMF). Messages have simple ASCII headers, and many kinds of content can be sent using MIME. Mail is submitted to message transfer agents for delivery and retrieved from them for presentation by a variety of user agents, including Web applications. Submitted mail is delivered using SMTP, which works by making a TCP connection from the sending message transfer agent to the receiving one.
+
+### File Transfer Protocol (FTP)
+
+File Transfer Protocol(FTP) is an application layer protocol which moves files between local and remote file systems. It runs on the top of TCP, like HTTP. To transfer a file, 2 TCP connections are used by FTP in parallel: control connection and data connection.
+
+
+### The Hypertext Transfer Protocol (HTTP)
+
+The Hypertext Transfer Protocol (HTTP) is an application-level protocol that uses TCP as an underlying transport and typically runs on port 80. HTTP is a stateless protocol i.e. server maintains no information about past client requests.
+
+HTTP Connections
+- Non-Persistent
+- Persistent
+
+Nowadays, much of the content on the Web is produced dynamically, either at the server (e.g., with PHP) or in the browser (e.g., with JavaScript). When combined with back-end databases, dynamic server pages allow Web applications such as e-commerce and search. 
 
 
 ## Reference

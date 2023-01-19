@@ -223,17 +223,62 @@ Linux, Windows, and Solaris manage virtual memory similarly, using demand paging
 
 ## File Management
 
+A file is an abstract data type defined and implemented by the operating system. It is a sequence of logical records. A logical record may be a byte, a line (of fixed or variable length), or a more complex data item. The operating system may specifically support various record types or may leave that support to the application program.
+
 ### File System
+
+Collection of files is a **file directory**. The directory contains information about the files, including attributes, location and ownership. Much of this information, especially that is concerned with storage, is managed by the operating system.
+- A single-level directory in a multiuser system causes naming problems, since each file must have a unique name. 
+- A two-level directory solves this problem by creating a separate directory for each user’s files. The directory lists the files by name and includes the file’s location on the disk, length, type, owner, time of creation, time of last use, and so on.
+- A tree-structured directory allows a user to create subdirectories to organize files. Acyclic-graph directory structures enable users to share subdirectories and files but complicate searching and deletion. A general graph structure allows complete flexibility in the sharing of files and directories but sometimes requires garbage collection to recover unused disk space.
+
+Since files are the main information-storage mechanism in most computer systems, file protection is needed on multiuser systems. Access to files can be controlled separately for each type of access — **read, write, open, close, execute, append, create, delete, list directory, and so on**. File protection can be provided by access lists, passwords, or other techniques。
+
+File systems are often implemented in a layered or modular structure. The lower levels deal with the physical properties of storage devices and communicating with them. Upper levels deal with symbolic file names and logical properties of files.
+
+The various files within a file system can be allocated space on the storage device in three ways: through **contiguous, linked, or indexed** allocation.
+- **Continuous Allocation**: A single continuous set of blocks is allocated to a file at the time of file creation. Contiguous allocation can suffer from external fragmentation and also makes it hard to extend a file.
+- **Linked Allocation**: Allocation is on an individual block basis. Each block contains a pointer to the next block in the chain. Direct access is very inefficient with linked allocation. 
+- **Indexed Allocation**: It addresses many of the problems of contiguous and chained allocation. In this case, the file allocation table contains a separate one-level index for each file. Indexed allocation may require substantial overhead for its index block. 
+
+These algorithms can be optimized in many ways. Contiguous space can be enlarged through extents to increase flexibility and to decrease external fragmentation. Indexed allocation can be done in clusters of multiple blocks to increase throughput and to reduce the number of index entries needed. Indexing in large clusters is similar to contiguous allocation with extents.
+
+**Free-space allocation** methods also influence the efficiency of disk-space use, the performance of the file system, and the reliability of secondary storage. The methods used include **bit vectors** and **linked lists**. Optimizations include grouping, counting, and the **FAT (File Allocation Table)**, which places the linked list in one contiguous area.
+
+Most systems are multi-user and thus must provide a method for file sharing and file protection. Frequently, files and directories include metadata, such as owner, user, and group access permissions.
 
 ### Disk Management
 
+Hard disk drives and nonvolatile memory devices are the major secondary storage I/O units on most computers. Modern secondary storage is structured as large one-dimensional arrays of logical blocks. Drives of either type may be attached to a computer system in one of three ways: (1) through the local I/O ports on the host computer, (2) directly connected to motherboards, or (3) through a communications network or storage network connection.
+
+Disk-scheduling algorithms can improve the effective bandwidth of HDDs, the average response time, and the variance in response time. Algorithms such as SCAN and C-SCAN are designed to make such improvements through strategies for disk-queue ordering. Performance of disk-scheduling algorithms can vary greatly on hard disks. In contrast, because solid-state disks have no moving parts, performance varies little among scheduling algorithms, and quite often a simple FCFS strategy is used.
+
+Disk Scheduling Algorithms:
+- FCFS: FCFS is the simplest of all the Disk Scheduling Algorithms. In FCFS, the requests are addressed in the order they arrive in the disk queue.
+- SSTF: In SSTF (Shortest Seek Time First), requests having shortest seek time are executed first. So, the seek time of every request is calculated in advance in a queue and then they are scheduled according to their calculated seek time. As a result, the request near the disk arm will get executed first.
+- **SCAN**: In SCAN algorithm the disk arm moves into a particular direction and services the requests coming in its path and after reaching the end of the disk, it reverses its direction and again services the request arriving in its path. So, this algorithm works like an elevator and hence also known as elevator algorithm.
+- CSCAN: In SCAN algorithm, the disk arm again scans the path that has been scanned, after reversing its direction. So, it may be possible that too many requests are waiting at the other end or there may be zero or few requests pending at the scanned area.
+- LOOK: It is similar to the SCAN disk scheduling algorithm except for the difference that the disk arm in spite of going to the end of the disk goes only to the last request to be serviced in front of the head and then reverses its direction from there only. Thus it prevents the extra delay which occurred due to unnecessary traversal to the end of the disk.
+- **C-LOOK**: As LOOK is similar to SCAN algorithm, in a similar way, CLOOK is similar to CSCAN disk scheduling algorithm. In CLOOK, the disk arm in spite of going to the end goes only to the last request to be serviced in front of the head and then from there goes to the other end’s last request. Thus, it also prevents the extra delay which occurred due to unnecessary traversal to the end of the disk.
+
+> Data storage and transmission are complex and frequently result in errors. Error detection attempts to spot such problems to alert the system for corrective action and to avoid error propagation. Error correction can detect and repair problems, depending on the amount of correction data available and the amount of data that was corrupted.
+
 ## I/O Management
  
-### Basic I/O Management
+The basic hardware elements involved in I/O are buses, device controllers, and the devices themselves. The work of moving data between devices and main memory is performed by the CPU as programmed I/O or is offloaded to a DMA controller.
 
-### I/O System
+The kernel module that controls a device is a device driver. The **system-call** interface provided to applications is designed to handle several basic categories of hardware, including block devices, **character-stream** devices, **memory-mapped** files, network sockets, and programmed interval timers. The system calls usually block the processes that issue them, but non-blocking and asynchronous calls are used by the kernel itself and by applications that must not sleep while waiting for an I/O operation to complete.
+
+![DMA]({{site.baseurl}}/assets/OSNotes/DMA.png)
+
+The kernel’s I/O subsystem provides numerous services. Among these are **I/O scheduling, buffering, caching, spooling, device reservation, error handling**. Another service, name translation, makes the connections between hardware devices and the symbolic file names used by applications. It involves several levels of mapping that translate from character-string names, to specific device drivers and device addresses, and then to physical addresses of I/O ports or bus controllers. This mapping may occur within the file-system name space, as it does in UNIX, or in a separate device name space, as it does in MS-DOS.
+
+![IO Request]({{site.baseurl}}/assets/OSNotes/IORequest.png)
+
+I/O system calls are costly in terms of CPU consumption because of the many layers of software between a physical device and an application. These layers imply overhead from several sources: context switching to cross the kernel’s protection boundary, signal and interrupt handling to service the I/O devices, and the load on the CPU and memory system to copy data between kernel buffers and application space.
+
 
 ## Reference
 
-1. Operating System Concepts 8th Edition
+1. [Operating System Concepts 8th Edition](https://os.ecci.ucr.ac.cr/slides/Abraham-Silberschatz-Operating-System-Concepts-10th-2018.pdf)
 2. [https://www.geeksforgeeks.org/last-minute-notes-operating-systems/](https://www.geeksforgeeks.org/last-minute-notes-operating-systems/)
