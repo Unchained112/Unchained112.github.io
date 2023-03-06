@@ -39,19 +39,19 @@ struct Matrix4x4{
     public float this[int row, int col]{
         get{
             if (row < 0 || row >= 4)
-					throw new IndexOutOfRangeException();
-				if (col < 0 || col >= 4)
-					throw new IndexOutOfRangeException();
-
-				return m[row, col];
+				throw new IndexOutOfRangeException();
+			if (col < 0 || col >= 4)
+				throw new IndexOutOfRangeException();
+			
+            return m[row, col];
         }
         set{
             if (row < 0 || row >= 4)
-					throw new IndexOutOfRangeException();
-				if (col < 0 || col >= 4)
-					throw new IndexOutOfRangeException();
+				throw new IndexOutOfRangeException();
+			if (col < 0 || col >= 4)
+				throw new IndexOutOfRangeException();
 
-				m[row, col] = value;
+			m[row, col] = value;
         }
     }
     public Matrix4x4 transpose{
