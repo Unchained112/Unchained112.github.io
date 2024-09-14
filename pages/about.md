@@ -8,7 +8,7 @@ weight: 3
 # **About Me**
 
 Hi I am **{{ site.author.name }}** :wave:,<br>
-I just finished my Master's degree in Interactive Media Technology at KTH. I learned about programming and studied computer graphics during my bachelor's and master's education. I love video games and animations, especially in 3D, and I always wish to create one of my own. My project experiences are listed on the Project page. Besides, I like to write blogs to record my technique skill improvement.
+A resourceful Developer with 3 years of experience in programming and testing. A fast learner proficient in various technological skills. Skilled at utilizing a wide array of tools and programs to deliver effective solutions.
 
 <div class="row">
 {% include about/skills.html title="Programming Skills" source=site.data.programming-skills %}

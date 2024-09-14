@@ -21,12 +21,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Cel Shading Metal and Glass">
-  <meta property="og:description" content="Learn about basic cel shading method and try to do it for metal and glass objects.">
+  <meta property="og:title" content="Modern Game Engine Course Notes 05">
+  <meta property="og:description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine. This part focus on the effects.">
   <meta property="og:image" content="https://i.imgur.com/WsyG08b.png">
 
-  <title>Cel Shading Metal and Glass</title>
-  <meta name="description" content="Learn about basic cel shading method and try to do it for metal and glass objects.">
+  <title>Modern Game Engine Course Notes 05</title>
+  <meta name="description" content="Modern Game Engine - From Getting Started To Practice is a free public course about game engine. This part focus on the effects.">
 
   <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
@@ -60,9 +60,9 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
 
-      <a class="nav-item nav-link " href="/blog/">Blog</a>
+      <a class="nav-item nav-link active" href="/blog/">Blog</a>
 
       <a class="nav-item nav-link " href="/about/">About</a>
 
@@ -74,7 +74,90 @@
 
 </nav>
     <div class="col-lg-10 mx-auto mt-5 markdown-body">
-  
+  <h1><b>Modern Game Engine Course Notes 05</b></h1>
+
+<p class="post-metadata text-muted">
+  06 March 2023 -  
+  <b>less than 1 min read time</b>
+
+  <br>Tags: 
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#computer-graphics">
+      <span class="tag badge badge-pill text-primary border border-primary">Computer Graphics</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#game-engine">
+      <span class="tag badge badge-pill text-primary border border-primary">Game Engine</span>
+    </a>
+    
+    <a class="text-decoration-none no-underline" href="/blog/tags#technology">
+      <span class="tag badge badge-pill text-primary border border-primary">Technology</span>
+    </a>
+    </p>
+
+<p>Course from: <a href="https://games104.boomingtech.com/sc/">BoomingTech</a></p>
+<h2 id="effects">Effects</h2>
+
+<h3 id="history-of-particle-system">History of Particle System</h3>
+
+<p>The origin of the particle system can be traced back to the movie industry:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>“A particle system is a collection of many many minute particles that together represent a fuzzy object. Over a period of time, particles are generated into a system, move and change from within the system, and die from the system.”
+
+— William Reeves, "Particle Systems—A Technique for Modeling a Class of Fuzzy Objects," ACM Transactions on Graphics 2:2 (April 1983), 92.
+</code></pre></div></div>
+
+<h3 id="particle">Particle</h3>
+
+<p>A particle in game is usually a sprite or 3D model, with the following attributes:</p>
+<ul>
+  <li>Position</li>
+  <li>Velocity</li>
+  <li>Size</li>
+  <li>Color</li>
+  <li>Lifetime</li>
+</ul>
+
+<h3 id="particle-1">Particle</h3>
+
+<p>A particle in game is usually a sprite or 3D model, with the following attributes:</p>
+<ul>
+  <li>Position</li>
+  <li>Velocity</li>
+  <li>Size</li>
+  <li>Color</li>
+  <li>Lifetime</li>
+</ul>
+
+<p>Particle’s lifespan 
+<img src="/assets/GameEngine/ParticleLife.png" alt="Particle Life" /></p>
+
+<h3 id="particle-emitter">Particle Emitter</h3>
+
+<p>Particle Emitter is used to define the particles simulation</p>
+<ul>
+  <li>Specify the spawn rules</li>
+  <li>Specify simulation logic</li>
+  <li>Describe how to render particles</li>
+</ul>
+
+<p><strong>Particle System</strong>
+A particle system is a collection of individual emitters</p>
+
+<p><img src="/assets/GameEngine/ParticleSystem.png" alt="Particle System" /></p>
+
+<p>Particle system is crucial to any 3D effects.</p>
+
+<p>The spawn position (single position spawn, spawn based on area, spawn based on mesh), and spawn modes (continuous, burst) will affect the how it looks in the end.</p>
+
+<p><strong>Simulation</strong> controls how the particles change over time.</p>
+
+<h3 id="particle-type">Particle Type</h3>
+
+<p><img src="/assets/GameEngine/ParticleType.png" alt="Particle Type" /></p>
+
+
+
 
 </div>
   </main>

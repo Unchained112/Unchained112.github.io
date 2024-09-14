@@ -17,7 +17,7 @@ What's Game Engine? Definition from the course:
 
 ## Layered Architecture of Game Engine
 
-Simplified gmae engine structure:
+Simplified game engine structure:
  - Tool Layer: tools in the editor
  - Function Layer: animation, physics, rendering, camera, HUB and Input, script, FSM and AI
  - Resource Layer: Scene and Level, Script and Graph, Game Logic Data

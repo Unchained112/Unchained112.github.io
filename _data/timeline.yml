@@ -1,3 +1,13 @@
+- title: Test Automation Developer, TietoEvry, Karlstad, Sweden
+  from: 2024 Jan
+  to: Present
+  description: Contributed to Ericsson Cloud RAN Baseband Validation testing with a focus on VDU2.0 Module CI development. Designed and implemented test cases using Java and JCat (TestNG-based) for comprehensive scenario testing. Configured test channels to accommodate various scenarios, monitored Spinnaker and Jenkins pipelines for smooth operations, and resolved issues within the testing environment.
+
+- title: C++ Developer, TietoEvry, Karlstad, Sweden
+  from: 2023 Jan
+  to: 2024 Jan
+  description: Contributed to the Ericsson SCTP and SS7 (Internet protocols) project on Ericsson's cloud microservice platform. Developed features in C++ to adapt SS7 and SCTP protocols for the cloud environment. Conducted functionality testing on Kubernetes clusters and implemented Helm charts in accordance with project requirements.
+
 - title: Master's degree, KTH Royal Institute of Technology, Stockholm, Sweden
   from: 2020 Aug
   to: 2022 Sept

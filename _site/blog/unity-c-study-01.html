@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <!--
-  portfolYOU Jekyll theme by Youssef Raafat
+  portfolYOU Jekyll theme by yousinix
   Free for personal and commercial use under the MIT license
-  https://github.com/YoussefRaafatNasry/portfolYOU
+  https://github.com/yousinix/portfolYOU
 -->
 
 <html lang="en" class="h-100">
@@ -34,7 +34,7 @@
   <script src="/assets/js/theme.js"></script>
 
   <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
@@ -46,6 +46,7 @@
   <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
+
 
 <body class="h-100 d-flex flex-column">
 
@@ -131,19 +132,19 @@
     <span class="k">public</span> <span class="kt">float</span> <span class="k">this</span><span class="p">[</span><span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">]{</span>
         <span class="k">get</span><span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">row</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
-					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
-				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">col</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
-					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
-
-				<span class="k">return</span> <span class="n">m</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">];</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">col</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+			
+            <span class="k">return</span> <span class="n">m</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">];</span>
         <span class="p">}</span>
         <span class="k">set</span><span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">row</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
-					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
-				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">col</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
-					<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="p">&lt;</span> <span class="m">0</span> <span class="p">||</span> <span class="n">col</span> <span class="p">&gt;=</span> <span class="m">4</span><span class="p">)</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">IndexOutOfRangeException</span><span class="p">();</span>
 
-				<span class="n">m</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+			<span class="n">m</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
     <span class="k">public</span> <span class="n">Matrix4x4</span> <span class="n">transpose</span><span class="p">{</span>
@@ -274,7 +275,7 @@
     </a>
 
 </div><small id="attribution">
-    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+    theme <a href="https://github.com/yousinix/portfolYOU">portfolYOU</a>
   </small>
 
 </footer>
